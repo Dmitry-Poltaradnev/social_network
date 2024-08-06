@@ -1,21 +1,22 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
+import {Header} from "./components/header/Header";
+import {Navigation} from "./components/navigation/Navigation";
+import {Main} from "./components/main/Main";
 
 function App() {
 
-    const [state, setState] = useState(['1', '323', '1', 20, '110'])
-
-    const deleteItem = (item1: any) => {
-        setState(state.filter(item => item !== item1))
-    }
+    const posts = [
+        {id: 1, text: 'one', likes: 2},
+        {id: 2, text: 'two', likes: 3},
+        {id: 3, text: 'three', likes: 5},
+    ]
 
     return (
         <div className="App">
-            {state.map(item => <ul>
-                <li>
-                    <button onClick={() => deleteItem(item)}>deleted</button>
-                    {item}</li>
-            </ul>)}
+            <Header/>
+            <Navigation/>
+            <Main posts={posts}/>
         </div>
     );
 }
