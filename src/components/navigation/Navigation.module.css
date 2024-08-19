@@ -2,3 +2,11 @@
     grid-area: navigation;
     background-color: green;
 }
+.link{
+    color: white;
+    text-decoration: none;
+
+}
+.activeLink{
+    color: gold;
+}
