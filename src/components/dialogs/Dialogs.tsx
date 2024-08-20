@@ -1,31 +1,34 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css'
-import {DialogItem} from "./DialogItem";
-import {Message} from "./Message";
-import {v1} from "uuid";
+import {DialogItem} from "./dialogItem/DialogItem";
+import {Message} from "./message/Message";
 
-export const Dialogs = () => {
+type Dialog = {
+    id: string
+    name: string
+}
+type Messages = {
+    id: string
+    text: string
+}
+type DialogProps = {
+    dialog: Dialog[]
+    messages: Messages[]
+}
 
-    const [dialog, setDialog] = useState([
-        {id: v1(), name: 'Sveta'},
-        {id: v1(), name: 'Misha'},
-        {id: v1(), name: 'Gena'},
-    ]);
-
+export const Dialogs = ({dialog, messages}: DialogProps) => {
     return (
         <div className={s.back}>
             <h2>Dialogs</h2>
             <div className={s.dialogs_wrapper}>
                 <div className={s.dialogs}>
                     <div className={s.dialogItems}>
-                        {dialog.map((item) =>  <DialogItem name={item.name} id={item.id} />)}
+                        {dialog.map((item) => <DialogItem key={item.id} name={item.name} id={item.id}/>)}
                     </div>
                 </div>
                 <div className={s.messages}>
-                   <Message text={'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, recusandae?'}/>
-                   <Message text={'Lorem ipsum dolor sit amet'}/>
+                    {messages.map((item) => <Message key={item.id} text={item.text}/>)}
                 </div>
-
             </div>
         </div>
 

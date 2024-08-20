@@ -4,26 +4,18 @@ import {Header} from "./components/header/Header";
 import {Navigation} from "./components/navigation/Navigation";
 import {Profile} from "./components/profile/Profile";
 import {Dialogs} from "./components/dialogs/Dialogs";
-import {v1} from "uuid";
 import {Route, BrowserRouter} from 'react-router-dom';
-import {Settings} from "./components/settings/Settings";
 
-function App() {
-
-    const posts = [
-        {id: '1', text: 'one', likes: 2},
-        {id: '2', text: 'two', likes: 3},
-        {id: '3', text: 'three', likes: 5},
-    ]
-
+function App({state}: any) {
     return (
         <BrowserRouter>
             <div className="App">
                 <Header/>
-                <Navigation/>
-                <Route path="/dialogs" component={Dialogs}/>
-                <Route path="/profile" component={Profile}/>
-                <Route path="/settings" component={Settings}/>
+                <Navigation friends={state.friendsBar}/>
+                <Route path="/" exact render={() => <Profile/>}/>
+                <Route path="/dialogs" render={() => <Dialogs dialog={state.messagesPage.dialog}
+                                                              messages={state.messagesPage.messages}/>}/>
+                <Route path="/profile" render={() => <Profile myPosts={state.profilePage.myPosts}/>}/>
             </div>
         </BrowserRouter>
     );
