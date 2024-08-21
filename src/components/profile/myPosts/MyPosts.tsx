@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {MyPost} from "./myPost/MyPost";
 
 export type MyPostProps = {
@@ -7,18 +7,26 @@ export type MyPostProps = {
     likes: number
 }
 
-type MyPostsProps = {
+export type MyPostsProps = {
     myPosts: MyPostProps[];
+    addPost: (title: string) => void
 }
 
-export const MyPosts = ({myPosts}: MyPostsProps) => {
+export const MyPosts = ({myPosts, addPost}: MyPostsProps) => {
+
+    const [inputState, setInputState] = useState('')
+
+    console.log(inputState)
+
+    let myPostsList = myPosts.map((item) => <MyPost key={item.id} id={item.id} likes={item.likes} text={item.text}/>)
+
     return (
         <div className={'myPosts'}>
             <h3>My Posts</h3>
-            <input type="text"/>
-            <button>Add Post</button>
+            <input value={inputState} onChange={event => setInputState(event.currentTarget.value)} type="text"/>
+            <button onClick={() => addPost(inputState)}>Add Post</button>
             <div>
-                {myPosts.map((item) => <MyPost key={item.id} id={item.id} likes={item.likes} text={item.text}/>)}
+                {myPostsList}
             </div>
         </div>
     );

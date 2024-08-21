@@ -3,9 +3,9 @@ import {v1} from "uuid";
 export const state = {
     profilePage: {
         myPosts: [
-            {id: v1(), text: 'lorem ipsum', likes: 12},
-            {id: v1(), text: 'lorem ipsum23', likes: 3},
-            {id: v1(), text: 'lorem ipsum4343', likes: 5}
+            {id: v1(), text: 'Hello', likes: 12},
+            {id: v1(), text: 'My second post', likes: 3},
+            {id: v1(), text: 'Good buy!', likes: 5}
         ]
     },
     messagesPage: {
@@ -14,9 +14,9 @@ export const state = {
             {id: v1(), text: 'Lorem ipsum dolor sit amet'},
         ],
         dialog: [
-            {id: v1(), name: 'Sveta'},
-            {id: v1(), name: 'Misha'},
-            {id: v1(), name: 'Gena'},
+            {id: v1(), name: 'Petr'},
+            {id: v1(), name: 'Jack'},
+            {id: v1(), name: 'Alexa'},
         ],
     },
     friendsBar: [
@@ -29,4 +29,6 @@ export const state = {
         {id: v1(), avaLink: 'https://i.pinimg.com/736x/68/f2/6f/68f26f05bb5152b02d918e4a3709493b.jpg', name: 'Alexa'},
     ]
 }
+
+
 

@@ -13,11 +13,14 @@ type FriendsListProps = {
 }
 
 export const FriendsList = ({friends}: FriendsListProps) => {
+
+    let friendsList = friends.map((friend) => <Friend key={friend.id} id={friend.id} avaLink={friend.avaLink}
+                                                      name={friend.name}/>)
+
     return (
         <div className={s.friendsListWrapper}>
             <ul className={s.friendList}>
-                {friends.map((friend) => <Friend key={friend.id} id={friend.id} avaLink={friend.avaLink}
-                                                 name={friend.name}/>)}
+                {friendsList}
             </ul>
         </div>
 
