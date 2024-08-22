@@ -5,20 +5,20 @@ export type MyPostProps = {
     id: string
     text: string
     likes: number
+    deletePost: (id: string) => void
 }
 
 export type MyPostsProps = {
     myPosts: MyPostProps[];
-    addPost: (title: string) => void
+    addPost: (text: string) => void
+    deletePost: (id: string) => void
 }
 
-export const MyPosts = ({myPosts, addPost}: MyPostsProps) => {
+export const MyPosts = ({myPosts, addPost, deletePost}: MyPostsProps) => {
 
     const [inputState, setInputState] = useState('')
 
-    console.log(inputState)
-
-    let myPostsList = myPosts.map((item) => <MyPost key={item.id} id={item.id} likes={item.likes} text={item.text}/>)
+    let myPostsList = myPosts.map((item) => <MyPost deletePost={deletePost} key={item.id} id={item.id} likes={item.likes} text={item.text}/>)
 
     return (
         <div className={'myPosts'}>
