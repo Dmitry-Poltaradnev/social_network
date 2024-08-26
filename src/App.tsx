@@ -47,7 +47,7 @@ function App() {
     //     ]
     // }
 
-    const [store,setStore] = useState({
+    const [store, setStore] = useState({
         profilePage: {
             myPosts: [
                 {id: v1(), text: 'Hello', likes: 12},
@@ -85,11 +85,26 @@ function App() {
         ]
     })
 
-    const addPost = (text: string) =>{
-        setStore({...store, profilePage: {...store.profilePage , myPosts: [...store.profilePage.myPosts,  {id: v1(), text: text, likes: 0}]}});
+    const addPost = (text: string) => {
+        setStore({
+            ...store,
+            profilePage: {
+                ...store.profilePage,
+                myPosts: [...store.profilePage.myPosts, {id: v1(), text: text, likes: 0}]
+            }
+        });
     }
-    const deletePost = (id: string) =>{
-        setStore({...store, profilePage: { ...store.profilePage, myPosts: store.profilePage.myPosts.filter(item => item.id !== id) }});
+    const deletePost = (id: string) => {
+        setStore({
+            ...store,
+            profilePage: {...store.profilePage, myPosts: store.profilePage.myPosts.filter(item => item.id !== id)}
+        });
+    }
+    const addNewMessage = (text: string) => {
+        setStore({
+            ...store,
+            messagesPage: {...store.messagesPage, messages: [...store.messagesPage.messages, {id: v1(), text: text}]}
+        })
     }
 
     console.log(store)
@@ -98,10 +113,12 @@ function App() {
             <div className="App">
                 <Header/>
                 <Navigation friends={store.friendsBar}/>
-                <Route path="/" exact render={() => <Profile deletePost={deletePost} addPost={addPost} myPosts={store.profilePage.myPosts}/>}/>
-                <Route path="/dialogs" render={() => <Dialogs dialog={store.messagesPage.dialog}
+                <Route path="/" exact render={() => <Profile deletePost={deletePost} addPost={addPost}
+                                                             myPosts={store.profilePage.myPosts}/>}/>
+                <Route path="/dialogs" render={() => <Dialogs addNewMessage={addNewMessage}  dialog={store.messagesPage.dialog}
                                                               messages={store.messagesPage.messages}/>}/>
-                <Route path="/profile" render={() => <Profile deletePost={deletePost} addPost={addPost} myPosts={store.profilePage.myPosts}/>}/>
+                <Route path="/profile" render={() => <Profile deletePost={deletePost} addPost={addPost}
+                                                              myPosts={store.profilePage.myPosts}/>}/>
             </div>
         </BrowserRouter>
     );
