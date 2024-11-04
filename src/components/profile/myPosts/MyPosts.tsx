@@ -18,13 +18,22 @@ export const MyPosts = ({myPosts, addPost, deletePost}: MyPostsProps) => {
 
     const [inputState, setInputState] = useState('')
 
-    let myPostsList = myPosts.map((item) => <MyPost deletePost={deletePost} key={item.id} id={item.id} likes={item.likes} text={item.text}/>)
+    let myPostsList = myPosts.map((item) => <MyPost deletePost={deletePost} key={item.id} id={item.id}
+                                                    likes={item.likes} text={item.text}/>)
+
+    const addPostHandler = (inputState: string) => {
+        if (inputState.trim().length > 0) {
+            addPost(inputState)
+            setInputState('')
+        }
+    }
+
 
     return (
         <div className={'myPosts'}>
             <h3>My Posts</h3>
             <input value={inputState} onChange={event => setInputState(event.currentTarget.value)} type="text"/>
-            <button onClick={() => addPost(inputState)}>Add Post</button>
+            <button onClick={() => addPostHandler(inputState)}>Add Post</button>
             <div>
                 {myPostsList}
             </div>

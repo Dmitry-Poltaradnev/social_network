@@ -20,8 +20,10 @@ type DialogProps = {
 export const Dialogs = ({dialog, messages, addNewMessage}: DialogProps) => {
 
     const addMessageHandler = (input: string) => {
-        addNewMessage(input)
-        setInputState('')
+        if (input.trim().length > 0) {
+            addNewMessage(input)
+            setInputState('')
+        }
     }
 
     const [inputState, setInputState] = useState('')
