@@ -1,8 +1,14 @@
 import React from 'react';
 import s from './MyPost.module.css'
-import {MyPostProps} from "../MyPosts";
 
-export const MyPost = ({id, text, likes, deletePost}: MyPostProps) => {
+export type MyPostType = {
+    id: string,
+    text: string,
+    likes: number
+    deletePost: (id: string) => void
+}
+
+export const MyPost = ({id, text, likes, deletePost}: MyPostType) => {
     return (
         <div className={s.post}>
             <p>{text}</p>

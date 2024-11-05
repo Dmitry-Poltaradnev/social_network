@@ -1,15 +1,15 @@
-import { v1 } from "uuid";
+import {v1} from "uuid";
 
 export const initialMessageState = {
     messagesPage: {
         messages: [
-            { id: v1(), text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, recusandae?' },
-            { id: v1(), text: 'Lorem ipsum dolor sit amet' },
+            {id: v1(), text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, recusandae?'},
+            {id: v1(), text: 'Lorem ipsum dolor sit amet'},
         ],
         dialog: [
-            { id: v1(), name: 'Petr' },
-            { id: v1(), name: 'Jack' },
-            { id: v1(), name: 'Alexa' },
+            {id: v1(), name: 'Petr'},
+            {id: v1(), name: 'Jack'},
+            {id: v1(), name: 'Alexa'},
         ],
     },
     friendsBar: [
@@ -38,7 +38,7 @@ export const messageReducer = (state = initialMessageState, action: any) => {
                 ...state,
                 messagesPage: {
                     ...state.messagesPage,
-                    messages: [...state.messagesPage.messages, { id: v1(), text: action.payload.text }],
+                    messages: [...state.messagesPage.messages, {id: v1(), text: action.payload.text}],
                 },
             };
         default:

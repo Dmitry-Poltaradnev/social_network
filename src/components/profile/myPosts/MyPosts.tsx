@@ -1,33 +1,30 @@
 import React, {useState} from 'react';
 import {MyPost} from "./myPost/MyPost";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "../../../reducer/store";
+import {addPost, deletePost} from "../../../reducer/postsActions";
 
-export type MyPostProps = {
-    id: string
-    text: string
-    likes: number
-    deletePost: (id: string) => void
-}
+export const MyPosts = () => {
 
-export type MyPostsProps = {
-    myPosts: MyPostProps[];
-    addPost: (text: string) => void
-    deletePost: (id: string) => void
-}
+    const dispatch = useDispatch()
 
-export const MyPosts = ({myPosts, addPost, deletePost}: MyPostsProps) => {
+    const post = useSelector((state: RootStateType) => state.post.myPosts);
 
     const [inputState, setInputState] = useState('')
 
-    let myPostsList = myPosts.map((item) => <MyPost deletePost={deletePost} key={item.id} id={item.id}
-                                                    likes={item.likes} text={item.text}/>)
+    const deletePostHandler = (id: string) => {
+        dispatch(deletePost(id))
+    }
 
     const addPostHandler = (inputState: string) => {
         if (inputState.trim().length > 0) {
-            addPost(inputState)
+            dispatch(addPost(inputState))
             setInputState('')
         }
     }
 
+    let myPostsList = post.map((item) => <MyPost deletePost={deletePostHandler} key={item.id} id={item.id}
+                                                 likes={item.likes} text={item.text}/>)
 
     return (
         <div className={'myPosts'}>
