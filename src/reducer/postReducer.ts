@@ -1,6 +1,16 @@
 import {v1} from "uuid";
 
-export const initialPostState = {
+type PostsType = {
+    id: string
+    text: string
+    likes: number
+}
+
+type initPostType = {
+    myPosts: PostsType[]
+}
+
+export const initialPostState: initPostType = {
     myPosts: [
         {id: v1(), text: 'This is my first post', likes: 10},
         {id: v1(), text: 'This is my second post', likes: 20},

@@ -1,48 +1,56 @@
 import {v1} from "uuid";
+// import {UserPropsType} from "../components/users/Users";
 
+export type InitUserStateType = {
+    users: any;
+};
 
-const initUserState = {
+const initUserState: any = {
     users: [
-        {
-            id: v1(),
-            follow: true,
-            fullName: 'Petra',
-            status: "I'm Sex Machine",
-            location: {country: 'Belarus', city: 'Minsk'}
-        },
-        {
-            id: v1(),
-            follow: false,
-            fullName: 'Vasa',
-            status: "I'm Sex Machine",
-            location: {country: 'Russia', city: 'Moscow'}
-        },
-        {
-            id: v1(),
-            follow: false,
-            fullName: 'Dimon',
-            status: "I'm Sex Machine",
-            location: {country: 'Germany', city: 'Berlin'}
-        },
-        {
-            id: v1(),
-            follow: true,
-            fullName: 'Katsiarina',
-            status: "I'm Sex Machine",
-            location: {country: 'Georgia', city: 'Tbilisi'}
-        },
+        // {
+        //     id: v1(),
+        //     follow: true,
+        //     fullName: 'Petra',
+        //     status: "I'm Sex Machine",
+        //     location: {country: 'Belarus', city: 'Minsk'}
+        // },
+        // {
+        //     id: v1(),
+        //     follow: false,
+        //     fullName: 'Vasa',
+        //     status: "I'm Sex Machine",
+        //     location: {country: 'Russia', city: 'Moscow'}
+        // },
+        // {
+        //     id: v1(),
+        //     follow: true,
+        //     fullName: 'Dimon',
+        //     status: "I'm Sex Machine",
+        //     location: {country: 'Germany', city: 'Berlin'}
+        // },
+        // {
+        //     id: v1(),
+        //     follow: true,
+        //     fullName: 'Katsiarina',
+        //     status: "I'm Sex Machine",
+        //     location: {country: 'Georgia', city: 'Tbilisi'}
+        // },
     ]
 }
 
 export const userReducer = (state = initUserState, action: any) => {
     switch (action.type) {
         case  'CHANGE-FOLLOW' : {
-            return {...state,
-                users: state.users.map(user => user.id === action.payload.id ? {
+            return {
+                ...state,
+                users: state.users.map((user: any) => user.id === action.payload.id ? {
                     ...user,
-                    follow: !action.payload.followStatus
+                    followed: !action.payload.followStatus
                 } : user)
             }
+        }
+        case 'SET_USERS' : {
+            return {...state, users: [...action.payload.users]}
         }
         default :
             return state

@@ -1,6 +1,24 @@
 import {v1} from "uuid";
+import {DialogType, MessageType} from "../components/dialogs/Dialogs";
 
-export const initialMessageState = {
+export type friendsBarType = {
+    id: string
+    avaLink: string
+    name: string
+}
+
+type messagePageType = {
+    messages: MessageType[]
+    dialog: DialogType[]
+}
+
+type initialMessageStateType = {
+    friendsBar: friendsBarType[]
+    messagesPage: messagePageType
+}
+
+
+export const initialMessageState: initialMessageStateType = {
     messagesPage: {
         messages: [
             {id: v1(), text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, recusandae?'},

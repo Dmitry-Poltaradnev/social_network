@@ -11,7 +11,7 @@ export type MessageType = {
     id: string
     text: string
 }
-export type Dialog = {
+export type DialogType = {
     id: string
     name: string
 }
@@ -37,7 +37,7 @@ export const Dialogs = () => {
             <div className={s.dialogs_wrapper}>
                 <div className={s.dialogs}>
                     <div className={s.dialogItems}>
-                        {dialog.map((dialog: Dialog) => <DialogItem key={dialog.id} name={dialog.name}
+                        {dialog.map((dialog: DialogType) => <DialogItem key={dialog.id} name={dialog.name}
                                                                     id={dialog.id}/>)}
                     </div>
                 </div>

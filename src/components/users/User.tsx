@@ -1,14 +1,13 @@
 import React from 'react';
 import {useDispatch} from "react-redux";
-import {UserPropsType} from "./Users";
+// import {UserPropsType} from "./Users";
 import {changeFollow} from "../../reducer/usersActions";
 
-type UserType = {
-    user: UserPropsType
-}
+// type UserType = {
+//     user: UserPropsType
+// }
 
-export const User = ({user}: UserType) => {
-    console.log(user)
+export const User = ({user}: any) => {
 
     const dispatch = useDispatch();
 
@@ -17,8 +16,15 @@ export const User = ({user}: UserType) => {
     }
 
     return (
-        <li >{user.fullName} , {user.status}
-            <button onClick={() => changeFollowHandler(user.id, user.follow)}> Жмяк {user.follow}</button>
+        <li>
+            <span> Name: {user.name}</span>
+            <br/>
+            {/*<span>Status: {user.status}</span>*/}
+            {/*<br/>*/}
+            {/*<span>Country: {user.location.country} , City: {user.location.city}</span>*/}
+            {/*<br/>*/}
+            <button
+                onClick={() => changeFollowHandler(user.id, user.followed)}>{user.followed ? "follow" : "don't unfollow"}</button>
         </li>
     );
 };
