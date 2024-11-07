@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {setTotalCount} from "./usersActions";
 // import {UserPropsType} from "../components/users/Users";
 
 export type InitUserStateType = {
@@ -35,7 +36,10 @@ const initUserState: any = {
         //     status: "I'm Sex Machine",
         //     location: {country: 'Georgia', city: 'Tbilisi'}
         // },
-    ]
+    ],
+    pageSizes: 50,
+    totalCount: 0,
+    currentPage: 1,
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -51,6 +55,10 @@ export const userReducer = (state = initUserState, action: any) => {
         }
         case 'SET_USERS' : {
             return {...state, users: [...action.payload.users]}
+        }
+        // ===
+        case 'SET_TOTAL_COUNT' : {
+            return {...state, totalCount: action.payload.totalCount}
         }
         default :
             return state
