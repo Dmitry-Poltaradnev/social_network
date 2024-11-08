@@ -37,7 +37,7 @@ const initUserState: any = {
         //     location: {country: 'Georgia', city: 'Tbilisi'}
         // },
     ],
-    pageSizes: 50,
+    pageSize: 50,
     totalCount: 0,
     currentPage: 1,
 }
@@ -54,11 +54,13 @@ export const userReducer = (state = initUserState, action: any) => {
             }
         }
         case 'SET_USERS' : {
-            return {...state, users: [...action.payload.users]}
+            return {...state, users: action.payload.users}
         }
-        // ===
         case 'SET_TOTAL_COUNT' : {
             return {...state, totalCount: action.payload.totalCount}
+        }
+        case 'SET_CURRENT_PAGE' : {
+            return {...state, currentPage: action.payload.currentPage}
         }
         default :
             return state

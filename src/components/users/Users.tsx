@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {User} from "./User";
 import axios from "axios";
-import {setTotalCount, setUser} from "../../reducer/usersActions";
+import {setCurrentPage, setTotalCount, setUser} from "../../reducer/usersActions";
 import s from './Users.module.css'
 
 // export type LocationType = {
@@ -24,7 +24,7 @@ export const Users = () => {
 
     const users = useSelector((state: RootStateType) => state.user.users)
 
-    const pageSizes = useSelector((state: RootStateType) => state.user.pageSizes)
+    const pageSize = useSelector((state: RootStateType) => state.user.pageSize)
 
     const totalCount = useSelector((state: RootStateType) => state.user.totalCount)
 
@@ -32,23 +32,26 @@ export const Users = () => {
 
 
     useEffect(() => {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSizes}`).then((response) => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`).then((response) => {
             dispatch(setTotalCount(response.data.totalCount))
-            console.log(response.data.totalCount)
             dispatch(setUser(response.data.items))
         })
-    }, [dispatch])
+    }, [currentPage, pageSize])
 
     console.log(`users : ${users}`)
-    console.log(`pageSizes ${pageSizes}`)
-    console.log(`totalCount ${totalCount}`)
+    console.log(`pageSize ${pageSize}`)
+    console.log(`totalUsersCount ${totalCount}`)
 
-    let pagesCount = Math.ceil(totalCount / pageSizes)
+    let pagesCount = Math.ceil(totalCount / pageSize)
 
     let pagesCountMass = []
 
     for (let i = 1; i <= pagesCount; i++) {
         pagesCountMass.push(i)
+    }
+
+    const setCurrentPageHandler = (currentPage: number) => {
+        dispatch(setCurrentPage(currentPage))
     }
 
     return (
@@ -57,7 +60,8 @@ export const Users = () => {
             <ul>
                 {users.map((user: any) => <User key={user.id} user={user}/>)}
             </ul>
-            {pagesCountMass.map(i => <button className={currentPage === i ? s.activeButton : ''} key={i}>{i}</button>)}
+            {pagesCountMass.map(i => <button onClick={() => setCurrentPageHandler(i)}
+                                             className={currentPage === i ? s.activeButton : ''} key={i}>{i}</button>)}
         </div>
     );
 };
