@@ -20,8 +20,7 @@ export const Dialogs = () => {
 
     const dispatch = useDispatch()
 
-    const messages = useSelector((state: RootStateType) => state.message.messagesPage.messages);
-    const dialog = useSelector((state: RootStateType) => state.message.messagesPage.dialog);
+    const {messages, dialog} = useSelector((state: RootStateType) => state.message.messagesPage)
 
     const addMessageHandler = (input: string) => {
         if (input.trim().length > 0) {
@@ -38,7 +37,7 @@ export const Dialogs = () => {
                 <div className={s.dialogs}>
                     <div className={s.dialogItems}>
                         {dialog.map((dialog: DialogType) => <DialogItem key={dialog.id} name={dialog.name}
-                                                                    id={dialog.id}/>)}
+                                                                        id={dialog.id}/>)}
                     </div>
                 </div>
                 <div className={s.messages}>

@@ -3,45 +3,28 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {User} from "./User";
 import axios from "axios";
-import {setCurrentPage, setTotalCount, setUser} from "../../reducer/usersActions";
+import {setCurrentPage, setTotalCount, setUser, toggleIsLoading} from "../../reducer/usersActions";
 import s from './Users.module.css'
-
-// export type LocationType = {
-//     country: string
-//     city: string
-// }
-// export type UserPropsType = {
-//     id: string
-//     follow: boolean
-//     fullName: string
-//     status: string
-//     location: LocationType
-// }
+import {Loader} from "../loader/Loader";
 
 export const Users = () => {
 
     const dispatch = useDispatch();
 
-    const users = useSelector((state: RootStateType) => state.user.users)
-
-    const pageSize = useSelector((state: RootStateType) => state.user.pageSize)
-
-    const totalCount = useSelector((state: RootStateType) => state.user.totalCount)
-
-    const currentPage = useSelector((state: RootStateType) => state.user.currentPage)
-
+    const {users, pageSize, totalCount, currentPage, isLoading} = useSelector((state: RootStateType) => state.user)
 
     useEffect(() => {
+        dispatch(toggleIsLoading(true))
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`).then((response) => {
             dispatch(setTotalCount(response.data.totalCount))
             dispatch(setUser(response.data.items))
+        }).finally(() => {
+            dispatch(toggleIsLoading(false))
         })
-    }, [currentPage, pageSize])
+    }, [currentPage])
 
-    console.log(`users : ${users}`)
-    console.log(`pageSize ${pageSize}`)
-    console.log(`totalUsersCount ${totalCount}`)
 
+    console.log(isLoading)
     let pagesCount = Math.ceil(totalCount / pageSize)
 
     let pagesCountMass = []
@@ -51,18 +34,25 @@ export const Users = () => {
     }
 
     const setCurrentPageHandler = (currentPage: number) => {
+        dispatch(toggleIsLoading(true))
         dispatch(setCurrentPage(currentPage))
     }
 
     return (
-        <div className='users-container'>
-            <h3>Users</h3>
-            <ul>
-                {users.map((user: any) => <User key={user.id} user={user}/>)}
-            </ul>
-            {pagesCountMass.map(i => <button onClick={() => setCurrentPageHandler(i)}
-                                             className={currentPage === i ? s.activeButton : ''} key={i}>{i}</button>)}
-        </div>
+        <>
+            <div className='users-container'>
+                <h3>Users</h3>
+                {isLoading ? <Loader/> : <div>
+                    <ul>
+                        {users.map((user: any) => <User key={user.id} user={user}/>)}
+                    </ul>
+                    {pagesCountMass.map(i => <button onClick={() => setCurrentPageHandler(i)}
+                                                     className={currentPage === i ? s.activeButton : ''}
+                                                     key={i}>{i}</button>)}
+                </div>
+                }
+            </div>
+        </>
     );
 };
 

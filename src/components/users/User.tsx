@@ -19,7 +19,9 @@ export const User = ({user}: any) => {
 
     return (
         <li>
-            <img style={{maxWidth: '100px', maxHeight: '100px'}} src={user.photos && (user.photos.small || user.photos.large) ?  (user.photos.small || user.photos.large) : defaultUserPhoto} alt="user_photo"/>
+            <img style={{maxWidth: '100px', maxHeight: '100px'}}
+                 src={user.photos && (user.photos.small || user.photos.large) ? (user.photos.small || user.photos.large) : defaultUserPhoto}
+                 alt="user_photo"/>
             <span> Name: {user.name}</span>
             <br/>
             {/*<span>Status: {user.status}</span>*/}
@@ -27,7 +29,7 @@ export const User = ({user}: any) => {
             {/*<span>Country: {user.location.country} , City: {user.location.city}</span>*/}
             {/*<br/>*/}
             <button
-                onClick={() => changeFollowHandler(user.id, user.followed)}>{user.followed ? "follow" : "don't unfollow"}</button>
+                onClick={() => changeFollowHandler(user.id, user.followed)}>{user.followed ? "follow" : "unfollow"}</button>
         </li>
     );
 };

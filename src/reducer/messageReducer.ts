@@ -17,7 +17,6 @@ type initialMessageStateType = {
     messagesPage: messagePageType
 }
 
-
 export const initialMessageState: initialMessageStateType = {
     messagesPage: {
         messages: [

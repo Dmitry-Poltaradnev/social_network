@@ -1,45 +1,13 @@
-import {v1} from "uuid";
-import {setTotalCount} from "./usersActions";
-// import {UserPropsType} from "../components/users/Users";
-
 export type InitUserStateType = {
     users: any;
 };
 
 const initUserState: any = {
-    users: [
-        // {
-        //     id: v1(),
-        //     follow: true,
-        //     fullName: 'Petra',
-        //     status: "I'm Sex Machine",
-        //     location: {country: 'Belarus', city: 'Minsk'}
-        // },
-        // {
-        //     id: v1(),
-        //     follow: false,
-        //     fullName: 'Vasa',
-        //     status: "I'm Sex Machine",
-        //     location: {country: 'Russia', city: 'Moscow'}
-        // },
-        // {
-        //     id: v1(),
-        //     follow: true,
-        //     fullName: 'Dimon',
-        //     status: "I'm Sex Machine",
-        //     location: {country: 'Germany', city: 'Berlin'}
-        // },
-        // {
-        //     id: v1(),
-        //     follow: true,
-        //     fullName: 'Katsiarina',
-        //     status: "I'm Sex Machine",
-        //     location: {country: 'Georgia', city: 'Tbilisi'}
-        // },
-    ],
+    users: [],
     pageSize: 50,
     totalCount: 0,
     currentPage: 1,
+    isLoading: false,
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -61,6 +29,9 @@ export const userReducer = (state = initUserState, action: any) => {
         }
         case 'SET_CURRENT_PAGE' : {
             return {...state, currentPage: action.payload.currentPage}
+        }
+        case 'IS_LOADING' : {
+            return {...state, isLoading: action.payload.isLoading}
         }
         default :
             return state

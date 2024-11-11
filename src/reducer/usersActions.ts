@@ -1,4 +1,3 @@
-// import {UserPropsType} from "../components/users/Users";
 
 export const changeFollow = (id: string, followStatus: boolean) => {
     return ({type: 'CHANGE-FOLLOW', payload: {id, followStatus}});
@@ -13,4 +12,7 @@ export const setTotalCount = (totalCount: number) => {
 
 export const setCurrentPage = (currentPage: number) => {
     return {type: 'SET_CURRENT_PAGE', payload: {currentPage}};
+}
+export const toggleIsLoading = (isLoading: boolean) => {
+    return {type: 'IS_LOADING', payload: {isLoading}}
 }
