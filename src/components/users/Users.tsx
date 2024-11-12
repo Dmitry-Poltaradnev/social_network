@@ -23,8 +23,6 @@ export const Users = () => {
         })
     }, [currentPage])
 
-
-    console.log(isLoading)
     let pagesCount = Math.ceil(totalCount / pageSize)
 
     let pagesCountMass = []
@@ -43,9 +41,9 @@ export const Users = () => {
             <div className='users-container'>
                 <h3>Users</h3>
                 {isLoading ? <Loader/> : <div>
-                    <ul>
+                    <ol>
                         {users.map((user: any) => <User key={user.id} user={user}/>)}
-                    </ul>
+                    </ol>
                     {pagesCountMass.map(i => <button onClick={() => setCurrentPageHandler(i)}
                                                      className={currentPage === i ? s.activeButton : ''}
                                                      key={i}>{i}</button>)}

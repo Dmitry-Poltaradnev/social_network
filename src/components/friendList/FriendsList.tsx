@@ -2,14 +2,13 @@ import React from 'react';
 import {Friend} from "./friend/Friend";
 import s from './FriendsList.module.css'
 import {useSelector} from "react-redux";
-import {RootStateType} from "../../../reducer/store";
+import {RootStateType} from "../../reducer/store";
 
-export type FriendPropsType = {
-    id: string
-    avaLink: string
-    name: string
-}
-
+// export type FriendPropsType = {
+//     id: string
+//     avaLink: string
+//     name: string
+// }
 
 export const FriendsList = () => {
 

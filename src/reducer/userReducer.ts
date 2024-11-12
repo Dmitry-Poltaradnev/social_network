@@ -8,6 +8,8 @@ const initUserState: any = {
     totalCount: 0,
     currentPage: 1,
     isLoading: false,
+//     ==
+    user: null
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -33,6 +35,11 @@ export const userReducer = (state = initUserState, action: any) => {
         case 'IS_LOADING' : {
             return {...state, isLoading: action.payload.isLoading}
         }
+        // ====
+        case 'SET_USER_PROFILE' : {
+            return {...state, user: action.payload.user}
+        }
+        // ====
         default :
             return state
     }
