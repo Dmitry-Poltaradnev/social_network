@@ -14,9 +14,9 @@ function App() {
         <div className="App">
             <Header/>
             <Navigation/>
-            <Route path="/" exact render={() => <Profile/>}/>
+            <Route path="/" exact render={() => <FriendsList/>}/>
             <Route path="/dialogs" render={() => <Dialogs/>}/>
-            <Route path="/profile" render={() => <Profile/>}/>
+            <Route path="/profile/:userId" render={() => <Profile/>}/>
             <Route path="/users" render={() => <Users/>}/>
             <Route path="/friendsList" render={() => <FriendsList/>}/>
         </div>

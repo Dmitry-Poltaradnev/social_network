@@ -1,8 +1,6 @@
 import React from 'react';
 import {useDispatch} from "react-redux";
-// import {UserPropsType} from "./Users";
 import {changeFollow} from "../../reducer/usersActions";
-
 import defaultUserPhoto from '../../img/default-avatar-profile.avif';
 import {NavLink} from "react-router-dom";
 
