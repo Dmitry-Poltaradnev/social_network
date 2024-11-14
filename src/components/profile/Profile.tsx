@@ -19,7 +19,6 @@ export const Profile = () => {
     useEffect(() => {
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then((response) => {
             dispatch(setProfile(response.data))
-            console.log(response.data)
         })
     }, [])
 

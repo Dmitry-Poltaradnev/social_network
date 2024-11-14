@@ -1,4 +1,3 @@
-import React from "react";
 
 export type InitUserStateType = {
     users: any;
@@ -20,7 +19,7 @@ export const userReducer = (state = initUserState, action: any) => {
                 ...state,
                 users: state.users.map((user: any) => user.id === action.payload.id ? {
                     ...user,
-                    followed: !action.payload.followStatus
+                    followed: action.payload.followStatus
                 } : user)
             }
         }

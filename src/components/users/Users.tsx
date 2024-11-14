@@ -15,9 +15,10 @@ export const Users = () => {
 
     useEffect(() => {
         dispatch(toggleIsLoading(true))
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`).then((response) => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`, {withCredentials: true}).then((response) => {
             dispatch(setTotalCount(response.data.totalCount))
             dispatch(setUser(response.data.items))
+            console.log(response.data.items)
         }).finally(() => {
             dispatch(toggleIsLoading(false))
         })

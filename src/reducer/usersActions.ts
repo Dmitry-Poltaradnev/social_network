@@ -1,3 +1,4 @@
+
 export const changeFollow = (id: string, followStatus: boolean) => {
     return ({type: 'CHANGE-FOLLOW', payload: {id, followStatus}});
 }
@@ -16,3 +17,5 @@ export const toggleIsLoading = (isLoading: boolean) => {
 export const setProfile = (user: any) => {
     return {type: 'SET_USER_PROFILE', payload: {user}};
 }
+
+
