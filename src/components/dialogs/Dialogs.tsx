@@ -4,7 +4,6 @@ import {DialogItem} from "./dialogItem/DialogItem";
 import {Message} from "./message/Message";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewMessage} from "../../reducer/messageActions";
-
 import {RootStateType} from "../../reducer/store";
 
 export type MessageType = {

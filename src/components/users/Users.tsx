@@ -2,23 +2,30 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {User} from "./User";
-import axios from "axios";
 import {setCurrentPage, setTotalCount, setUser, toggleIsLoading} from "../../reducer/usersActions";
 import s from './Users.module.css'
 import {Loader} from "../loader/Loader";
+import {userAPI} from "../../api/api";
 
 export const Users = () => {
 
     const dispatch = useDispatch();
 
-    const {users, pageSize, totalCount, currentPage, isLoading} = useSelector((state: RootStateType) => state.user)
+    const {
+        users,
+        pageSize,
+        totalCount,
+        currentPage,
+        isLoading,
+    } = useSelector((state: RootStateType) => state.user)
 
     useEffect(() => {
+
         dispatch(toggleIsLoading(true))
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`, {withCredentials: true}).then((response) => {
-            dispatch(setTotalCount(response.data.totalCount))
-            dispatch(setUser(response.data.items))
-            console.log(response.data.items)
+
+        userAPI.getUser(currentPage, pageSize).then((data: any) => {
+            dispatch(setTotalCount(data.totalCount))
+            dispatch(setUser(data.items))
         }).finally(() => {
             dispatch(toggleIsLoading(false))
         })

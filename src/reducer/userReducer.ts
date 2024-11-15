@@ -1,15 +1,15 @@
-
 export type InitUserStateType = {
     users: any;
 };
 
 const initUserState: any = {
     users: [],
-    pageSize: 50,
+    pageSize: 15,
     totalCount: 0,
     currentPage: 1,
     isLoading: false,
-    user: {}
+    user: {},
+    isFollowing: false
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -21,6 +21,11 @@ export const userReducer = (state = initUserState, action: any) => {
                     ...user,
                     followed: action.payload.followStatus
                 } : user)
+            }
+        }
+        case  'IS_FOLLOWING' : {
+            return {
+                ...state, isFollowing: action.payload.isFollowing
             }
         }
         case 'SET_USERS' : {

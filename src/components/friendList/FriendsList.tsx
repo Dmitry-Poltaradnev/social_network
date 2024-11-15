@@ -4,12 +4,6 @@ import s from './FriendsList.module.css'
 import {useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 
-// export type FriendPropsType = {
-//     id: string
-//     avaLink: string
-//     name: string
-// }
-
 export const FriendsList = () => {
 
     const stateMessage = useSelector((state: RootStateType) => state.message.friendsBar);

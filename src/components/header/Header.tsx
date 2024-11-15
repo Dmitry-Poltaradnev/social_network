@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import s from './Header.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {setAuthUser} from "../../reducer/authActions";
-import axios from "axios";
 import {RootStateType} from "../../reducer/store";
 import {NavLink} from "react-router-dom";
+import {userAPI} from "../../api/api";
 
 export const Header = () => {
 
@@ -13,9 +13,9 @@ export const Header = () => {
     const auth = useSelector((state: RootStateType) => state.auth);
 
     useEffect(() => {
-        axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {withCredentials: true}).then((response) => {
-            if (response.data.resultCode === 0) {
-                let {id, email, login} = response.data.data
+        userAPI.getLogin().then((data) => {
+            if (data.resultCode === 0) {
+                let {id, email, login} = data.data
                 dispatch(setAuthUser({id, email, login}))
             }
         })

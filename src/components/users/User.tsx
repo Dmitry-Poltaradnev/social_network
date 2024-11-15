@@ -1,17 +1,16 @@
 import React from 'react';
-import {useDispatch} from "react-redux";
-import {changeFollow} from "../../reducer/usersActions";
+import {useDispatch, useSelector} from "react-redux";
 import defaultUserPhoto from '../../img/default-avatar-profile.avif';
 import {NavLink} from "react-router-dom";
-import axios from "axios";
-
-// type UserType = {
-//     user: UserPropsType
-// }
+import {userAPI} from "../../api/api";
+import {changeFollow, setIsFollowing} from "../../reducer/usersActions";
+import {RootStateType} from "../../reducer/store";
 
 export const User = ({user}: any) => {
 
     const dispatch = useDispatch();
+
+    const {isFollowing} = useSelector((state: RootStateType) => state.user)
 
     const changeFollowHandler = (id: string, followStatus: boolean) => {
         dispatch(changeFollow(id, followStatus))
@@ -27,22 +26,26 @@ export const User = ({user}: any) => {
             <br/>
             <span> Name: {user.name}</span>
             <br/>
-            <button
-                onClick={() => {
+            <button disabled={isFollowing === true}
+                    onClick={() => {
+                        dispatch(setIsFollowing(true))
 
-                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {}, {
-                        withCredentials: true, headers: {'API-KEY': '0570d7e8-028b-4976-ac64-ded2181cd92b'}
-                    }).then((response) => {
-                            console.log(response.data)
-                            if (response.data.resultCode === 0) {
-                                // need fix!!!
-                                changeFollowHandler(user.id, true)
+                        const method = user.followed ? 'delete' : 'post';
+                        userAPI.changeUserFollow(method, user.id).then((data) => {
+                            //  need fix button
+                            console.log(isFollowing)
+                            if (data.resultCode === 0) {
+                                changeFollowHandler(user.id, !user.followed);
                             }
-                        }
-                    )
-
-                    // changeFollowHandler(user.id, !user.followed)
-                }}>{user.followed ? "follow" : "unfollow"}</button>
+                        }).catch((error: any) => {
+                            console.error("Ошибка запроса:", error);
+                        }).finally(() => {
+                            dispatch(setIsFollowing(false))
+                            console.log(isFollowing)
+                        })
+                    }}>
+                {user.followed ? "Unfollow" : "Follow"}
+            </button>
         </li>
     );
 };
