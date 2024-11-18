@@ -1,8 +1,8 @@
 export const changeFollow = (id: string, followStatus: boolean) => {
     return ({type: 'CHANGE-FOLLOW', payload: {id, followStatus}});
 }
-export const setIsFollowing = (isFollowing: boolean) => {
-    return ({type: 'IS_FOLLOWING', payload: {isFollowing}});
+export const setIsFollowing = (isFollowing: boolean , userId: string) => {
+    return ({type: 'IS_FOLLOWING', payload: {isFollowing , userId}});
 }
 
 export const setUser = (users: any) => {

@@ -10,7 +10,10 @@ export const User = ({user}: any) => {
 
     const dispatch = useDispatch();
 
-    const {isFollowing} = useSelector((state: RootStateType) => state.user)
+    const {isFollowingInProgress} = useSelector((state: RootStateType) => state.user)
+
+    const isDisabled = isFollowingInProgress.includes(user.id)
+
 
     const changeFollowHandler = (id: string, followStatus: boolean) => {
         dispatch(changeFollow(id, followStatus))
@@ -26,22 +29,19 @@ export const User = ({user}: any) => {
             <br/>
             <span> Name: {user.name}</span>
             <br/>
-            <button disabled={isFollowing === true}
+            <button disabled={isDisabled}
                     onClick={() => {
-                        dispatch(setIsFollowing(true))
+                        dispatch(setIsFollowing(true, user.id))
 
                         const method = user.followed ? 'delete' : 'post';
                         userAPI.changeUserFollow(method, user.id).then((data) => {
-                            //  need fix button
-                            console.log(isFollowing)
                             if (data.resultCode === 0) {
                                 changeFollowHandler(user.id, !user.followed);
                             }
                         }).catch((error: any) => {
                             console.error("Ошибка запроса:", error);
                         }).finally(() => {
-                            dispatch(setIsFollowing(false))
-                            console.log(isFollowing)
+                            dispatch(setIsFollowing(false, user.id))
                         })
                     }}>
                 {user.followed ? "Unfollow" : "Follow"}

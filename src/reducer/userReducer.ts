@@ -9,7 +9,7 @@ const initUserState: any = {
     currentPage: 1,
     isLoading: false,
     user: {},
-    isFollowing: false
+    isFollowingInProgress: [] // Список пользователей, для которых выполняется запрос
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -25,7 +25,10 @@ export const userReducer = (state = initUserState, action: any) => {
         }
         case  'IS_FOLLOWING' : {
             return {
-                ...state, isFollowing: action.payload.isFollowing
+                ...state,
+                isFollowingInProgress: action.payload.isFollowing ?
+                    [...state.isFollowingInProgress, action.payload.userId] :
+                    state.isFollowingInProgress.filter((id: string) => id !== action.payload.userId)
             }
         }
         case 'SET_USERS' : {
