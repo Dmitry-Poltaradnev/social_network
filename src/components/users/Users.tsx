@@ -6,6 +6,7 @@ import {setCurrentPage, setTotalCount, setUser, toggleIsLoading} from "../../red
 import s from './Users.module.css'
 import {Loader} from "../loader/Loader";
 import {userAPI} from "../../api/api";
+import {getUsersThunkCreator} from "../../reducer/userReducer";
 
 export const Users = () => {
 
@@ -20,15 +21,15 @@ export const Users = () => {
     } = useSelector((state: RootStateType) => state.user)
 
     useEffect(() => {
-
-        dispatch(toggleIsLoading(true))
-
-        userAPI.getUser(currentPage, pageSize).then((data: any) => {
-            dispatch(setTotalCount(data.totalCount))
-            dispatch(setUser(data.items))
-        }).finally(() => {
-            dispatch(toggleIsLoading(false))
-        })
+        dispatch(getUsersThunkCreator(currentPage, pageSize))
+        // dispatch(toggleIsLoading(true))
+        //
+        // userAPI.getUser(currentPage, pageSize).then((data: any) => {
+        //     dispatch(setTotalCount(data.totalCount))
+        //     dispatch(setUser(data.items))
+        // }).finally(() => {
+        //     dispatch(toggleIsLoading(false))
+        // })
     }, [currentPage])
 
     let pagesCount = Math.ceil(totalCount / pageSize)

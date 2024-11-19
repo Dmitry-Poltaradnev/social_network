@@ -1,3 +1,6 @@
+import {userAPI} from "../api/api";
+import {setTotalCount, setUser, toggleIsLoading} from "./usersActions";
+
 export type InitUserStateType = {
     users: any;
 };
@@ -50,3 +53,16 @@ export const userReducer = (state = initUserState, action: any) => {
             return state
     }
 };
+
+// =======
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return (dispatch: any) => {
+        dispatch(toggleIsLoading(true))
+        userAPI.getUser(currentPage, pageSize).then((data: any) => {
+            dispatch(setTotalCount(data.totalCount))
+            dispatch(setUser(data.items))
+        }).finally(() => {
+            dispatch(toggleIsLoading(false))
+        })
+    }
+}

@@ -4,7 +4,6 @@ export const changeFollow = (id: string, followStatus: boolean) => {
 export const setIsFollowing = (isFollowing: boolean , userId: string) => {
     return ({type: 'IS_FOLLOWING', payload: {isFollowing , userId}});
 }
-
 export const setUser = (users: any) => {
     return {type: 'SET_USERS', payload: {users}};
 }
@@ -20,5 +19,7 @@ export const toggleIsLoading = (isLoading: boolean) => {
 export const setProfile = (user: any) => {
     return {type: 'SET_USER_PROFILE', payload: {user}};
 }
+
+
 
 
