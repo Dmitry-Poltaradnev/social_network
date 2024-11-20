@@ -7,7 +7,7 @@ export const ProfileInfo = ({user}: { user: any }) => {
                 <img style={{width: '100px', height: '100px', margin: '20px'}} src={user.user.photos.large}
                      alt="User profile"/>
             ) : (
-                <div>Фото не загружено</div> // Показать, если фото нет
+                <div>Photo didn't load</div>
             )}
             <p>Name: {user.user.fullName}</p>
             <p>Description: {user.user.lookingForAJobDescription}</p>

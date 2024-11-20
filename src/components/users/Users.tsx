@@ -2,10 +2,9 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {User} from "./User";
-import {setCurrentPage, setTotalCount, setUser, toggleIsLoading} from "../../reducer/usersActions";
+import {setCurrentPage, toggleIsLoading} from "../../reducer/usersActions";
 import s from './Users.module.css'
 import {Loader} from "../loader/Loader";
-import {userAPI} from "../../api/api";
 import {getUsersThunkCreator} from "../../reducer/userReducer";
 
 export const Users = () => {
@@ -22,14 +21,6 @@ export const Users = () => {
 
     useEffect(() => {
         dispatch(getUsersThunkCreator(currentPage, pageSize))
-        // dispatch(toggleIsLoading(true))
-        //
-        // userAPI.getUser(currentPage, pageSize).then((data: any) => {
-        //     dispatch(setTotalCount(data.totalCount))
-        //     dispatch(setUser(data.items))
-        // }).finally(() => {
-        //     dispatch(toggleIsLoading(false))
-        // })
     }, [currentPage])
 
     let pagesCount = Math.ceil(totalCount / pageSize)

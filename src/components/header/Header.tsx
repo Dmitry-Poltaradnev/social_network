@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
 import s from './Header.module.css';
 import {useDispatch, useSelector} from "react-redux";
-import {setAuthUser} from "../../reducer/authActions";
 import {RootStateType} from "../../reducer/store";
 import {NavLink} from "react-router-dom";
-import {userAPI} from "../../api/api";
+import {getLoginThunkCreator} from "../../reducer/authReducer";
 
 export const Header = () => {
 
@@ -13,13 +12,8 @@ export const Header = () => {
     const auth = useSelector((state: RootStateType) => state.auth);
 
     useEffect(() => {
-        userAPI.getLogin().then((data) => {
-            if (data.resultCode === 0) {
-                let {id, email, login} = data.data
-                dispatch(setAuthUser({id, email, login}))
-            }
-        })
-    }, [])
+        dispatch(getLoginThunkCreator())
+    }, [dispatch])
 
     return (
         <header className={s.header}>

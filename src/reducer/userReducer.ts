@@ -1,5 +1,5 @@
 import {userAPI} from "../api/api";
-import {setTotalCount, setUser, toggleIsLoading} from "./usersActions";
+import {changeFollow, setIsFollowing, setProfile, setTotalCount, setUser, toggleIsLoading} from "./usersActions";
 
 export type InitUserStateType = {
     users: any;
@@ -54,7 +54,6 @@ export const userReducer = (state = initUserState, action: any) => {
     }
 };
 
-// =======
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
     return (dispatch: any) => {
         dispatch(toggleIsLoading(true))
@@ -63,6 +62,29 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
             dispatch(setUser(data.items))
         }).finally(() => {
             dispatch(toggleIsLoading(false))
+        })
+    }
+}
+
+export const changeUserFollowThunkCreator = (method: string, userId: string, userFollowed: boolean) => {
+    return (dispatch: any) => {
+        dispatch(setIsFollowing(true, userId))
+        userAPI.changeUserFollow(method, userId).then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(changeFollow(userId, !userFollowed));
+            }
+        }).catch((error: any) => {
+            console.error("Ошибка запроса:", error);
+        }).finally(() => {
+            dispatch(setIsFollowing(false, userId))
+        })
+    }
+}
+
+export const setUserProfileThunkCreator = (userId: string) => {
+    return (dispatch: any) => {
+        userAPI.getProfile(userId).then((response) => {
+            dispatch(setProfile(response))
         })
     }
 }
