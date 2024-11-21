@@ -5,6 +5,7 @@ import {Message} from "./message/Message";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewMessage} from "../../reducer/messageActions";
 import {RootStateType} from "../../reducer/store";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export type MessageType = {
     id: string
@@ -15,11 +16,13 @@ export type DialogType = {
     name: string
 }
 
-export const Dialogs = () => {
+ const Dialogs = () => {
 
     const dispatch = useDispatch()
 
     const {messages, dialog} = useSelector((state: RootStateType) => state.message.messagesPage)
+
+    const [inputState, setInputState] = useState('')
 
     const addMessageHandler = (input: string) => {
         if (input.trim().length > 0) {
@@ -27,7 +30,6 @@ export const Dialogs = () => {
             setInputState('')
         }
     }
-    const [inputState, setInputState] = useState('')
 
     return (
         <div className={s.back}>
@@ -49,7 +51,8 @@ export const Dialogs = () => {
                 </div>
             </div>
         </div>
-
     );
 };
+
+export const DialogsComponent = WithAuthRedirect(Dialogs);
 

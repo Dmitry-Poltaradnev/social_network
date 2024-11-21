@@ -3,14 +3,15 @@ import {Friend} from "./friend/Friend";
 import s from './FriendsList.module.css'
 import {useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
-export const FriendsList = () => {
+const FriendsList = () => {
 
     const stateMessage = useSelector((state: RootStateType) => state.message.friendsBar);
 
     let friendsList = stateMessage.map((friend) => <Friend key={friend.id} id={friend.id}
-                                                                              avaLink={friend.avaLink}
-                                                                              name={friend.name}/>)
+                                                           avaLink={friend.avaLink}
+                                                           name={friend.name}/>)
 
     return (
         <div className={s.friendsListWrapper}>
@@ -22,3 +23,4 @@ export const FriendsList = () => {
     );
 };
 
+export const FriendsListComponent = WithAuthRedirect(FriendsList)

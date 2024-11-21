@@ -1,11 +1,12 @@
 import {userAPI} from "../api/api";
-import {setAuthUser} from "./authActions";
+import {setAuthLoading, setAuthUser} from "./authActions";
 
 const initAuthState: any = {
     id: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
+    isLoading: true
 }
 
 export const authReducer = (state = initAuthState, action: any) => {
@@ -13,6 +14,11 @@ export const authReducer = (state = initAuthState, action: any) => {
         case 'SET_AUTH_USER': {
             return {
                 ...state, ...action.payload, isAuth: true
+            }
+        }
+        case 'SET_LOADING': {
+            return {
+                ...state, isLoading: action.payload
             }
         }
         default : {
@@ -28,6 +34,8 @@ export const getLoginThunkCreator = () => {
                 let {id, email, login} = data.data
                 dispatch(setAuthUser({id, email, login}))
             }
+        }).finally(() => {
+            dispatch(setAuthLoading(false))
         })
     }
 }

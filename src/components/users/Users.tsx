@@ -6,8 +6,9 @@ import {setCurrentPage, toggleIsLoading} from "../../reducer/usersActions";
 import s from './Users.module.css'
 import {Loader} from "../loader/Loader";
 import {getUsersThunkCreator} from "../../reducer/userReducer";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
-export const Users = () => {
+const Users = () => {
 
     const dispatch = useDispatch();
 
@@ -54,3 +55,4 @@ export const Users = () => {
     );
 };
 
+export const UsersComponents = WithAuthRedirect(Users)

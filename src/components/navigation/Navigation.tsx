@@ -12,6 +12,7 @@ export const Navigation = () => {
                     <li><NavLink className={s.link} activeClassName={s.activeLink} to="/users">Users</NavLink></li>
                     <li><NavLink className={s.link} activeClassName={s.activeLink}
                                  to="/friendsList">FriendsList</NavLink></li>
+                    <li><NavLink className={s.link} activeClassName={s.activeLink} to="/login">Login</NavLink></li>
                 </ul>
             </nav>
         </>
