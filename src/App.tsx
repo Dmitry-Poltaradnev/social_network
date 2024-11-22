@@ -8,13 +8,15 @@ import {Route} from 'react-router-dom';
 import {UsersComponents} from "./components/users/Users";
 import {FriendsListComponent} from "./components/friendList/FriendsList";
 import {Login} from "./components/login/Login";
+import {UserProfileComponent} from "./components/userProfile/UserProfile";
 
 function App() {
     return (
         <div className="App">
             <Header/>
             <Navigation/>
-            <Route path="/" exact render={() => <FriendsListComponent/>}/>
+            <Route path="/" exact render={() => <UserProfileComponent/>}/>
+            <Route path="/userProfile" exact render={() => <UserProfileComponent/>}/>
             <Route path="/dialogs" render={() => <DialogsComponent/>}/>
             <Route path="/profile/:userId" render={() => <Profile/>}/>
             <Route path="/users" render={() => <UsersComponents/>}/>

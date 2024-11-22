@@ -19,6 +19,14 @@ export const toggleIsLoading = (isLoading: boolean) => {
 export const setProfile = (user: any) => {
     return {type: 'SET_USER_PROFILE', payload: {user}};
 }
+// =====
+export const setUserStatus = (status: string) => {
+    return {type: 'GET_USER_STATUS', payload: {status}};
+}
+// ----
+export const putProfileStatus = (status: string) => {
+    return {type: 'PUT_USER_STATUS', payload: {status}};
+}
 
 
 

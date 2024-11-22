@@ -11,6 +11,8 @@ export const Profile = () => {
 
     const {userId} = useParams<{ userId: string }>();
 
+    console.log(userId)
+
     const dispatch = useDispatch();
 
     const user = useSelector((state: RootStateType) => state.user);

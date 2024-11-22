@@ -22,7 +22,18 @@ export const userAPI = {
             method: method,
             url: `follow/${id}`
         }).then(response => response.data)
-    }
+    },
+    //     ====
+    getProfileStatus() {
+        // переписать по аналогу getProfile
+        return axiosInstance.get(`profile/status/31665`).then(response => response.data)
+    },
+    putProfileStatusS(status: string) {
+        return axiosInstance.put(`profile/status`, {status: status}).then(response => response.data)
+    },
+    //     ====
+
+
 }
 
 

@@ -1,5 +1,13 @@
 import {userAPI} from "../api/api";
-import {changeFollow, setIsFollowing, setProfile, setTotalCount, setUser, toggleIsLoading} from "./usersActions";
+import {
+    changeFollow, putProfileStatus,
+    setIsFollowing,
+    setProfile,
+    setTotalCount,
+    setUser,
+    setUserStatus,
+    toggleIsLoading
+} from "./usersActions";
 
 export type InitUserStateType = {
     users: any;
@@ -12,7 +20,10 @@ const initUserState: any = {
     currentPage: 1,
     isLoading: false,
     user: {},
-    isFollowingInProgress: [] // Список пользователей, для которых выполняется запрос
+    isFollowingInProgress: [],
+    // ====
+    userStatus: 'Первый',
+    newUserStatus : ''
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -49,6 +60,14 @@ export const userReducer = (state = initUserState, action: any) => {
         case 'SET_USER_PROFILE' : {
             return {...state, user: action.payload.user}
         }
+        // =====
+        case 'GET_USER_STATUS' : {
+            return {...state, userStatus: action.payload.status}
+        }
+        case 'PUT_USER_STATUS' : {
+            return {...state, newUserStatus: action.payload.status}
+        }
+        // =====
         default :
             return state
     }
@@ -85,6 +104,27 @@ export const setUserProfileThunkCreator = (userId: string) => {
     return (dispatch: any) => {
         userAPI.getProfile(userId).then((response) => {
             dispatch(setProfile(response))
+        })
+    }
+}
+//=====
+export const setUserStatusThunkCreator = () => {
+    return (dispatch: any) => {
+        userAPI.getProfileStatus().then((data) => {
+            console.log(data)
+            dispatch(setUserStatus(data))
+        }).catch((error: any) => {
+            console.error("Ошибка запроса:", error);
+        })
+    }
+}
+
+export const putUserStatusThunkCreator = (status: string) => {
+    return (dispatch: any) => {
+        userAPI.putProfileStatusS(status).then(() => {
+            dispatch(putProfileStatus(status))
+        }).catch((error: any) => {
+            console.error("Ошибка запроса:", error);
         })
     }
 }
