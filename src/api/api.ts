@@ -24,16 +24,12 @@ export const userAPI = {
         }).then(response => response.data)
     },
     //     ====
-    getProfileStatus() {
-        // переписать по аналогу getProfile
-        return axiosInstance.get(`profile/status/31665`).then(response => response.data)
+    getProfileStatus(userId: number) {
+        return axiosInstance.get(`profile/status/${userId}`).then(response => response.data)
     },
-    putProfileStatusS(status: string) {
+    putProfileStatus(status: string) {
         return axiosInstance.put(`profile/status`, {status: status}).then(response => response.data)
-    },
-    //     ====
-
-
+    }
 }
 
 

@@ -22,8 +22,9 @@ const initUserState: any = {
     user: {},
     isFollowingInProgress: [],
     // ====
-    userStatus: 'Первый',
-    newUserStatus : ''
+    userStatus: 'change status',
+    newUserStatus: '',
+    userId: null
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -67,7 +68,9 @@ export const userReducer = (state = initUserState, action: any) => {
         case 'PUT_USER_STATUS' : {
             return {...state, newUserStatus: action.payload.status}
         }
-        // =====
+        case 'GET_USER_ID' : {
+            return {...state, userId: action.payload.userId}
+        }
         default :
             return state
     }
@@ -107,24 +110,29 @@ export const setUserProfileThunkCreator = (userId: string) => {
         })
     }
 }
-//=====
+
 export const setUserStatusThunkCreator = () => {
-    return (dispatch: any) => {
-        userAPI.getProfileStatus().then((data) => {
-            console.log(data)
-            dispatch(setUserStatus(data))
+    return (dispatch: any, getState: any) => {
+        const userId = getState().user.userId; // Получаем userId из состояния
+        if (!userId) {
+            console.error("userId отсутствует в состоянии");
+            return;
+        }
+        userAPI.getProfileStatus(userId).then((data) => {
+            dispatch(setUserStatus(data));
         }).catch((error: any) => {
             console.error("Ошибка запроса:", error);
-        })
-    }
-}
+        });
+    };
+};
 
 export const putUserStatusThunkCreator = (status: string) => {
     return (dispatch: any) => {
-        userAPI.putProfileStatusS(status).then(() => {
+        userAPI.putProfileStatus(status).then(() => {
             dispatch(putProfileStatus(status))
         }).catch((error: any) => {
             console.error("Ошибка запроса:", error);
         })
     }
 }
+

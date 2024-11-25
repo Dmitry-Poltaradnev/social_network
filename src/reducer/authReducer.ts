@@ -1,5 +1,6 @@
 import {userAPI} from "../api/api";
 import {setAuthLoading, setAuthUser} from "./authActions";
+import {getUserId} from "./usersActions";
 
 const initAuthState: any = {
     id: null,
@@ -33,6 +34,7 @@ export const getLoginThunkCreator = () => {
             if (data.resultCode === 0) {
                 let {id, email, login} = data.data
                 dispatch(setAuthUser({id, email, login}))
+                dispatch(getUserId(id))
             }
         }).finally(() => {
             dispatch(setAuthLoading(false))
