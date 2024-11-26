@@ -1,6 +1,6 @@
 import {userAPI} from "../api/api";
 import {
-    changeFollow, putProfileStatus,
+    changeFollow, putProfileSt,
     setIsFollowing,
     setProfile,
     setTotalCount,
@@ -21,10 +21,8 @@ const initUserState: any = {
     isLoading: false,
     user: {},
     isFollowingInProgress: [],
-    // ====
-    userStatus: 'change status',
     newUserStatus: '',
-    userId: null
+    userId: null,
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -61,9 +59,8 @@ export const userReducer = (state = initUserState, action: any) => {
         case 'SET_USER_PROFILE' : {
             return {...state, user: action.payload.user}
         }
-        // =====
         case 'GET_USER_STATUS' : {
-            return {...state, userStatus: action.payload.status}
+            return {...state, newUserStatus: action.payload.status}
         }
         case 'PUT_USER_STATUS' : {
             return {...state, newUserStatus: action.payload.status}
@@ -118,20 +115,26 @@ export const setUserStatusThunkCreator = () => {
             console.error("userId отсутствует в состоянии");
             return;
         }
+        dispatch(toggleIsLoading(true))
         userAPI.getProfileStatus(userId).then((data) => {
             dispatch(setUserStatus(data));
         }).catch((error: any) => {
             console.error("Ошибка запроса:", error);
-        });
+        }).finally(() => {
+            dispatch(toggleIsLoading(false))
+        })
     };
 };
 
 export const putUserStatusThunkCreator = (status: string) => {
     return (dispatch: any) => {
+        dispatch(toggleIsLoading(true))
         userAPI.putProfileStatus(status).then(() => {
-            dispatch(putProfileStatus(status))
+            dispatch(putProfileSt(status))
         }).catch((error: any) => {
             console.error("Ошибка запроса:", error);
+        }).finally(() => {
+            dispatch(toggleIsLoading(false))
         })
     }
 }

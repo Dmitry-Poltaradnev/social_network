@@ -1,34 +1,28 @@
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from "../../reducer/store";
-import {putUserStatusThunkCreator, setUserStatusThunkCreator} from "../../reducer/userReducer";
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from "react-redux";
+import {putUserStatusThunkCreator} from "../../reducer/userReducer";
 
-export const ProfileStatus = () => {
+export const ProfileStatus = ({newUserStatus}: any) => {
 
     const dispatch = useDispatch();
 
-    const {userStatus} = useSelector((state: RootStateType) => state.user)
+    // Синхронизируем localStatus с newUserStatus
+    useEffect(() => {
+        setLocalStatus(newUserStatus);
+    }, [newUserStatus]);
 
-    const [localStatus, setLocalStatus] = useState(userStatus);
-
-    const {newUserStatus} = useSelector((state: RootStateType) => state.user)
+    const [localStatus, setLocalStatus] = useState(newUserStatus);
 
     const [inputMode, setInputMode] = useState(false);
 
-    const getST = () => {
-        dispatch(setUserStatusThunkCreator())
-    }
-
     const updateStatusHandler = () => {
         dispatch(putUserStatusThunkCreator(localStatus))
-        getST()
         setInputMode(false);
     }
 
-
     return (
         <>
-            {!inputMode ? <span onDoubleClick={() => setInputMode(true)}>User status: {userStatus}</span> : <div>
+            {!inputMode ? <span onDoubleClick={() => setInputMode(true)}>User status: {newUserStatus}</span> : <div>
                 <input autoFocus onBlur={updateStatusHandler} value={localStatus}
                        onChange={(e) => setLocalStatus(e.target.value)}/>
                 <button onClick={updateStatusHandler}>обновить статус на сервере</button>
