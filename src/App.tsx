@@ -7,8 +7,8 @@ import {DialogsComponent} from "./components/dialogs/Dialogs";
 import {Route} from 'react-router-dom';
 import {UsersComponents} from "./components/users/Users";
 import {FriendsListComponent} from "./components/friendList/FriendsList";
-import {Login} from "./components/login/Login";
 import {UserProfileComponent} from "./components/userProfile/UserProfile";
+import Login from "./components/login/Login";
 
 function App() {
     return (

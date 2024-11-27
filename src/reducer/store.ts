@@ -4,6 +4,7 @@ import {postReducer} from "./postReducer";
 import {userReducer} from "./userReducer";
 import {authReducer} from "./authReducer";
 import thunk from "redux-thunk";
+import { reducer as formReducer } from 'redux-form'
 
 export type RootStateType = ReturnType<typeof reducers>;
 
@@ -11,7 +12,8 @@ let reducers = combineReducers({
     message: messageReducer,
     post: postReducer,
     user: userReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer,
 })
 let store = createStore(reducers , applyMiddleware(thunk));
 
