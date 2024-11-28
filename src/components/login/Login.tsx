@@ -1,6 +1,7 @@
 import React from 'react';
 import {LoginForm} from "./LoginForm";
 import {reduxForm} from "redux-form";
+// import {deleteLoginThunkCreator} from "../../reducer/authReducer";
 
 const Login = () => {
 
@@ -9,14 +10,15 @@ const Login = () => {
         form: 'login'
     })(LoginForm)
 
-    const onSubmit = (formData: any) =>{
+    const onSubmit = (formData: any) => {
         console.log(formData)
     }
 
     return (
         <div style={{background: 'bisque', color: 'black'}}>
+            {/*<button onClick={deleteLoginThunkCreator()}>отлогиниться</button>*/}
             <h2>Login</h2>
-            <LoginReduxForm onSubmit={onSubmit} />
+            <LoginReduxForm onSubmit={onSubmit}/>
         </div>
     );
 };

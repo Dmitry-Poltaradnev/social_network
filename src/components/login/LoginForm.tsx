@@ -1,7 +1,7 @@
 import React from 'react';
 import {Field} from "redux-form";
 
-export const LoginForm = (props:any) => {
+export const LoginForm = (props: any) => {
     return (
         <div>
             <form onSubmit={props.handleSubmit}>

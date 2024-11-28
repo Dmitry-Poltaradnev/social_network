@@ -1,11 +1,10 @@
 import React, {useEffect} from 'react';
-import s from './Profile.module.css';
-import {MyPosts} from "./myPosts/MyPosts";
-import {ProfileInfo} from "./profileInfo/ProfileInfo";
+import s from './profile.module.css';
+import {ProfileInfo} from "./memberProfileInfo/ProfileInfo";
 import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from "../../reducer/store";
+import {RootStateType} from "../../../../reducer/store";
 import {useParams} from "react-router-dom";
-import {setUserProfileThunkCreator} from "../../reducer/userReducer";
+import {setUserProfileThunkCreator} from "../../../../reducer/userReducer";
 
 export const Profile = () => {
 
@@ -24,7 +23,6 @@ export const Profile = () => {
     return (
         <div className={s.back}>
             <ProfileInfo user={user}/>
-            <MyPosts/>
         </div>
     );
 };

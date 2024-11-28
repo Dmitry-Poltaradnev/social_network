@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './MyPost.module.css'
+import s from './mainUserPost.module.css'
 
 export type MyPostType = {
     id: string,
@@ -8,7 +8,7 @@ export type MyPostType = {
     deletePost: (id: string) => void
 }
 
-export const MyPost = ({id, text, likes, deletePost}: MyPostType) => {
+export const MainUserPost = ({id, text, likes, deletePost}: MyPostType) => {
     return (
         <div className={s.post}>
             <p>{text}</p>

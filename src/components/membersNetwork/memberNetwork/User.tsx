@@ -1,9 +1,9 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import defaultUserPhoto from '../../img/default-avatar-profile.avif';
+import defaultUserPhoto from '../../../img/default-avatar-profile.avif';
 import {NavLink} from "react-router-dom";
-import {RootStateType} from "../../reducer/store";
-import {changeUserFollowThunkCreator} from "../../reducer/userReducer";
+import {RootStateType} from "../../../reducer/store";
+import {changeUserFollowThunkCreator} from "../../../reducer/userReducer";
 
 export const FOLLOW_METHOD = {
     FOLLOW: 'post',

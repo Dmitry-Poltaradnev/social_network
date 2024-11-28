@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
-import {User} from "./User";
+import {User} from "./memberNetwork/User";
 import {setCurrentPage, toggleIsLoading} from "../../reducer/usersActions";
-import s from './Users.module.css'
+import s from './users.module.css'
 import {Loader} from "../loader/Loader";
 import {getUsersThunkCreator} from "../../reducer/userReducer";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";

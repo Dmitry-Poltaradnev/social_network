@@ -1,3 +1,3 @@
 export const addNewMessage = (text: string) => {
-    return({type: 'ADD-NEW-MESSAGE', payload: {text}});
+    return ({type: 'ADD-NEW-MESSAGE', text});
 }

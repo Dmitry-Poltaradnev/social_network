@@ -7,7 +7,8 @@ const initAuthState: any = {
     email: null,
     login: null,
     isAuth: false,
-    isLoading: true
+    isLoading: true,
+//     logout: null
 }
 
 export const authReducer = (state = initAuthState, action: any) => {
@@ -22,6 +23,13 @@ export const authReducer = (state = initAuthState, action: any) => {
                 ...state, isLoading: action.payload
             }
         }
+        // -----
+        // case 'LOGOUT_USER': {
+        //     return {
+        //         ...state, logout: true
+        //     }
+        // }
+        // -----
         default : {
             return state;
         }
@@ -41,3 +49,15 @@ export const getLoginThunkCreator = () => {
         })
     }
 }
+// ==========================================
+// export const deleteLoginThunkCreator = () => {
+//     return (dispatch: any) => {
+//         userAPI.deleteLogin().then((data) => {
+//             if (data.resultCode === 0) {
+//                 dispatch(setDeleteLogin(false))
+//             }
+//         }).finally(() => {
+//             dispatch(setAuthLoading(false))
+//         })
+//     }
+// }

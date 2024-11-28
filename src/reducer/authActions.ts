@@ -4,4 +4,7 @@ export const setAuthUser = ({id, email, login}: any) => {
 export const setAuthLoading = (loadingState: boolean) => {
     return {type: 'SET_LOADING', payload: loadingState};
 }
+// export const setDeleteLogin = (logoutStatus : boolean) => {
+//     return {type: 'LOGOUT_USER' , payload: {logoutStatus}};
+// }
 

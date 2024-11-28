@@ -13,6 +13,11 @@ export const userAPI = {
     getLogin() {
         return axiosInstance.get(`auth/me`).then(response => response.data)
     },
+    // ======
+    // deleteLogin() {
+    //     return axiosInstance.delete(`auth/login`).then(response => response.data)
+    // },
+    // ======
     getProfile(userId: string) {
         return axiosInstance.get(`profile/${userId}`)
             .then(response => response.data)
@@ -23,7 +28,6 @@ export const userAPI = {
             url: `follow/${id}`
         }).then(response => response.data)
     },
-    //     ====
     getProfileStatus(userId: number) {
         return axiosInstance.get(`profile/status/${userId}`).then(response => response.data)
     },

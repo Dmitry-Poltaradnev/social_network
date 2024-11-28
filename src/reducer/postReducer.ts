@@ -22,7 +22,7 @@ export const postReducer = (state = initialPostState, action: any) => {
     switch (action.type) {
         case 'ADD-POST':
             return {
-                ...state, myPosts: [...state.myPosts, {id: v1(), text: action.payload.text, likes: 0}],
+                ...state, myPosts: [...state.myPosts, {id: v1(), text: action.text, likes: 0}],
             };
         case 'DELETE-POST':
             return {

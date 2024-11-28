@@ -2,12 +2,12 @@ import React from 'react';
 import './App.css';
 import {Header} from "./components/header/Header";
 import {Navigation} from "./components/navigation/Navigation";
-import {Profile} from "./components/profile/Profile";
+import {Profile} from "./components/membersNetwork/memberNetwork/memberProfile/Profile";
 import {DialogsComponent} from "./components/dialogs/Dialogs";
 import {Route} from 'react-router-dom';
-import {UsersComponents} from "./components/users/Users";
+import {UsersComponents} from "./components/membersNetwork/Users";
 import {FriendsListComponent} from "./components/friendList/FriendsList";
-import {UserProfileComponent} from "./components/userProfile/UserProfile";
+import {UserProfileComponent} from "./components/mainUserProfile/UserProfile";
 import Login from "./components/login/Login";
 
 function App() {

@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {setUserStatusThunkCreator} from "../../reducer/userReducer";
 import {Loader} from "../loader/Loader";
+import {MainUserPosts} from "./mainUserPosts/MainUserPosts";
 
 const UserProfile = () => {
 
@@ -20,9 +21,13 @@ const UserProfile = () => {
         }
     }, [dispatch, userId]);
 
+
     return (
         <>
-            {isLoading ? <Loader/> : <ProfileStatus newUserStatus={newUserStatus}/>}
+            {isLoading ? <Loader/> : <>
+                <ProfileStatus newUserStatus={newUserStatus}/>
+                <MainUserPosts/>
+            </>}
         </>
     );
 };
