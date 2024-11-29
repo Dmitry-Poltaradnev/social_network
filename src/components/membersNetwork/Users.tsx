@@ -4,7 +4,7 @@ import {RootStateType} from "../../reducer/store";
 import {User} from "./memberNetwork/User";
 import {setCurrentPage, toggleIsLoading} from "../../reducer/usersActions";
 import s from './users.module.css'
-import {Loader} from "../loader/Loader";
+import {Loader} from "../common/loader/Loader";
 import {getUsersThunkCreator} from "../../reducer/userReducer";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
