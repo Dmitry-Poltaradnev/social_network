@@ -35,9 +35,6 @@ export const MainUserPosts = () => {
         }
     };
 
-
-    // ====
-
     return (
         <div className={'myPosts'}>
             <h3>My Posts</h3>

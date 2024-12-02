@@ -14,10 +14,13 @@ export const userAPI = {
         return axiosInstance.get(`auth/me`).then(response => response.data)
     },
     // ======
-    // deleteLogin() {
-    //     return axiosInstance.delete(`auth/login`).then(response => response.data)
-    // },
-    // ======
+    logout() {
+        return axiosInstance.delete(`auth/login`)
+    },
+    login(email: string, password: string, rememberMe = false) {
+        return axiosInstance.post(`auth/login`, {email, password, rememberMe})
+    },
+    // ====
     getProfile(userId: string) {
         return axiosInstance.get(`profile/${userId}`)
             .then(response => response.data)

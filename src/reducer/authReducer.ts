@@ -8,7 +8,6 @@ const initAuthState: any = {
     login: null,
     isAuth: false,
     isLoading: true,
-//     logout: null
 }
 
 export const authReducer = (state = initAuthState, action: any) => {
@@ -26,7 +25,7 @@ export const authReducer = (state = initAuthState, action: any) => {
         // -----
         // case 'LOGOUT_USER': {
         //     return {
-        //         ...state, logout: true
+        //         ...state, id: null, email: null, login: null
         //     }
         // }
         // -----
@@ -36,12 +35,13 @@ export const authReducer = (state = initAuthState, action: any) => {
     }
 }
 
+
 export const getLoginThunkCreator = () => {
     return (dispatch: any) => {
         userAPI.getLogin().then((data) => {
             if (data.resultCode === 0) {
                 let {id, email, login} = data.data
-                dispatch(setAuthUser({id, email, login}))
+                dispatch(setAuthUser({id, email, login , isAuth :  true}))
                 dispatch(getUserId(id))
             }
         }).finally(() => {
@@ -50,14 +50,24 @@ export const getLoginThunkCreator = () => {
     }
 }
 // ==========================================
-// export const deleteLoginThunkCreator = () => {
-//     return (dispatch: any) => {
-//         userAPI.deleteLogin().then((data) => {
-//             if (data.resultCode === 0) {
-//                 dispatch(setDeleteLogin(false))
-//             }
-//         }).finally(() => {
-//             dispatch(setAuthLoading(false))
-//         })
-//     }
-// }
+export const deleteLoginThunkCreator = () => {
+    return (dispatch: any) => {
+        userAPI.logout().then((data) => {
+            if (data.data.resultCode === 0) {
+                dispatch(setAuthUser({id : null,email:  null, login:  null, isAuth:  false}))
+            }
+        }).finally(() => {
+            dispatch(setAuthLoading(false))
+        })
+    }
+}
+// ===========================
+export const loginThunkCreator = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
+    return (dispatch: any) => {
+        userAPI.login(email, password, rememberMe).then((data) => {
+            if (data.data.resultCode === 0) {
+                dispatch(getLoginThunkCreator())
+            }
+        })
+    }
+}

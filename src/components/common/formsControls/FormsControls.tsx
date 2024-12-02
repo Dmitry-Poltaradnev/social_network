@@ -1,20 +1,25 @@
 import React from 'react';
-
-// export const Input = ({input,meta,...props}: any) => {
-//     return (
-//         <div>
-//             <input type="text" {...input} {...props} />
-//         </div>
-//     );
-// };
+import s from './formsControls.module.css'
 
 export const Input = ({input, meta, ...props}: any) => {
     const hasError = meta.touched && meta.error;
     return (
-        <div>
-            <input {...input} {...props} style={{border: hasError ? '1px solid red' : '1px solid black'}} />
-            {hasError && <span style={{color: 'red'}}>{meta.error}</span>}
+        <div className={`${s.formControl} ${hasError ? s.error : ''}`}>
+            <input {...input} {...props} />
+            {hasError && <span className={s.errorText}>{meta.error}</span>}
         </div>
     );
 };
+
+export const TextArea = ({input, meta, ...props}: any) => {
+    const hasError = meta.touched && meta.error;
+    return (
+        <div className={`${s.formControl} ${hasError ? s.error : ''}`}>
+            <textarea {...input} {...props} />
+            {hasError && <span className={s.errorText}>{meta.error}</span>}
+        </div>
+    );
+};
+
+
 
