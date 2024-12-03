@@ -1,22 +1,33 @@
 import React from 'react';
 import {LoginForm} from "./LoginForm";
 import {reduxForm} from "redux-form";
-// import {deleteLoginThunkCreator} from "../../reducer/authReducer";
+import { loginThunkCreator} from "../../reducer/authReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "../../reducer/store";
+import {Redirect} from "react-router-dom";
 
 const Login = () => {
+
+    const dispatch = useDispatch()
+
+    const {isAuth} = useSelector((state: RootStateType) => state.auth)
 
     const LoginReduxForm = reduxForm({
         // a unique name for the form
         form: 'login'
     })(LoginForm)
 
-    const onSubmit = (formData: any) => {
-        console.log(formData)
+    const onSubmit = ({email, password, rememberMe}: any) => {
+        dispatch(loginThunkCreator(email, password, rememberMe))
+        console.log(`email ${email}, password: ${password}, rememberMe: ${rememberMe}`);
+    }
+
+    if(isAuth){
+        return <Redirect to={'/userProfile'} />;
     }
 
     return (
         <div style={{background: 'bisque', color: 'black'}}>
-            {/*<button onClick={deleteLoginThunkCreator()}>отлогиниться</button>*/}
             <h2>Login</h2>
             <LoginReduxForm onSubmit={onSubmit}/>
         </div>

@@ -6,8 +6,19 @@
     align-items: center;
     padding: 0 30px;
 }
-
 .loginLink a {
+    border: 1px solid blue;
+    padding: 10px;
+    border-radius: 5px;
     text-decoration: none;
     color: black;
+    font-weight: bold;
+    background: yellow;
+}
+.loginWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    max-height: 30px;
 }

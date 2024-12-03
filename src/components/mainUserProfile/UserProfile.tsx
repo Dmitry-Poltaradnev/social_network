@@ -21,7 +21,6 @@ const UserProfile = () => {
         }
     }, [dispatch, userId]);
 
-
     return (
         <>
             {isLoading ? <Loader/> : <>
