@@ -1,6 +1,7 @@
 import {userAPI} from "../api/api";
 import {setAuthLoading, setAuthUser} from "./authActions";
 import {getUserId} from "./usersActions";
+import {stopSubmit} from "redux-form";
 
 const initAuthState: any = {
     id: null,
@@ -28,7 +29,6 @@ export const authReducer = (state = initAuthState, action: any) => {
     }
 }
 export const getLoginThunkCreator = () => {
-    console.log('getLoginThunkCreator')
     return (dispatch: any) => {
         userAPI.getLogin().then((data) => {
             if (data.resultCode === 0) {
@@ -53,9 +53,12 @@ export const deleteLoginThunkCreator = () => {
 export const loginThunkCreator = (email: string, password: string, rememberMe: boolean) => {
     console.log(email, password, rememberMe)
     return (dispatch: any) => {
-        userAPI.login(email, password, rememberMe).then((data) => {
+        userAPI.login(email, password, rememberMe).then((data: any) => {
             if (data.data.resultCode === 0) {
                 dispatch(getLoginThunkCreator())
+            } else {
+                const messageError = data.data.messages.length > 0 ? data.data.messages[0] : 'Some error!'
+                dispatch(stopSubmit('login', {_error: messageError}))
             }
         })
     }

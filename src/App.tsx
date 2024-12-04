@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Header} from "./components/header/Header";
 import {Navigation} from "./components/navigation/Navigation";
@@ -9,8 +9,17 @@ import {UsersComponents} from "./components/membersNetwork/Users";
 import {FriendsListComponent} from "./components/friendList/FriendsList";
 import {UserProfileComponent} from "./components/mainUserProfile/UserProfile";
 import Login from "./components/login/Login";
+import {getLoginThunkCreator} from "./reducer/authReducer";
+import {useDispatch} from "react-redux";
 
 function App() {
+
+    // const dispatch = useDispatch()
+    //
+    // useEffect(() => {
+    //     dispatch(getLoginThunkCreator())
+    // }, [dispatch])
+
     return (
         <div className="App">
             <Header/>

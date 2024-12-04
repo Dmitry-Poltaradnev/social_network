@@ -2,6 +2,7 @@ import React from 'react';
 import {Field} from "redux-form";
 import {Input} from "../common/formsControls/FormsControls";
 import {required} from "../../utils/validators";
+import s from './loginForm.module.css'
 
 
 export const LoginForm = (props: any) => {
@@ -15,6 +16,8 @@ export const LoginForm = (props: any) => {
                        validate={[required]}/>
                 <br/>
                 <Field type={'checkbox'} component={Input} name={'rememberMe'}/>
+                {props.error && <span className={s.formError}>{props.error}</span> }
+                <br/>
                 <span>remember me</span>
                 <br/>
                 <button>Login</button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {LoginForm} from "./LoginForm";
 import {reduxForm} from "redux-form";
-import { loginThunkCreator} from "../../reducer/authReducer";
+import {loginThunkCreator} from "../../reducer/authReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {Redirect} from "react-router-dom";
@@ -19,11 +19,10 @@ const Login = () => {
 
     const onSubmit = ({email, password, rememberMe}: any) => {
         dispatch(loginThunkCreator(email, password, rememberMe))
-        console.log(`email ${email}, password: ${password}, rememberMe: ${rememberMe}`);
     }
 
-    if(isAuth){
-        return <Redirect to={'/userProfile'} />;
+    if (isAuth) {
+        return <Redirect to={'/userProfile'}/>;
     }
 
     return (
