@@ -1,18 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import s from './Header.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
-import {deleteLoginThunkCreator, getLoginThunkCreator} from "../../reducer/authReducer";
+import {deleteLoginThunkCreator} from "../../reducer/authReducer";
 
 export const Header = () => {
 
     const dispatch = useDispatch()
 
     const auth = useSelector((state: RootStateType) => state.auth);
-
-    useEffect(() => {
-        dispatch(getLoginThunkCreator())
-    }, [dispatch])
 
     return (
         <header className={s.header}>

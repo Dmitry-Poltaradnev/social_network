@@ -9,16 +9,24 @@ import {UsersComponents} from "./components/membersNetwork/Users";
 import {FriendsListComponent} from "./components/friendList/FriendsList";
 import {UserProfileComponent} from "./components/mainUserProfile/UserProfile";
 import Login from "./components/login/Login";
-import {getLoginThunkCreator} from "./reducer/authReducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {initializeApp} from "./reducer/appReducer";
+import {RootStateType} from "./reducer/store";
+import {Loader} from "./components/common/loader/Loader";
 
 function App() {
 
-    // const dispatch = useDispatch()
-    //
-    // useEffect(() => {
-    //     dispatch(getLoginThunkCreator())
-    // }, [dispatch])
+    const dispatch = useDispatch()
+
+    const initialized = useSelector((state: RootStateType) => state.app.initialized);
+
+    useEffect(() => {
+        dispatch(initializeApp())
+    }, [dispatch])
+
+    if (!initialized) {
+        return <Loader/>
+    }
 
     return (
         <div className="App">
