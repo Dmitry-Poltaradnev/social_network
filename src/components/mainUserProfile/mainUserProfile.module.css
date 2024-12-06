@@ -1,0 +1,7 @@
+.noStatusField {
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 10px;
+    max-height: 25px;
+    max-width: 75px;
+}

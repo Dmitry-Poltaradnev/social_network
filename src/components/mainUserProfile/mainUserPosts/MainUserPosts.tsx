@@ -23,11 +23,6 @@ export const MainUserPosts = () => {
         form: 'addPost'
     })(AddPostForm)
 
-    // const addNewPost = (post: any) => {
-    //     if (post.trim().length > 0) {
-    //         dispatch(addPost(post))
-    //     }
-    // }
 
     const addNewPost = (formData: any) => {
         if (formData.post.trim().length > 0) {

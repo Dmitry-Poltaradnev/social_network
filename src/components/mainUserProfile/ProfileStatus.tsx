@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {putUserStatusThunkCreator} from "../../reducer/userReducer";
+import s from './mainUserProfile.module.css'
 
 export const ProfileStatus = ({newUserStatus}: any) => {
 
@@ -20,13 +21,22 @@ export const ProfileStatus = ({newUserStatus}: any) => {
         setInputMode(false);
     }
 
+    const changeInputModeHandler = () => {
+        setInputMode(true)
+    }
+
+    const stateStatus = newUserStatus ?
+        (<span onDoubleClick={changeInputModeHandler}>User status: {newUserStatus}</span>) : (
+            <span className={s.noStatusField} onDoubleClick={changeInputModeHandler}>No status</span>)
+
+
     return (
         <>
-            {!inputMode ? <span onDoubleClick={() => setInputMode(true)}>User status: {newUserStatus}</span> : <div>
+            {!inputMode ? (stateStatus) : (<div>
                 <input autoFocus onBlur={updateStatusHandler} value={localStatus}
                        onChange={(e) => setLocalStatus(e.target.value)}/>
-                <button onClick={updateStatusHandler}>обновить статус на сервере</button>
-            </div>}
+                <button onClick={updateStatusHandler}>Update status on server</button>
+            </div>)}
         </>
     );
 };
