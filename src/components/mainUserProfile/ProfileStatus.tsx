@@ -16,6 +16,8 @@ export const ProfileStatus = ({newUserStatus}: any) => {
 
     const [inputMode, setInputMode] = useState(false);
 
+    console.log('Render status component')
+
     const updateStatusHandler = () => {
         dispatch(putUserStatusThunkCreator(localStatus))
         setInputMode(false);
@@ -28,8 +30,6 @@ export const ProfileStatus = ({newUserStatus}: any) => {
     const stateStatus = newUserStatus ?
         (<span onDoubleClick={changeInputModeHandler}>User status: {newUserStatus}</span>) : (
             <span className={s.noStatusField} onDoubleClick={changeInputModeHandler}>No status</span>)
-
-
     return (
         <>
             {!inputMode ? (stateStatus) : (<div>
@@ -39,5 +39,5 @@ export const ProfileStatus = ({newUserStatus}: any) => {
             </div>)}
         </>
     );
-};
+}
 

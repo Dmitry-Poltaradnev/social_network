@@ -73,69 +73,72 @@ export const userReducer = (state = initUserState, action: any) => {
     }
 };
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
-    return (dispatch: any) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: any) => {
+    try {
         dispatch(toggleIsLoading(true))
-        userAPI.getUser(currentPage, pageSize).then((data: any) => {
-            dispatch(setTotalCount(data.totalCount))
-            dispatch(setUser(data.items))
-        }).finally(() => {
-            dispatch(toggleIsLoading(false))
-        })
+        let data: any = await userAPI.getUser(currentPage, pageSize)
+        dispatch(setTotalCount(data.totalCount))
+        dispatch(setUser(data.items))
+    } catch (error) {
+        console.log("Didn't get users", error);
+    } finally {
+        dispatch(toggleIsLoading(false))
     }
 }
 
-export const changeUserFollowThunkCreator = (method: string, userId: string, userFollowed: boolean) => {
-    return (dispatch: any) => {
+export const changeUserFollowThunkCreator = (method: string, userId: string, userFollowed: boolean) => async (dispatch: any) => {
+    try {
         dispatch(setIsFollowing(true, userId))
-        userAPI.changeUserFollow(method, userId).then((data) => {
-            if (data.resultCode === 0) {
-                dispatch(changeFollow(userId, !userFollowed));
-            }
-        }).catch((error: any) => {
-            console.error("Ошибка запроса:", error);
-        }).finally(() => {
-            dispatch(setIsFollowing(false, userId))
-        })
+        let data = await userAPI.changeUserFollow(method, userId)
+        if (data.resultCode === 0) {
+            dispatch(changeFollow(userId, !userFollowed));
+        }
+    } catch (error: any) {
+        console.error("Ошибка запроса:", error);
+    } finally {
+        dispatch(setIsFollowing(false, userId))
     }
 }
 
-export const setUserProfileThunkCreator = (userId: string) => {
-    return (dispatch: any) => {
-        userAPI.getProfile(userId).then((response) => {
-            dispatch(setProfile(response))
-        })
+export const setUserProfileThunkCreator = (userId: string) => async (dispatch: any) => {
+    try {
+        let data = await userAPI.getProfile(userId)
+        dispatch(setProfile(data))
+    } catch (error: any) {
+        console.error("Ошибка запроса:", error);
     }
 }
 
-export const setUserStatusThunkCreator = () => {
-    return (dispatch: any, getState: any) => {
+export const setUserStatusThunkCreator = () => async (dispatch: any, getState: any) => {
+    try {
         const userId = getState().user.userId; // Получаем userId из состояния
         if (!userId) {
             console.error("userId отсутствует в состоянии");
             return;
         }
         dispatch(toggleIsLoading(true))
-        userAPI.getProfileStatus(userId).then((data) => {
-            dispatch(setUserStatus(data));
-        }).catch((error: any) => {
-            console.error("Ошибка запроса:", error);
-        }).finally(() => {
-            dispatch(toggleIsLoading(false))
-        })
-    };
+        let data = await userAPI.getProfileStatus(userId)
+        dispatch(setUserStatus(data));
+    } catch (error: any) {
+        console.error("Ошибка запроса:", error);
+    } finally {
+        dispatch(toggleIsLoading(false))
+    }
 };
 
-export const putUserStatusThunkCreator = (status: string) => {
-    return (dispatch: any) => {
+export const putUserStatusThunkCreator = (status: string) => async (dispatch: any) => {
+    try {
         dispatch(toggleIsLoading(true))
-        userAPI.putProfileStatus(status).then(() => {
+        let data = await userAPI.putProfileStatus(status)
+        if (data.resultCode === 0) {
             dispatch(putProfileSt(status))
-        }).catch((error: any) => {
-            console.error("Ошибка запроса:", error);
-        }).finally(() => {
-            dispatch(toggleIsLoading(false))
-        })
+        } else {
+            console.error("Ошибка обновления статуса:", data.messages[0]);
+        }
+    } catch (error: any) {
+        console.error("Ошибка запроса:", error);
+    } finally {
+        dispatch(toggleIsLoading(false))
     }
 }
 

@@ -20,7 +20,6 @@ export const appReducer = (state = initAuthState, action: any) => {
 
 export const initializeApp = () => (dispatch: any) => {
     let promise = dispatch(getLoginThunkCreator())
-    console.log(promise)
     Promise.all([promise]).then(() => {
         dispatch(setInitialized())
     })
