@@ -1,43 +1,35 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from "../../reducer/store";
-import {setCurrentPage, toggleIsLoading} from "../../reducer/usersActions";
-import s from './members.module.css'
-import {getUsersThunkCreator} from "../../reducer/userReducer";
+import React from "react";
+import s from "./members.module.css";
 
-export const Paginator = () => {
+type PaginatorProps = {
+    totalCount: number;
+    pageSize: number;
+    currentPage: number;
+    onPageChange: (page: number) => void;
+}
 
-    const dispatch = useDispatch();
+export const Paginator: React.FC<PaginatorProps> = ({
+                                                        totalCount,
+                                                        pageSize,
+                                                        currentPage,
+                                                        onPageChange,
+                                                    }) => {
 
-    const {
-        pageSize,
-        totalCount,
-        currentPage,
-    } = useSelector((state: RootStateType) => state.user)
+    const pagesCount = Math.ceil(totalCount / pageSize);
 
-    useEffect(() => {
-        dispatch(getUsersThunkCreator(currentPage, pageSize))
-    }, [currentPage])
-
-    let pagesCount = Math.ceil(totalCount / pageSize)
-
-    let pagesCountMass = []
-
-    for (let i = 1; i <= pagesCount; i++) {
-        pagesCountMass.push(i)
-    }
-
-    const setCurrentPageHandler = (currentPage: number) => {
-        dispatch(toggleIsLoading(true))
-        dispatch(setCurrentPage(currentPage))
-    }
+    const pages = Array.from({length: pagesCount}, (_, i) => i + 1);
 
     return (
         <div>
-            {pagesCountMass.map(i => <button onClick={() => setCurrentPageHandler(i)}
-                                             className={currentPage === i ? s.activeButton : ''}
-                                             key={i}>{i}</button>)}
+            {pages.map((page) => (
+                <button
+                    key={page}
+                    className={currentPage === page ? s.activeButton : ""}
+                    onClick={() => onPageChange(page)}
+                >
+                    {page}
+                </button>
+            ))}
         </div>
     );
 };
-

@@ -9,7 +9,7 @@ import {
     toggleIsLoading
 } from "./usersActions";
 
-export const CHANGE_FOLLOW = 'CHANGE-FOLLOW'
+export const CHANGE_FOLLOW = 'CHANGE_FOLLOW'
 export const IS_FOLLOWING = 'IS_FOLLOWING'
 export const SET_USERS = 'SET_USERS'
 export const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
