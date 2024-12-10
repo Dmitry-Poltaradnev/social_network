@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import './App.css';
 import {Header} from "./components/header/Header";
 import {Navigation} from "./components/navigation/Navigation";
-import {Profile} from "./components/membersNetwork/memberNetwork/memberProfile/Profile";
+import {MemberProfile} from "./components/membersNetwork/memberProfile/MemberProfile";
 import {DialogsComponent} from "./components/dialogs/Dialogs";
 import {Route} from 'react-router-dom';
-import {UsersComponents} from "./components/membersNetwork/Users";
+import {UsersComponents} from "./components/membersNetwork/Members";
 import {FriendsListComponent} from "./components/friendList/FriendsList";
 import {UserProfileComponent} from "./components/mainUserProfile/UserProfile";
 import Login from "./components/login/Login";
@@ -35,7 +35,7 @@ function App() {
             <Route path="/" exact render={() => <UserProfileComponent/>}/>
             <Route path="/userProfile" exact render={() => <UserProfileComponent/>}/>
             <Route path="/dialogs" render={() => <DialogsComponent/>}/>
-            <Route path="/profile/:userId" render={() => <Profile/>}/>
+            <Route path="/profile/:userId" render={() => <MemberProfile/>}/>
             <Route path="/users" render={() => <UsersComponents/>}/>
             <Route path="/friendsList" render={() => <FriendsListComponent/>}/>
             <Route path="/login" render={() => <Login/>}/>

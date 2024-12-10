@@ -7,7 +7,6 @@ export const ProfileStatus = ({newUserStatus}: any) => {
 
     const dispatch = useDispatch();
 
-    // Синхронизируем localStatus с newUserStatus
     useEffect(() => {
         setLocalStatus(newUserStatus);
     }, [newUserStatus]);
@@ -15,8 +14,6 @@ export const ProfileStatus = ({newUserStatus}: any) => {
     const [localStatus, setLocalStatus] = useState(newUserStatus);
 
     const [inputMode, setInputMode] = useState(false);
-
-    console.log('Render status component')
 
     const updateStatusHandler = () => {
         dispatch(putUserStatusThunkCreator(localStatus))

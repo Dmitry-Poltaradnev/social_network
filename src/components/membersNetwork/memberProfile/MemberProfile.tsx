@@ -1,16 +1,14 @@
 import React, {useEffect} from 'react';
-import s from './profile.module.css';
-import {ProfileInfo} from "./memberProfileInfo/ProfileInfo";
+import s from './memberProfile.module.css';
+import {MemberProfileInfo} from "./MemberProfileInfo";
 import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from "../../../../reducer/store";
+import {RootStateType} from "../../../reducer/store";
 import {useParams} from "react-router-dom";
-import {setUserProfileThunkCreator} from "../../../../reducer/userReducer";
+import {setUserProfileThunkCreator} from "../../../reducer/userReducer";
 
-export const Profile = () => {
+export const MemberProfile = () => {
 
     const {userId} = useParams<{ userId: string }>();
-
-    console.log(userId)
 
     const dispatch = useDispatch();
 
@@ -18,11 +16,11 @@ export const Profile = () => {
 
     useEffect(() => {
         dispatch(setUserProfileThunkCreator(userId));
-    }, []);
+    }, [dispatch,userId]);
 
     return (
         <div className={s.back}>
-            <ProfileInfo user={user}/>
+            <MemberProfileInfo user={user}/>
         </div>
     );
 };

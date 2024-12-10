@@ -1,3 +1,5 @@
+import {SET_INITIALIZED} from "./appReducer";
+
 export const setInitialized = () => {
-    return {type: 'SET_INITIALIZED'};
+    return {type: SET_INITIALIZED};
 }

@@ -1,5 +1,9 @@
 import {v1} from "uuid";
 
+
+export const ADD_POST = 'ADD_POST'
+export const DELETE_POST = 'DELETE_POST'
+
 type PostsType = {
     id: string
     text: string
@@ -20,11 +24,11 @@ export const initialPostState: initPostType = {
 
 export const postReducer = (state = initialPostState, action: any) => {
     switch (action.type) {
-        case 'ADD-POST':
+        case ADD_POST:
             return {
                 ...state, myPosts: [...state.myPosts, {id: v1(), text: action.text, likes: 0}],
             };
-        case 'DELETE-POST':
+        case DELETE_POST:
             return {
                 ...state, myPosts: state.myPosts.filter(post => post.id !== action.payload.id),
             };

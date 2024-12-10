@@ -3,22 +3,27 @@ import {setAuthLoading, setAuthUser} from "./authActions";
 import {getUserId} from "./usersActions";
 import {stopSubmit} from "redux-form";
 
+export const SET_AUTH_USER = 'SET_AUTH_USER'
+export const SET_LOADING = 'SET_LOADING'
+
 const initAuthState: any = {
     id: null,
     email: null,
     login: null,
     isAuth: false,
     isLoading: true,
+    // ==
+    rememberMe: false,
 }
 
 export const authReducer = (state = initAuthState, action: any) => {
     switch (action.type) {
-        case 'SET_AUTH_USER': {
+        case SET_AUTH_USER: {
             return {
                 ...state, ...action.payload
             }
         }
-        case 'SET_LOADING': {
+        case SET_LOADING: {
             return {
                 ...state, isLoading: action.payload
             }

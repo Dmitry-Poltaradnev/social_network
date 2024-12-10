@@ -1,0 +1,9 @@
+.back {
+    background-color: yellow;
+}
+
+.memberPhoto {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}

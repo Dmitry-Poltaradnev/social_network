@@ -5,6 +5,7 @@ import {loginThunkCreator} from "../../reducer/authReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {Redirect} from "react-router-dom";
+import s from './loginForm.module.css'
 
 const Login = () => {
 
@@ -26,7 +27,7 @@ const Login = () => {
     }
 
     return (
-        <div style={{background: 'bisque', color: 'black'}}>
+        <div className={s.loginWrapper}>
             <h2>Login</h2>
             <LoginReduxForm onSubmit={onSubmit}/>
         </div>

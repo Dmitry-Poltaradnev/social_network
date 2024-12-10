@@ -1,6 +1,8 @@
 import {v1} from "uuid";
 import {DialogType, MessageType} from "../components/dialogs/Dialogs";
 
+export const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE'
+
 export type friendsBarType = {
     id: string
     avaLink: string
@@ -45,7 +47,7 @@ export const initialMessageState: initialMessageStateType = {
 
 export const messageReducer = (state = initialMessageState, action: any) => {
     switch (action.type) {
-        case 'ADD-NEW-MESSAGE':
+        case ADD_NEW_MESSAGE:
             return {
                 ...state,
                 messagesPage: {

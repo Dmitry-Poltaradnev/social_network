@@ -1,9 +1,10 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import defaultUserPhoto from '../../../img/default-avatar-profile.avif';
+import defaultUserPhoto from '../../img/default-avatar-profile.avif';
 import {NavLink} from "react-router-dom";
-import {RootStateType} from "../../../reducer/store";
-import {changeUserFollowThunkCreator} from "../../../reducer/userReducer";
+import {RootStateType} from "../../reducer/store";
+import {changeUserFollowThunkCreator} from "../../reducer/userReducer";
+import s from './memberProfile/memberProfile.module.css'
 
 export const FOLLOW_METHOD = {
     FOLLOW: 'post',
@@ -24,9 +25,9 @@ export const User = ({user}: any) => {
     const isDisabled = isFollowingInProgress.includes(user.id)
 
     return (
-        <li style={{margin: '20px'}}>
+        <li>
             <NavLink to={'/profile/' + user.id}>
-                <img style={{maxWidth: '100px', maxHeight: '100px'}}
+                <img className={s.memberPhoto}
                      src={user.photos && (user.photos.small || user.photos.large) ? (user.photos.small || user.photos.large) : defaultUserPhoto}
                      alt="user_photo"/>
             </NavLink>

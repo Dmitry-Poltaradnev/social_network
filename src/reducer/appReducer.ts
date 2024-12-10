@@ -1,13 +1,15 @@
 import {getLoginThunkCreator} from "./authReducer";
 import {setInitialized} from "./appActions";
 
+export  const SET_INITIALIZED = 'SET_INITIALIZED'
+
 const initAuthState: any = {
     initialized: false
 }
 
 export const appReducer = (state = initAuthState, action: any) => {
     switch (action.type) {
-        case 'SET_INITIALIZED': {
+        case SET_INITIALIZED: {
             return {
                 ...state, initialized: true
             }

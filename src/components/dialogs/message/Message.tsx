@@ -1,10 +1,14 @@
 import React from 'react';
 
-export const Message = (props: any) => {
+type MessageType = {
+    text: string;
+}
+
+export const Message = ({text}: MessageType) => {
     return (
-        <div>{props.text}
+        <div>{text}
             <hr/>
-         </div>
+        </div>
     );
 };
 

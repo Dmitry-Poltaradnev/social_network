@@ -9,6 +9,17 @@ import {
     toggleIsLoading
 } from "./usersActions";
 
+export const CHANGE_FOLLOW = 'CHANGE-FOLLOW'
+export const IS_FOLLOWING = 'IS_FOLLOWING'
+export const SET_USERS = 'SET_USERS'
+export const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+export const IS_LOADING = 'IS_LOADING'
+export const SET_USER_PROFILE = 'SET_USER_PROFILE'
+export const GET_USER_STATUS = 'GET_USER_STATUS'
+export const PUT_USER_STATUS = 'PUT_USER_STATUS'
+export const GET_USER_ID = 'GET_USER_ID'
+
 export type InitUserStateType = {
     users: any;
 };
@@ -27,7 +38,7 @@ const initUserState: any = {
 
 export const userReducer = (state = initUserState, action: any) => {
     switch (action.type) {
-        case  'CHANGE-FOLLOW' : {
+        case  CHANGE_FOLLOW : {
             return {
                 ...state,
                 users: state.users.map((user: any) => user.id === action.payload.id ? {
@@ -36,7 +47,7 @@ export const userReducer = (state = initUserState, action: any) => {
                 } : user)
             }
         }
-        case  'IS_FOLLOWING' : {
+        case  IS_FOLLOWING : {
             return {
                 ...state,
                 isFollowingInProgress: action.payload.isFollowing ?
@@ -44,28 +55,28 @@ export const userReducer = (state = initUserState, action: any) => {
                     state.isFollowingInProgress.filter((id: string) => id !== action.payload.userId)
             }
         }
-        case 'SET_USERS' : {
+        case SET_USERS : {
             return {...state, users: action.payload.users}
         }
-        case 'SET_TOTAL_COUNT' : {
+        case SET_TOTAL_COUNT : {
             return {...state, totalCount: action.payload.totalCount}
         }
-        case 'SET_CURRENT_PAGE' : {
+        case SET_CURRENT_PAGE : {
             return {...state, currentPage: action.payload.currentPage}
         }
-        case 'IS_LOADING' : {
+        case IS_LOADING : {
             return {...state, isLoading: action.payload.isLoading}
         }
-        case 'SET_USER_PROFILE' : {
+        case SET_USER_PROFILE : {
             return {...state, user: action.payload.user}
         }
-        case 'GET_USER_STATUS' : {
+        case GET_USER_STATUS : {
             return {...state, newUserStatus: action.payload.status}
         }
-        case 'PUT_USER_STATUS' : {
+        case PUT_USER_STATUS : {
             return {...state, newUserStatus: action.payload.status}
         }
-        case 'GET_USER_ID' : {
+        case GET_USER_ID : {
             return {...state, userId: action.payload.userId}
         }
         default :
