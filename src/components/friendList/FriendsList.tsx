@@ -19,8 +19,8 @@ const FriendsList = () => {
                 {friendsList}
             </ul>
         </div>
-
     );
 };
 
-export const FriendsListComponent = WithAuthRedirect(FriendsList)
+const FriendsListComponent = WithAuthRedirect(FriendsList)
+export default FriendsListComponent

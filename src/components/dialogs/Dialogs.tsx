@@ -54,5 +54,5 @@ const Dialogs = () => {
     );
 };
 
-export const DialogsComponent = WithAuthRedirect(Dialogs);
-
+const DialogsComponent = WithAuthRedirect(Dialogs);
+export default DialogsComponent
