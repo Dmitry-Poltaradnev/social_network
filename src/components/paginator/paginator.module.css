@@ -1,0 +1,27 @@
+.paginatorWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    gap: 5px;
+}
+
+.paginatorBtn{
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.activeButton {
+    background-color: red;
+    color: yellow;
+    font-weight: bold;
+}
+.unActiveButton {
+    font-weight: 500;
+    background-color: green;
+    color: yellow;
+}
+

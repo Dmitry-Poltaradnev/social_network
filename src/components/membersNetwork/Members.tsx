@@ -5,7 +5,7 @@ import { User } from "./User";
 import { Loader } from "../common/loader/Loader";
 import { getUsersThunkCreator } from "../../reducer/userReducer";
 import { WithAuthRedirect } from "../../hoc/withAuthRedirect";
-import { Paginator } from "./Paginator";
+import { Paginator } from "../paginator/Paginator";
 import {setCurrentPage} from "../../reducer/usersActions";
 import s from './members.module.css'
 
@@ -37,8 +37,8 @@ const Members: React.FC = () => {
                         ))}
                     </ol>
                     <Paginator
-                        totalCount={totalCount}
-                        pageSize={pageSize}
+                        totalItemCount={totalCount}
+                        portionSize={pageSize}
                         currentPage={currentPage}
                         onPageChange={onPageChange}
                     />
