@@ -5,3 +5,22 @@
     max-height: 25px;
     max-width: 75px;
 }
+
+.userPhoto {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+}
+
+.mainUserProfile {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+}
+
+.profileWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}

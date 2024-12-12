@@ -4,7 +4,7 @@ import {postReducer} from "./postReducer";
 import {userReducer} from "./userReducer";
 import {authReducer} from "./authReducer";
 import thunk from "redux-thunk";
-import { reducer as formReducer} from 'redux-form'
+import {reducer as formReducer} from 'redux-form'
 import {appReducer} from "./appReducer";
 
 export type RootStateType = ReturnType<typeof reducers>;

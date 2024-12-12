@@ -5,7 +5,8 @@ import {
     SET_CURRENT_PAGE,
     SET_TOTAL_COUNT,
     SET_USER_PROFILE,
-    SET_USERS
+    SET_USERS,
+    SAVE_PHOTO_SUCCESS
 } from "./userReducer";
 
 export const changeFollow = (id: string, followStatus: boolean) => {
@@ -37,6 +38,10 @@ export const putProfileSt = (status: string) => {
 }
 export const getUserId = (userId: number) => {
     return {type: GET_USER_ID, payload: {userId}};
+}
+// ====
+export const savePhotoSuccess = (photos: any) => {
+    return {type: SAVE_PHOTO_SUCCESS, payload: {photos}};
 }
 
 

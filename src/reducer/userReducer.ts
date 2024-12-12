@@ -1,6 +1,6 @@
 import {userAPI} from "../api/api";
 import {
-    changeFollow, putProfileSt,
+    changeFollow, putProfileSt, savePhotoSuccess,
     setIsFollowing,
     setProfile,
     setTotalCount,
@@ -19,6 +19,7 @@ export const SET_USER_PROFILE = 'SET_USER_PROFILE'
 export const GET_USER_STATUS = 'GET_USER_STATUS'
 export const PUT_USER_STATUS = 'PUT_USER_STATUS'
 export const GET_USER_ID = 'GET_USER_ID'
+export const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
 export type InitUserStateType = {
     users: any;
@@ -34,6 +35,8 @@ const initUserState: any = {
     isFollowingInProgress: [],
     newUserStatus: '',
     userId: null,
+    // ====
+    photo: null
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -78,6 +81,9 @@ export const userReducer = (state = initUserState, action: any) => {
         }
         case GET_USER_ID : {
             return {...state, userId: action.payload.userId}
+        }
+        case SAVE_PHOTO_SUCCESS : {
+            return {...state, photo: action.payload.photo}
         }
         default :
             return state
@@ -145,6 +151,24 @@ export const putUserStatusThunkCreator = (status: string) => async (dispatch: an
             dispatch(putProfileSt(status))
         } else {
             console.error("Ошибка обновления статуса:", data.messages[0]);
+        }
+    } catch (error: any) {
+        console.error("Ошибка запроса:", error);
+    } finally {
+        dispatch(toggleIsLoading(false))
+    }
+}
+
+// ======================
+export const savePhoto = (file: any) => async (dispatch: any) => {
+    try {
+        dispatch(toggleIsLoading(true))
+        let data: any = await userAPI.putSavePhoto(file)
+        if (data.resultCode === 0) {
+            console.log(data)
+            dispatch(savePhotoSuccess(data.photos))
+        } else {
+            console.error("Ошибка обновления фото:", data.messages[0]);
         }
     } catch (error: any) {
         console.error("Ошибка запроса:", error);

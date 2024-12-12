@@ -9,16 +9,19 @@ const FriendsList = () => {
 
     const stateMessage = useSelector((state: RootStateType) => state.message.friendsBar);
 
+
     let friendsList = stateMessage.map((friend) => <Friend key={friend.id} id={friend.id}
                                                            avaLink={friend.avaLink}
                                                            name={friend.name}/>)
 
     return (
-        <div className={s.friendsListWrapper}>
-            <ul className={s.friendList}>
-                {friendsList}
-            </ul>
-        </div>
+        <>
+            {<div className={s.friendsListWrapper}>
+                <ul className={s.friendList}>
+                    {friendsList}
+                </ul>
+            </div>}
+        </>
     );
 };
 
