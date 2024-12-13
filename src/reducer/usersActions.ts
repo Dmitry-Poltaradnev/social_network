@@ -39,10 +39,10 @@ export const putProfileSt = (status: string) => {
 export const getUserId = (userId: number) => {
     return {type: GET_USER_ID, payload: {userId}};
 }
-// ====
-export const savePhotoSuccess = (photos: any) => {
+export const savePhotoSuccess = (photos: string) => {
     return {type: SAVE_PHOTO_SUCCESS, payload: {photos}};
 }
+
 
 
 

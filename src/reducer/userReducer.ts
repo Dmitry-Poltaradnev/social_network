@@ -36,7 +36,8 @@ const initUserState: any = {
     newUserStatus: '',
     userId: null,
     // ====
-    photo: null
+    // photos: "https://social-network.samuraijs.com/activecontent/images/users/31665/user.jpg?v=64"
+    photos: ""
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -83,7 +84,7 @@ export const userReducer = (state = initUserState, action: any) => {
             return {...state, userId: action.payload.userId}
         }
         case SAVE_PHOTO_SUCCESS : {
-            return {...state, photo: action.payload.photo}
+            return {...state, photos: action.payload.photos}
         }
         default :
             return state
@@ -121,6 +122,12 @@ export const setUserProfileThunkCreator = (userId: string) => async (dispatch: a
     try {
         let data = await userAPI.getProfile(userId)
         dispatch(setProfile(data))
+        // !!!!!!!!--------------!!!!!!!!!
+        if (data.photos) {
+            console.log(data)
+            dispatch(savePhotoSuccess(data.photos.large));
+        }
+        // !!!!!!!!--------------!!!!!!!!!
     } catch (error: any) {
         console.error("Ошибка запроса:", error);
     }
@@ -158,22 +165,23 @@ export const putUserStatusThunkCreator = (status: string) => async (dispatch: an
         dispatch(toggleIsLoading(false))
     }
 }
-
 // ======================
 export const savePhoto = (file: any) => async (dispatch: any) => {
     try {
         dispatch(toggleIsLoading(true))
         let data: any = await userAPI.putSavePhoto(file)
-        if (data.resultCode === 0) {
-            console.log(data)
-            dispatch(savePhotoSuccess(data.photos))
-        } else {
-            console.error("Ошибка обновления фото:", data.messages[0]);
-        }
+
+        console.log("Ответ от API:", data); // Добавьте этот лог для проверки
+        console.log('Linka', data.data.data.photos.large)
+        // !!!!!!!!--------------!!!!!!!!!
+        dispatch(savePhotoSuccess(data.data.data.photos.large));
+
     } catch (error: any) {
         console.error("Ошибка запроса:", error);
     } finally {
         dispatch(toggleIsLoading(false))
     }
 }
+
+
 
