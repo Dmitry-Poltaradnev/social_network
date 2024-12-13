@@ -1,23 +1,24 @@
 {
   "files": {
-    "main.css": "/social_network/static/css/main.e86a1d2a.css",
-    "main.js": "/social_network/static/js/main.1d3c8c5d.js",
+    "main.css": "/social_network/static/css/main.e4ceba65.css",
+    "main.js": "/social_network/static/js/main.40718be1.js",
     "static/css/857.8ea87a82.chunk.css": "/social_network/static/css/857.8ea87a82.chunk.css",
     "static/js/857.410b8843.chunk.js": "/social_network/static/js/857.410b8843.chunk.js",
     "static/css/169.8ead9a7d.chunk.css": "/social_network/static/css/169.8ead9a7d.chunk.css",
-    "static/js/169.2759d42b.chunk.js": "/social_network/static/js/169.2759d42b.chunk.js",
+    "static/js/169.905a078a.chunk.js": "/social_network/static/js/169.905a078a.chunk.js",
+    "static/media/peon.gif": "/social_network/static/media/peon.fa01c7b7aea0e3b9d670.gif",
     "static/media/default-avatar-profile.avif": "/social_network/static/media/default-avatar-profile.bf358cda2c95cb620bde.avif",
     "static/media/loader.svg": "/social_network/static/media/loader.5d4681f76c221ba6d4fdc8a8408ba965.svg",
     "index.html": "/social_network/index.html",
-    "main.e86a1d2a.css.map": "/social_network/static/css/main.e86a1d2a.css.map",
-    "main.1d3c8c5d.js.map": "/social_network/static/js/main.1d3c8c5d.js.map",
+    "main.e4ceba65.css.map": "/social_network/static/css/main.e4ceba65.css.map",
+    "main.40718be1.js.map": "/social_network/static/js/main.40718be1.js.map",
     "857.8ea87a82.chunk.css.map": "/social_network/static/css/857.8ea87a82.chunk.css.map",
     "857.410b8843.chunk.js.map": "/social_network/static/js/857.410b8843.chunk.js.map",
     "169.8ead9a7d.chunk.css.map": "/social_network/static/css/169.8ead9a7d.chunk.css.map",
-    "169.2759d42b.chunk.js.map": "/social_network/static/js/169.2759d42b.chunk.js.map"
+    "169.905a078a.chunk.js.map": "/social_network/static/js/169.905a078a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e86a1d2a.css",
-    "static/js/main.1d3c8c5d.js"
+    "static/css/main.e4ceba65.css",
+    "static/js/main.40718be1.js"
   ]
 }
