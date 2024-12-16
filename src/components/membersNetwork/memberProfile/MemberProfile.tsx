@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../../reducer/store";
 import {useParams} from "react-router-dom";
 import {setUserProfileThunkCreator} from "../../../reducer/userReducer";
+import {ProfileContacts} from "../../mainUserProfile/ProfileContacts";
 
 export const MemberProfile = () => {
 
@@ -12,15 +13,16 @@ export const MemberProfile = () => {
 
     const dispatch = useDispatch();
 
-    const user = useSelector((state: RootStateType) => state.user);
+    const {user} = useSelector((state: RootStateType) => state.user);
 
     useEffect(() => {
         dispatch(setUserProfileThunkCreator(userId));
-    }, [dispatch,userId]);
+    }, [dispatch, userId]);
 
     return (
         <div className={s.back}>
             <MemberProfileInfo user={user}/>
+            <ProfileContacts contacts={user.contacts}/>
         </div>
     );
 };

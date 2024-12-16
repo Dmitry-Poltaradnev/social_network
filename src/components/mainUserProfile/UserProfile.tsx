@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {ProfileStatus} from "./ProfileStatus";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,12 +8,22 @@ import {Loader} from "../common/loader/Loader";
 import {MainUserPosts} from "./mainUserPosts/MainUserPosts";
 import s from './mainUserProfile.module.css'
 import mainUserPhoto from '../../img/peon.gif'
+import {ProfileContacts} from "./ProfileContacts";
+import {ProfileContactsForm} from "./ProfileContactsForm";
 
 const UserProfile = () => {
 
     const dispatch = useDispatch();
 
-    const {isLoading, newUserStatus, userId, photos} = useSelector((state: RootStateType) => state.user)
+    const [editMode, setEditMode] = useState(false);
+
+    const {
+        isLoading,
+        newUserStatus,
+        userId,
+        photos,
+        user
+    } = useSelector((state: RootStateType) => state.user)
 
     useEffect(() => {
         if (userId) {
@@ -29,6 +39,12 @@ const UserProfile = () => {
             dispatch(savePhoto(e.target.files[0]));
         }
     }
+
+    const editProfileContacts = (editMode: any) => {
+        return editMode ? <ProfileContacts contacts={user.contacts} userId={userId}/> :
+            <ProfileContactsForm contacts={user.contacts} userId={userId}/>
+    }
+
     return (
         <div className={s.mainUserProfile}>
             {isLoading ? <Loader/> : <>
@@ -36,6 +52,7 @@ const UserProfile = () => {
                     <img className={s.userPhoto} src={photos || mainUserPhoto} alt="mainUserPhoto"/>
                     {userId && <input onChange={mainPhotoSelected} type="file"/>}
                     <ProfileStatus newUserStatus={newUserStatus}/>
+                    {editProfileContacts(editMode)}
                 </div>
                 <MainUserPosts/>
             </>}

@@ -13,7 +13,6 @@ export const Header = () => {
     return (
         <header className={s.header}>
             <p>poltaradnev@gmail.com</p>
-            <p>xueta_vash_google</p>
             <p>31665</p>
             <h2>Header</h2>
             <div>{auth.isAuth ? <div className={s.loginWrapper}>

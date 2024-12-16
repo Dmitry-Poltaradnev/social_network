@@ -36,8 +36,7 @@ const initUserState: any = {
     newUserStatus: '',
     userId: null,
     // ====
-    // photos: "https://social-network.samuraijs.com/activecontent/images/users/31665/user.jpg?v=64"
-    photos: ""
+    photos: "",
 }
 
 export const userReducer = (state = initUserState, action: any) => {
@@ -121,6 +120,7 @@ export const changeUserFollowThunkCreator = (method: string, userId: string, use
 export const setUserProfileThunkCreator = (userId: string) => async (dispatch: any) => {
     try {
         let data = await userAPI.getProfile(userId)
+        console.log(data)
         dispatch(setProfile(data))
         // !!!!!!!!--------------!!!!!!!!!
         if (data.photos) {
