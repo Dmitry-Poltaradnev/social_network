@@ -10,9 +10,6 @@ export const MemberProfileInfo = ({user}: any) => {
             ) : (
                 <div>Photo didn't load</div>
             )}
-            <p>Name: {user.fullName}</p>
-            <p>Description: {user.lookingForAJobDescription}</p>
-            <p>About: {user.aboutMe}</p>
         </div>
     );
 };

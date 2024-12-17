@@ -12,7 +12,6 @@ const initAuthState: any = {
     login: null,
     isAuth: false,
     isLoading: true,
-    // ==
     rememberMe: false,
 }
 
@@ -58,7 +57,6 @@ export const deleteLoginThunkCreator = () => async (dispatch: any) => {
         console.log('Error deleting login data:', error);
     }
 }
-
 
 export const loginThunkCreator = (email: string, password: string, rememberMe: boolean) => async (dispatch: any) => {
     try {

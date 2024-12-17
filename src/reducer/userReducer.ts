@@ -8,6 +8,7 @@ import {
     setUserStatus,
     toggleIsLoading
 } from "./usersActions";
+import {stopSubmit} from "redux-form";
 
 export const CHANGE_FOLLOW = 'CHANGE_FOLLOW'
 export const IS_FOLLOWING = 'IS_FOLLOWING'
@@ -178,6 +179,21 @@ export const savePhoto = (file: any) => async (dispatch: any) => {
 
     } catch (error: any) {
         console.error("Ошибка запроса:", error);
+    } finally {
+        dispatch(toggleIsLoading(false))
+    }
+}
+
+// =====
+export const saveProfileThunkCreator = (fullName: string, aboutMe: string, lookingForAJobDescription: boolean) => async (dispatch: any) => {
+    try {
+        dispatch(toggleIsLoading(true))
+        const data: any = await userAPI.saveProfile({fullName, aboutMe, lookingForAJobDescription})
+        debugger
+        console.log(data)
+    } catch (error: any) {
+        const errorMessage = error.message || 'Failed to connect to server!';
+        dispatch(stopSubmit('edit-profile', {_error: errorMessage}));
     } finally {
         dispatch(toggleIsLoading(false))
     }

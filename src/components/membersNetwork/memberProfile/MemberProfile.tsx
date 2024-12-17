@@ -22,7 +22,7 @@ export const MemberProfile = () => {
     return (
         <div className={s.back}>
             <MemberProfileInfo user={user}/>
-            <ProfileContacts contacts={user.contacts}/>
+            <ProfileContacts contacts={user.contacts} user={user}/>
         </div>
     );
 };
