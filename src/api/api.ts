@@ -40,9 +40,8 @@ export const userAPI = {
         formData.append('image', photos)
         return axiosInstance.put(`profile/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
     },
-    // =======
     saveProfile(profile: any) {
-        return axiosInstance.put(`profile` , profile)
+        return axiosInstance.put(`profile`, profile)
     },
 }
 

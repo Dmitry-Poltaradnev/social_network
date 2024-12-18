@@ -6,12 +6,10 @@ import {required} from "../../utils/validators";
 
 type ProfileContactsFormProps = {
     contacts: any;
-    user: any;
 };
 
 const ProfileContactsForm: React.FC<InjectedFormProps<{}, ProfileContactsFormProps> & ProfileContactsFormProps> = ({
                                                                                                                        contacts,
-                                                                                                                       user,
                                                                                                                        handleSubmit
                                                                                                                    }: any) => {
     return (
@@ -20,22 +18,27 @@ const ProfileContactsForm: React.FC<InjectedFormProps<{}, ProfileContactsFormPro
                 <button>save</button>
             </div>
             <h3>Edit Contacts</h3>
-            <div><p>Full name: {user.fullName}</p>
+            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
+                <p>About me: </p>
+                <Field placeholder={'about'} name={'aboutMe'} component={Input} type="text"
+                />
+            </div>
+            <div>
                 <Field placeholder={'change name'} name={'fullName'} component={Input} type="text"
                        validate={[required]}/>
             </div>
-            <div>
-                <p>My professional skills: {user.lookingForAJobDescription}</p>
-                <Field name={'lookingForAJobDescription'} component={Input} type="checkbox"/>
+            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
+                <p>Free for a work:</p>
+                <Field name={'lookingForAJob'} component={Input} type="checkbox"/>
             </div>
             <div>
-                <p>About me: {user.aboutMe}</p>
-                <Field placeholder={'about me'} name={'aboutMe'} component={Input} type="text"
+                <Field placeholder={'my skills'} name={'lookingForAJobDescription'} component={Input} type="text"
                        validate={[required]}/>
             </div>
             <ul>
                 {Object.entries(contacts).map(([key, value]: any) =>
-                    <li key={key}><strong>{key}</strong>: {value}</li>
+                    <li key={key}>{key} :<Field placeholder={key} name={`contacts.${key}`}
+                                                component={Input} type="text"/></li>
                 )}
             </ul>
         </form>

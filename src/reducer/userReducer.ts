@@ -36,7 +36,6 @@ const initUserState: any = {
     isFollowingInProgress: [],
     newUserStatus: '',
     userId: null,
-    // ====
     photos: "",
 }
 
@@ -183,21 +182,44 @@ export const savePhoto = (file: any) => async (dispatch: any) => {
         dispatch(toggleIsLoading(false))
     }
 }
-
 // =====
-export const saveProfileThunkCreator = (fullName: string, aboutMe: string, lookingForAJobDescription: boolean) => async (dispatch: any) => {
+// export const saveProfileThunkCreator = (fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: boolean) => async (dispatch: any) => {
+//     try {
+//         dispatch(toggleIsLoading(true))
+//         const data: any = await userAPI.saveProfile({fullName, lookingForAJob, lookingForAJobDescription, aboutMe})
+//         dispatch(setProfile(data))
+//         console.log(data)
+//
+//     } catch (error: any) {
+//         const errorMessage = error.message || 'Failed to connect to server!';
+//         dispatch(stopSubmit('edit-profile', {_error: errorMessage}));
+//     } finally {
+//         dispatch(toggleIsLoading(false))
+//     }
+// }
+
+export const saveProfileThunkCreator = (fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: string) => async (dispatch: any, getState: any) => {
     try {
         dispatch(toggleIsLoading(true))
-        const data: any = await userAPI.saveProfile({fullName, aboutMe, lookingForAJobDescription})
-        debugger
-        console.log(data)
-    } catch (error: any) {
-        const errorMessage = error.message || 'Failed to connect to server!';
-        dispatch(stopSubmit('edit-profile', {_error: errorMessage}));
+        const userId = getState().user.userId;
+        const profile = {fullName, lookingForAJob, lookingForAJobDescription, aboutMe};
+        const response = await userAPI.saveProfile(profile);
+
+        if (response.data.resultCode === 0) {
+            dispatch(setUserProfileThunkCreator(userId));
+        } else {
+            dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0] || 'Error'}));
+            throw new Error(response.data.messages[0] || 'Error');
+        }
+    } catch (error) {
+        console.error('Ошибка сохранения профиля:', error);
     } finally {
         dispatch(toggleIsLoading(false))
     }
-}
+};
+
+
+
 
 
 

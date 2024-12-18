@@ -16,6 +16,7 @@ import mainUserPhoto from '../../img/peon.gif'
 import {ProfileContacts} from "./ProfileContacts";
 import ProfileContactsForm from "./ProfileContactsForm";
 
+
 const UserProfile = () => {
 
     const dispatch = useDispatch();
@@ -49,17 +50,16 @@ const UserProfile = () => {
         setEditMode(!editMode);
     }
 
-    const onSubmit = ({fullName, lookingForAJobDescription, aboutMe}: any) => {
-        console.log('dispatch')
-        dispatch(saveProfileThunkCreator(fullName, lookingForAJobDescription, aboutMe))
+    const onSubmit = ({fullName, lookingForAJob, lookingForAJobDescription, aboutMe}: any) => {
+        dispatch(saveProfileThunkCreator(fullName, lookingForAJob, lookingForAJobDescription, aboutMe))
+        setEditMode(false)
     }
 
     const editProfileContacts = (editMode: any) => {
         return !editMode ?
             <ProfileContacts user={user} contacts={user.contacts} userId={userId} toEditMode={toEditMode}/> :
-            <ProfileContactsForm contacts={user.contacts} user={user} onSubmit={onSubmit}/>
+            <ProfileContactsForm initialValues={user} contacts={user.contacts} onSubmit={onSubmit}/>
     }
-
 
     return (
         <div className={s.mainUserProfile}>
