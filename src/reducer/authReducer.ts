@@ -1,10 +1,11 @@
 import {userAPI} from "../api/api";
 import {setAuthLoading, setAuthUser} from "./authActions";
-import {getUserId} from "./usersActions";
+import {getUserId, setCaptcha} from "./usersActions";
 import {stopSubmit} from "redux-form";
 
 export const SET_AUTH_USER = 'SET_AUTH_USER'
 export const SET_LOADING = 'SET_LOADING'
+export const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL'
 
 const initAuthState: any = {
     id: null,
@@ -13,6 +14,7 @@ const initAuthState: any = {
     isAuth: false,
     isLoading: true,
     rememberMe: false,
+    captchaUrl: null,
 }
 
 export const authReducer = (state = initAuthState, action: any) => {
@@ -26,6 +28,9 @@ export const authReducer = (state = initAuthState, action: any) => {
             return {
                 ...state, isLoading: action.payload
             }
+        }
+        case SET_CAPTCHA_URL: {
+            return {...state, captchaUrl: action.payload}
         }
         default : {
             return state;
@@ -64,10 +69,24 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
         if (data.data.resultCode === 0) {
             dispatch(getLoginThunkCreator())
         } else {
+            if (data.data.resultCode === 10) {
+                dispatch(getCaptchaThunkCreator())
+            }
             throw new Error(data.data.messages.length > 0 ? data.data.messages[0] : 'Some error!');
         }
     } catch (error: any) {
         const errorMessage = error.message || 'Failed to connect to server!';
         dispatch(stopSubmit('login', {_error: errorMessage}));
+    }
+}
+// ====
+export const getCaptchaThunkCreator = () => async (dispatch: any) => {
+    try {
+        const response = await userAPI.getCaptcha()
+        const captchaUrl = response.data.url
+        console.log(`'это url captchi ${captchaUrl}`)
+        dispatch(setCaptcha(captchaUrl));
+    } catch (error: any) {
+
     }
 }

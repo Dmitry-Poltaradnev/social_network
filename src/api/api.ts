@@ -43,6 +43,9 @@ export const userAPI = {
     saveProfile(profile: any) {
         return axiosInstance.put(`profile`, profile)
     },
+    getCaptcha() {
+        return axiosInstance.get(`security/get-captcha-url`)
+    },
 }
 
 

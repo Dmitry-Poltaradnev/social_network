@@ -165,7 +165,6 @@ export const putUserStatusThunkCreator = (status: string) => async (dispatch: an
         dispatch(toggleIsLoading(false))
     }
 }
-// ======================
 export const savePhoto = (file: any) => async (dispatch: any) => {
     try {
         dispatch(toggleIsLoading(true))
@@ -182,27 +181,11 @@ export const savePhoto = (file: any) => async (dispatch: any) => {
         dispatch(toggleIsLoading(false))
     }
 }
-// =====
-// export const saveProfileThunkCreator = (fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: boolean) => async (dispatch: any) => {
-//     try {
-//         dispatch(toggleIsLoading(true))
-//         const data: any = await userAPI.saveProfile({fullName, lookingForAJob, lookingForAJobDescription, aboutMe})
-//         dispatch(setProfile(data))
-//         console.log(data)
-//
-//     } catch (error: any) {
-//         const errorMessage = error.message || 'Failed to connect to server!';
-//         dispatch(stopSubmit('edit-profile', {_error: errorMessage}));
-//     } finally {
-//         dispatch(toggleIsLoading(false))
-//     }
-// }
-
-export const saveProfileThunkCreator = (fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: string) => async (dispatch: any, getState: any) => {
+export const saveProfileThunkCreator = (fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: string, contacts: any) => async (dispatch: any, getState: any) => {
     try {
         dispatch(toggleIsLoading(true))
         const userId = getState().user.userId;
-        const profile = {fullName, lookingForAJob, lookingForAJobDescription, aboutMe};
+        const profile = {fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts};
         const response = await userAPI.saveProfile(profile);
 
         if (response.data.resultCode === 0) {

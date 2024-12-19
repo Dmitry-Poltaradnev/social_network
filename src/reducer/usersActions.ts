@@ -8,6 +8,7 @@ import {
     SET_USERS,
     SAVE_PHOTO_SUCCESS
 } from "./userReducer";
+import {SET_CAPTCHA_URL} from "./authReducer";
 
 export const changeFollow = (id: string, followStatus: boolean) => {
     return ({type: CHANGE_FOLLOW, payload: {id, followStatus}});
@@ -41,6 +42,9 @@ export const getUserId = (userId: number) => {
 }
 export const savePhotoSuccess = (photos: string) => {
     return {type: SAVE_PHOTO_SUCCESS, payload: {photos}};
+}
+export const setCaptcha = (captchaUrl: string) => {
+    return {type: SET_CAPTCHA_URL, payload: {captchaUrl}};
 }
 
 

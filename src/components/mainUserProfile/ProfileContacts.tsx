@@ -19,7 +19,7 @@ export const ProfileContacts = ({contacts, userId, toEditMode, user}: any) => {
             <h3>Contacts</h3>
             <ul>
                 {Object.entries(contacts).map(([key, value]: any) =>
-                    <li key={key}><strong>{key}</strong>: {value !== null ? value : 'null' }</li>
+                    <li key={key}><strong>{key}</strong>: {value || 'null'}</li>
                 )}
             </ul>
         </div>

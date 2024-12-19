@@ -5,10 +5,11 @@ import {required} from "../../utils/validators";
 import s from './loginForm.module.css'
 
 
-export const LoginForm = (props: any) => {
+export const LoginForm = ({handleSubmit, error, captchaUrl}: any) => {
     return (
         <div>
-            <form onSubmit={props.handleSubmit}>
+            {captchaUrl && <img src={captchaUrl} alt="captcha"/>}
+            <form onSubmit={handleSubmit}>
                 <Field placeholder={'Email'} name={'email'} component={Input} type="text"
                        validate={[required]}/>
                 <br/>
@@ -17,7 +18,7 @@ export const LoginForm = (props: any) => {
                 <br/>
                 <Field type={'checkbox'} component={Input} name={'rememberMe'}/>
                 <span>remember me</span>
-                {props.error && <span className={s.formError}>{props.error}</span>}
+                {error && <span className={s.formError}>{error}</span>}
                 <br/>
                 <button>Login</button>
             </form>

@@ -11,9 +11,9 @@ const Login = () => {
 
     const dispatch = useDispatch()
 
-    const {isAuth} = useSelector((state: RootStateType) => state.auth)
+    const {isAuth,captchaUrl} = useSelector((state: RootStateType) => state.auth)
 
-    const LoginReduxForm = reduxForm({
+    const LoginReduxForm = reduxForm<{ email: string; password: string; rememberMe: boolean }, { captchaUrl: string }>({
         // a unique name for the form
         form: 'login'
     })(LoginForm)
@@ -29,7 +29,7 @@ const Login = () => {
     return (
         <div className={s.loginWrapper}>
             <h2>Login</h2>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
         </div>
     );
 };
