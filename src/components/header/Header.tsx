@@ -15,13 +15,11 @@ export const Header = () => {
             <p>poltaradnev@gmail.com</p>
             <p>31665</p>
             <h2>Header</h2>
-            <div>{auth.isAuth ? <div className={s.loginWrapper}>
-                    <p>
-                        <button onClick={() => dispatch(deleteLoginThunkCreator())}>Logout</button>
-                        - {auth.login}</p>
-                </div> :
-                // <span className={s.loginLink}><NavLink to="/login">Login</NavLink></span>
-                <span></span>
+            <div>{auth.isAuth && <div className={s.loginWrapper}>
+                <p>
+                    <button onClick={() => dispatch(deleteLoginThunkCreator())}>Logout</button>
+                    -{auth.login}</p>
+            </div>
             }</div>
         </header>
     );

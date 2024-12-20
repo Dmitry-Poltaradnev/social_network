@@ -1,6 +1,6 @@
 import {userAPI} from "../api/api";
-import {setAuthLoading, setAuthUser} from "./authActions";
-import {getUserId, setCaptcha} from "./usersActions";
+import {setAuthLoading, setAuthUser, setCaptcha} from "./authActions";
+import {getUserId} from "./usersActions";
 import {stopSubmit} from "redux-form";
 
 export const SET_AUTH_USER = 'SET_AUTH_USER'
@@ -16,7 +16,6 @@ const initAuthState: any = {
     rememberMe: false,
     captchaUrl: null,
 }
-
 export const authReducer = (state = initAuthState, action: any) => {
     switch (action.type) {
         case SET_AUTH_USER: {
@@ -63,9 +62,9 @@ export const deleteLoginThunkCreator = () => async (dispatch: any) => {
     }
 }
 
-export const loginThunkCreator = (email: string, password: string, rememberMe: boolean) => async (dispatch: any) => {
+export const loginThunkCreator = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
     try {
-        const data = await userAPI.login(email, password, rememberMe)
+        const data = await userAPI.login(email, password, rememberMe, captcha)
         if (data.data.resultCode === 0) {
             dispatch(getLoginThunkCreator())
         } else {
@@ -84,9 +83,8 @@ export const getCaptchaThunkCreator = () => async (dispatch: any) => {
     try {
         const response = await userAPI.getCaptcha()
         const captchaUrl = response.data.url
-        console.log(`'это url captchi ${captchaUrl}`)
         dispatch(setCaptcha(captchaUrl));
     } catch (error: any) {
-
+        console.log(error)
     }
 }

@@ -16,8 +16,8 @@ export const userAPI = {
     logout() {
         return axiosInstance.delete(`auth/login`)
     },
-    login(email: string, password: string, rememberMe = false) {
-        return axiosInstance.post(`auth/login`, {email, password, rememberMe})
+    login(email: string, password: string, rememberMe = false , captcha: string) {
+        return axiosInstance.post(`auth/login`, {email, password, rememberMe , captcha})
     },
     getProfile(userId: string) {
         return axiosInstance.get(`profile/${userId}`)

@@ -11,15 +11,15 @@ const Login = () => {
 
     const dispatch = useDispatch()
 
-    const {isAuth,captchaUrl} = useSelector((state: RootStateType) => state.auth)
+    const {isAuth, captchaUrl} = useSelector((state: RootStateType) => state.auth)
 
     const LoginReduxForm = reduxForm<{ email: string; password: string; rememberMe: boolean }, { captchaUrl: string }>({
         // a unique name for the form
         form: 'login'
     })(LoginForm)
 
-    const onSubmit = ({email, password, rememberMe}: any) => {
-        dispatch(loginThunkCreator(email, password, rememberMe))
+    const onSubmit = ({email, password, rememberMe,captcha}: any) => {
+        dispatch(loginThunkCreator(email, password, rememberMe, captcha))
     }
 
     if (isAuth) {
