@@ -7,7 +7,17 @@ export const SET_AUTH_USER = 'SET_AUTH_USER'
 export const SET_LOADING = 'SET_LOADING'
 export const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL'
 
-const initAuthState: any = {
+export type InitAuthStateType = {
+    id: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean,
+    isLoading: boolean,
+    rememberMe: boolean,
+    captchaUrl: string | null,
+}
+
+const initAuthState: InitAuthStateType = {
     id: null,
     email: null,
     login: null,
@@ -16,7 +26,7 @@ const initAuthState: any = {
     rememberMe: false,
     captchaUrl: null,
 }
-export const authReducer = (state = initAuthState, action: any) => {
+export const authReducer = (state = initAuthState, action: any): InitAuthStateType => {
     switch (action.type) {
         case SET_AUTH_USER: {
             return {
@@ -29,7 +39,7 @@ export const authReducer = (state = initAuthState, action: any) => {
             }
         }
         case SET_CAPTCHA_URL: {
-            return {...state, captchaUrl: action.payload}
+            return {...state, captchaUrl: action.payload.captchaUrl}
         }
         default : {
             return state;
@@ -78,7 +88,7 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
         dispatch(stopSubmit('login', {_error: errorMessage}));
     }
 }
-// ====
+
 export const getCaptchaThunkCreator = () => async (dispatch: any) => {
     try {
         const response = await userAPI.getCaptcha()

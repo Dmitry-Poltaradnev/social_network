@@ -29,7 +29,7 @@ const Login = () => {
     return (
         <div className={s.loginWrapper}>
             <h2>Login</h2>
-            <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
+            <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl ?? ""}/>
         </div>
     );
 };
