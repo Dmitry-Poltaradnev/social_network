@@ -9,10 +9,20 @@ import {
     SAVE_PHOTO_SUCCESS
 } from "./userReducer";
 
-export const changeFollow = (id: string, followStatus: boolean) => {
+// type ChangeFollowType = {
+//     type: typeof CHANGE_FOLLOW,
+//     payload: {id: string, followStatus: boolean}
+// }
+// type SetIsFollowingType = {
+//     type: typeof IS_FOLLOWING,
+//     payload: {isFollowing: boolean, userId: string}
+// }
+
+
+export const changeFollow = (id: string, followStatus: boolean): any => {
     return ({type: CHANGE_FOLLOW, payload: {id, followStatus}});
 }
-export const setIsFollowing = (isFollowing: boolean, userId: string) => {
+export const setIsFollowing = (isFollowing: boolean, userId: string): any => {
     return ({type: IS_FOLLOWING, payload: {isFollowing, userId}});
 }
 export const setUser = (users: any) => {

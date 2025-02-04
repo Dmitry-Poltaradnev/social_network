@@ -3,23 +3,23 @@ import {DialogType, MessageType} from "../components/dialogs/Dialogs";
 
 export const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE'
 
-export type friendsBarType = {
+export type FriendsBarType = {
     id: string
     avaLink: string
     name: string
 }
 
-type messagePageType = {
+type MessagePageType = {
     messages: MessageType[]
     dialog: DialogType[]
 }
 
-type initialMessageStateType = {
-    friendsBar: friendsBarType[]
-    messagesPage: messagePageType
+type InitialMessageStateType = {
+    friendsBar: FriendsBarType[]
+    messagesPage: MessagePageType
 }
 
-export const initialMessageState: initialMessageStateType = {
+export const initialMessageState: InitialMessageStateType = {
     messagesPage: {
         messages: [
             {id: v1(), text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, recusandae?'},
@@ -45,7 +45,7 @@ export const initialMessageState: initialMessageStateType = {
     ],
 };
 
-export const messageReducer = (state = initialMessageState, action: any) => {
+export const messageReducer = (state = initialMessageState, action: any): InitialMessageStateType => {
     switch (action.type) {
         case ADD_NEW_MESSAGE:
             return {

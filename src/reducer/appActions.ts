@@ -1,6 +1,6 @@
 import {SET_INITIALIZED} from "./appReducer";
 
-type SetInitializedActionType = {
+export type SetInitializedActionType = {
     type: typeof SET_INITIALIZED;
 }
 

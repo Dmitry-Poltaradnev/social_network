@@ -1,7 +1,9 @@
 import {getLoginThunkCreator} from "./authReducer";
-import {setInitialized} from "./appActions";
+import {setInitialized, SetInitializedActionType} from "./appActions";
 
 export const SET_INITIALIZED = 'SET_INITIALIZED'
+
+type AppActions = SetInitializedActionType;
 
 export type InitAuthStateType = {
     initialized: boolean,
@@ -11,7 +13,7 @@ const initAuthState: InitAuthStateType = {
     initialized: false
 }
 
-export const appReducer = (state = initAuthState, action: any): InitAuthStateType => {
+export const appReducer = (state = initAuthState, action: AppActions): InitAuthStateType => {
     switch (action.type) {
         case SET_INITIALIZED: {
             return {

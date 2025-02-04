@@ -7,30 +7,23 @@ export const SET_AUTH_USER = 'SET_AUTH_USER'
 export const SET_LOADING = 'SET_LOADING'
 export const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL'
 
-export type InitAuthStateType = {
-    id: number | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean,
-    isLoading: boolean,
-    rememberMe: boolean,
-    captchaUrl: string | null,
-}
-
-const initAuthState: InitAuthStateType = {
-    id: null,
-    email: null,
-    login: null,
-    isAuth: false,
+const initAuthState = {
+    id: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
+    isAuth: false as boolean,
     isLoading: true,
     rememberMe: false,
-    captchaUrl: null,
+    captchaUrl: null as string | null,
 }
+
+type InitAuthStateType = typeof initAuthState
+
 export const authReducer = (state = initAuthState, action: any): InitAuthStateType => {
     switch (action.type) {
         case SET_AUTH_USER: {
             return {
-                ...state, ...action.payload
+                ...state, ...action.payload, hello: '222'
             }
         }
         case SET_LOADING: {

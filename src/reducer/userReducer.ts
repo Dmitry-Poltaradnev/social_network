@@ -22,10 +22,6 @@ export const PUT_USER_STATUS = 'PUT_USER_STATUS'
 export const GET_USER_ID = 'GET_USER_ID'
 export const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
-export type InitUserStateType = {
-    users: any;
-};
-
 const initUserState: any = {
     users: [],
     pageSize: 15,
@@ -39,7 +35,9 @@ const initUserState: any = {
     photos: "",
 }
 
-export const userReducer = (state = initUserState, action: any) => {
+type InitUserStateType = typeof initUserState
+
+export const userReducer = (state = initUserState, action: any) : InitUserStateType => {
     switch (action.type) {
         case  CHANGE_FOLLOW : {
             return {
@@ -120,14 +118,11 @@ export const changeUserFollowThunkCreator = (method: string, userId: string, use
 export const setUserProfileThunkCreator = (userId: string) => async (dispatch: any) => {
     try {
         let data = await userAPI.getProfile(userId)
-        console.log(data)
         dispatch(setProfile(data))
-        // !!!!!!!!--------------!!!!!!!!!
         if (data.photos) {
             console.log(data)
             dispatch(savePhotoSuccess(data.photos.large));
         }
-        // !!!!!!!!--------------!!!!!!!!!
     } catch (error: any) {
         console.error("Ошибка запроса:", error);
     }
