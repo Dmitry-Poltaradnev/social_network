@@ -1,7 +1,10 @@
 import {v1} from "uuid";
 import {DialogType, MessageType} from "../components/dialogs/Dialogs";
+import {AddMessageType} from "./messageActions";
 
 export const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE'
+
+type MessageActions = AddMessageType
 
 export type FriendsBarType = {
     id: string
@@ -45,14 +48,14 @@ export const initialMessageState: InitialMessageStateType = {
     ],
 };
 
-export const messageReducer = (state = initialMessageState, action: any): InitialMessageStateType => {
+export const messageReducer = (state = initialMessageState, action: MessageActions): InitialMessageStateType => {
     switch (action.type) {
         case ADD_NEW_MESSAGE:
             return {
                 ...state,
                 messagesPage: {
                     ...state.messagesPage,
-                    messages: [...state.messagesPage.messages, {id: v1(), text: action.text}],
+                    messages: [...state.messagesPage.messages, {id: v1(), text: action.payload.text}],
                 },
             };
         default:

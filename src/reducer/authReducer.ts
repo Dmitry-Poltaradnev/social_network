@@ -1,11 +1,20 @@
 import {userAPI} from "../api/api";
-import {setAuthLoading, setAuthUser, setCaptcha} from "./authActions";
+import {
+    setAuthLoading,
+    SetAuthLoadingType,
+    setAuthUser,
+    SetAuthUserType,
+    setCaptcha,
+    SetCaptchaType
+} from "./authActions";
 import {getUserId} from "./usersActions";
 import {stopSubmit} from "redux-form";
 
 export const SET_AUTH_USER = 'SET_AUTH_USER'
 export const SET_LOADING = 'SET_LOADING'
 export const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL'
+
+type AuthActions = SetAuthUserType | SetAuthLoadingType | SetCaptchaType
 
 const initAuthState = {
     id: null as number | null,
@@ -19,11 +28,11 @@ const initAuthState = {
 
 type InitAuthStateType = typeof initAuthState
 
-export const authReducer = (state = initAuthState, action: any): InitAuthStateType => {
+export const authReducer = (state = initAuthState, action: AuthActions): InitAuthStateType => {
     switch (action.type) {
         case SET_AUTH_USER: {
             return {
-                ...state, ...action.payload, hello: '222'
+                ...state, ...action.payload
             }
         }
         case SET_LOADING: {

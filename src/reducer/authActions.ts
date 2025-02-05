@@ -7,16 +7,15 @@ type SetAuthUserPayLoadType = {
     isAuth: boolean
 }
 
-type SetAuthUserType = {
+export type SetAuthUserType = {
     type: typeof SET_AUTH_USER,
     payload: SetAuthUserPayLoadType
 }
-
-type SetAuthLoadingType = {
+export type SetAuthLoadingType = {
     type: typeof SET_LOADING;
     payload: boolean
 }
-type SetCaptchaType = {
+export type SetCaptchaType = {
     type: typeof SET_CAPTCHA_URL,
     payload: { captchaUrl: string }
 }

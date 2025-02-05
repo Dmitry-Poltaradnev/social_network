@@ -1,14 +1,26 @@
 import {userAPI} from "../api/api";
 import {
-    changeFollow, putProfileSt, savePhotoSuccess,
+    changeFollow,
+    ChangeFollowType,
+    GetUserIdType,
+    putProfileStatus,
+    PutProfileStatusType,
+    savePhotoSuccess, SavePhotoSuccessType,
+    SetCurrentPageType,
     setIsFollowing,
-    setProfile,
+    SetIsFollowingType,
+    setProfile, SetProfileType,
     setTotalCount,
+    SetTotalCountType,
     setUser,
     setUserStatus,
-    toggleIsLoading
+    SetUserStatusType,
+    SetUserType,
+    toggleIsLoading,
+    ToggleIsLoadingType
 } from "./usersActions";
 import {stopSubmit} from "redux-form";
+import {ContactsUserType, UsersType, UserType} from "../types/types";
 
 export const CHANGE_FOLLOW = 'CHANGE_FOLLOW'
 export const IS_FOLLOWING = 'IS_FOLLOWING'
@@ -22,27 +34,59 @@ export const PUT_USER_STATUS = 'PUT_USER_STATUS'
 export const GET_USER_ID = 'GET_USER_ID'
 export const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
-const initUserState: any = {
+type UserActions =
+    ChangeFollowType
+    | SetIsFollowingType
+    | SetTotalCountType
+    | SetCurrentPageType
+    | ToggleIsLoadingType
+    | SetUserStatusType
+    | PutProfileStatusType
+    | GetUserIdType
+    | SavePhotoSuccessType
+    | SetProfileType
+    | SetUserType
+
+
+type InitUserStateType = {
+    users: UsersType[],
+    pageSize: number,
+    totalCount: number,
+    currentPage: number,
+    isLoading: boolean,
+    user: UserType,
+    isFollowingInProgress: any,
+    newUserStatus: string,
+    userId: any,
+    photos: string
+}
+// очень спорно нужно дописывать
+const initialState = {
     users: [],
-    pageSize: 15,
-    totalCount: 0,
+    totalUsersCount: 0,
+    pageSize: 10,
     currentPage: 1,
     isLoading: false,
-    user: {},
+    user: {
+        userId: 0,
+        lookingForAJob: false,
+        name: '',
+        photos: {
+            small: null,
+            large: null
+        }
+    },
     isFollowingInProgress: [],
     newUserStatus: '',
     userId: null,
-    photos: "",
-}
+};
 
-type InitUserStateType = typeof initUserState
-
-export const userReducer = (state = initUserState, action: any) : InitUserStateType => {
+export const userReducer = (state = initialState, action: UserActions): any => {
     switch (action.type) {
         case  CHANGE_FOLLOW : {
             return {
                 ...state,
-                users: state.users.map((user: any) => user.id === action.payload.id ? {
+                users: state.users.map((user: any) => user.id === Number(action.payload.id) ? {
                     ...user,
                     followed: action.payload.followStatus
                 } : user)
@@ -53,7 +97,7 @@ export const userReducer = (state = initUserState, action: any) : InitUserStateT
                 ...state,
                 isFollowingInProgress: action.payload.isFollowing ?
                     [...state.isFollowingInProgress, action.payload.userId] :
-                    state.isFollowingInProgress.filter((id: string) => id !== action.payload.userId)
+                    state.isFollowingInProgress.filter((id: number) => id !== action.payload.userId)
             }
         }
         case SET_USERS : {
@@ -103,7 +147,8 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => a
 
 export const changeUserFollowThunkCreator = (method: string, userId: string, userFollowed: boolean) => async (dispatch: any) => {
     try {
-        dispatch(setIsFollowing(true, userId))
+        const numericUserId = Number(userId);
+        dispatch(setIsFollowing(true, numericUserId));
         let data = await userAPI.changeUserFollow(method, userId)
         if (data.resultCode === 0) {
             dispatch(changeFollow(userId, !userFollowed));
@@ -111,7 +156,7 @@ export const changeUserFollowThunkCreator = (method: string, userId: string, use
     } catch (error: any) {
         console.error("Ошибка запроса:", error);
     } finally {
-        dispatch(setIsFollowing(false, userId))
+        dispatch(setIsFollowing(false, Number(userId)))
     }
 }
 
@@ -150,7 +195,7 @@ export const putUserStatusThunkCreator = (status: string) => async (dispatch: an
         dispatch(toggleIsLoading(true))
         let data = await userAPI.putProfileStatus(status)
         if (data.resultCode === 0) {
-            dispatch(putProfileSt(status))
+            dispatch(putProfileStatus(status))
         } else {
             console.error("Ошибка обновления статуса:", data.messages[0]);
         }
@@ -176,7 +221,7 @@ export const savePhoto = (file: any) => async (dispatch: any) => {
         dispatch(toggleIsLoading(false))
     }
 }
-export const saveProfileThunkCreator = (fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: string, contacts: any) => async (dispatch: any, getState: any) => {
+export const saveProfileThunkCreator = (fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: string, contacts: ContactsUserType) => async (dispatch: any, getState: any) => {
     try {
         dispatch(toggleIsLoading(true))
         const userId = getState().user.userId;
