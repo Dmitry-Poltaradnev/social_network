@@ -32,9 +32,8 @@ const UserProfile = () => {
 
     useEffect(() => {
         if (userId) {
-            // !!!!!!!!--------------!!!!!!!!!
+            console.log(typeof userId);
             dispatch(setUserProfileThunkCreator(userId));
-            // !!!!!!!!--------------!!!!!!!!!
             dispatch(setUserStatusThunkCreator());
         }
     }, [dispatch, userId]);
@@ -49,25 +48,26 @@ const UserProfile = () => {
         setEditMode(!editMode);
     }
 
-    const onSubmit = ({fullName, lookingForAJob, lookingForAJobDescription, aboutMe , contacts }: any) => {
-        dispatch(saveProfileThunkCreator(fullName, lookingForAJob, lookingForAJobDescription, aboutMe,contacts ))
+    const onSubmit = ({fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts}: any) => {
+        dispatch(saveProfileThunkCreator(fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts))
         setEditMode(false)
     }
 
     const editProfileContacts = (editMode: any) => {
         return !editMode ?
-            <ProfileContacts user={user} contacts={user.contacts} userId={userId} toEditMode={toEditMode}/> :
-            <ProfileContactsForm initialValues={user} contacts={user.contacts} onSubmit={onSubmit}/>
+            <ProfileContacts user={user} contacts={user?.contacts} userId={userId} toEditMode={toEditMode}/> :
+            <ProfileContactsForm initialValues={user || {}} contacts={user?.contacts} onSubmit={onSubmit}/>
     }
 
     return (
         <div className={s.mainUserProfile}>
             {isLoading ? <Loader/> : <>
                 <div className={s.profileWrapper}>
-                    <img className={s.userPhoto} src={photos || mainUserPhoto} alt="mainUserPhoto"/>
+                    {/*== ==*/}
+                    <img className={s.userPhoto} src={user?.photos.large || mainUserPhoto} alt="mainUserPhoto"/>
+                    {/*====*/}
                     {userId && <input onChange={mainPhotoSelected} type="file"/>}
                     <ProfileStatus newUserStatus={newUserStatus}/>
-
                     {editProfileContacts(editMode)}
 
                 </div>

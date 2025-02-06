@@ -19,11 +19,11 @@ export const userAPI = {
     login(email: string, password: string, rememberMe = false , captcha: string) {
         return axiosInstance.post(`auth/login`, {email, password, rememberMe , captcha})
     },
-    getProfile(userId: string) {
+    getProfile(userId: number) {
         return axiosInstance.get(`profile/${userId}`)
             .then(response => response.data)
     },
-    changeUserFollow(method: any, id: string) {
+    changeUserFollow(method: any, id: number) {
         return axiosInstance({
             method: method,
             url: `follow/${id}`

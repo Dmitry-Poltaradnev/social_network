@@ -16,13 +16,13 @@ export const MemberProfile = () => {
     const {user} = useSelector((state: RootStateType) => state.user);
 
     useEffect(() => {
-        dispatch(setUserProfileThunkCreator(userId));
+        dispatch(setUserProfileThunkCreator(Number(userId)));
     }, [dispatch, userId]);
 
     return (
         <div className={s.back}>
             <MemberProfileInfo user={user}/>
-            <ProfileContacts contacts={user.contacts} user={user}/>
+            <ProfileContacts contacts={user?.contacts} user={user}/>
         </div>
     );
 };

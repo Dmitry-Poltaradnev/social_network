@@ -12,7 +12,7 @@ import {PhotosUserType, UsersType, UserType} from "../types/types";
 
 export type ChangeFollowType = {
     type: typeof CHANGE_FOLLOW,
-    payload: { id: string, followStatus: boolean }
+    payload: { id: number, followStatus: boolean }
 }
 
 export type SetIsFollowingType = {
@@ -20,7 +20,7 @@ export type SetIsFollowingType = {
     payload: { isFollowing: boolean, userId: number }
 }
 
-export type SetUserType = {
+export type SetUsersType = {
     type: typeof SET_USERS,
     payload: { users: UsersType }
 }
@@ -64,13 +64,13 @@ export type SavePhotoSuccessType = {
     payload: { photos: PhotosUserType }
 }
 
-export const changeFollow = (id: string, followStatus: boolean): ChangeFollowType => {
+export const changeFollow = (id: number, followStatus: boolean): ChangeFollowType => {
     return ({type: CHANGE_FOLLOW, payload: {id, followStatus}});
 }
 export const setIsFollowing = (isFollowing: boolean, userId: number): SetIsFollowingType => {
     return ({type: IS_FOLLOWING, payload: {isFollowing, userId}});
 }
-export const setUser = (users: UsersType): any => {
+export const setUser = (users: UsersType): SetUsersType => {
     return {type: SET_USERS, payload: {users}};
 }
 export const setTotalCount = (totalCount: number): SetTotalCountType => {

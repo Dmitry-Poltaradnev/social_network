@@ -15,12 +15,12 @@ import {
     setUser,
     setUserStatus,
     SetUserStatusType,
-    SetUserType,
+    SetUsersType,
     toggleIsLoading,
     ToggleIsLoadingType
 } from "./usersActions";
 import {stopSubmit} from "redux-form";
-import {ContactsUserType, UsersType, UserType} from "../types/types";
+import {ContactsUserType, PhotosUserType, UsersType, UserType} from "../types/types";
 
 export const CHANGE_FOLLOW = 'CHANGE_FOLLOW'
 export const IS_FOLLOWING = 'IS_FOLLOWING'
@@ -45,7 +45,7 @@ type UserActions =
     | GetUserIdType
     | SavePhotoSuccessType
     | SetProfileType
-    | SetUserType
+    | SetUsersType
 
 
 type InitUserStateType = {
@@ -54,16 +54,16 @@ type InitUserStateType = {
     totalCount: number,
     currentPage: number,
     isLoading: boolean,
-    user: UserType,
-    isFollowingInProgress: any,
+    user: UserType | null,
+    isFollowingInProgress: number[],
     newUserStatus: string,
-    userId: any,
-    photos: string
+    userId: number | null,
+    photos: PhotosUserType | null
 }
 // очень спорно нужно дописывать
-const initialState = {
+const initialState: InitUserStateType = {
     users: [],
-    totalUsersCount: 0,
+    totalCount: 0,
     pageSize: 10,
     currentPage: 1,
     isLoading: false,
@@ -71,17 +71,25 @@ const initialState = {
         userId: 0,
         lookingForAJob: false,
         name: '',
-        photos: {
-            small: null,
-            large: null
+        photos: {small: null, large: null},
+        contacts: {
+            github: '',
+            vk: '',
+            facebook: '',
+            instagram: '',
+            twitter: '',
+            website: '',
+            youtube: '',
+            mainLink: '',
         }
     },
     isFollowingInProgress: [],
     newUserStatus: '',
     userId: null,
+    photos: null,
 };
 
-export const userReducer = (state = initialState, action: UserActions): any => {
+export const userReducer = (state = initialState, action: UserActions): InitUserStateType => {
     switch (action.type) {
         case  CHANGE_FOLLOW : {
             return {
@@ -101,7 +109,7 @@ export const userReducer = (state = initialState, action: UserActions): any => {
             }
         }
         case SET_USERS : {
-            return {...state, users: action.payload.users}
+            return { ...state, users: Array.isArray(action.payload.users) ? action.payload.users : [action.payload.users] };
         }
         case SET_TOTAL_COUNT : {
             return {...state, totalCount: action.payload.totalCount}
@@ -145,7 +153,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => a
     }
 }
 
-export const changeUserFollowThunkCreator = (method: string, userId: string, userFollowed: boolean) => async (dispatch: any) => {
+export const changeUserFollowThunkCreator = (method: string, userId: number, userFollowed: boolean) => async (dispatch: any) => {
     try {
         const numericUserId = Number(userId);
         dispatch(setIsFollowing(true, numericUserId));
@@ -160,7 +168,7 @@ export const changeUserFollowThunkCreator = (method: string, userId: string, use
     }
 }
 
-export const setUserProfileThunkCreator = (userId: string) => async (dispatch: any) => {
+export const setUserProfileThunkCreator = (userId: number) => async (dispatch: any) => {
     try {
         let data = await userAPI.getProfile(userId)
         dispatch(setProfile(data))
