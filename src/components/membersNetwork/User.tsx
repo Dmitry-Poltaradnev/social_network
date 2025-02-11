@@ -5,13 +5,16 @@ import {NavLink} from "react-router-dom";
 import {RootStateType} from "../../reducer/store";
 import {changeUserFollowThunkCreator} from "../../reducer/userReducer";
 import s from './memberProfile/memberProfile.module.css'
+import {UsersType} from "../../types/types";
 
 export const FOLLOW_METHOD = {
     FOLLOW: 'post',
     UNFOLLOW: 'delete',
 }
 
-export const User = ({user}: any) => {
+export const User: React.FC<{ user: UsersType }> = ({user}) => {
+
+    const photoSrc = user.photos.small ?? user.photos.large ?? defaultUserPhoto;
 
     const dispatch = useDispatch();
 
@@ -27,9 +30,7 @@ export const User = ({user}: any) => {
     return (
         <li>
             <NavLink to={'/profile/' + user.id}>
-                <img className={s.memberPhoto}
-                     src={user.photos && (user.photos.small || user.photos.large) ? (user.photos.small || user.photos.large) : defaultUserPhoto}
-                     alt="user_photo"/>
+                <img className={s.memberPhoto} src={photoSrc} alt="user_photo"/>
             </NavLink>
             <br/>
             <span> Name: {user.name}</span>

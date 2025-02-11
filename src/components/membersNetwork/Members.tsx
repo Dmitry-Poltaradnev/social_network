@@ -1,18 +1,20 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootStateType } from "../../reducer/store";
-import { User } from "./User";
-import { Loader } from "../common/loader/Loader";
-import { getUsersThunkCreator } from "../../reducer/userReducer";
-import { WithAuthRedirect } from "../../hoc/withAuthRedirect";
-import { Paginator } from "../paginator/Paginator";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "../../reducer/store";
+import {User} from "./User";
+import {Loader} from "../common/loader/Loader";
+import {getUsersThunkCreator} from "../../reducer/userReducer";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {Paginator} from "../paginator/Paginator";
 import {setCurrentPage} from "../../reducer/usersActions";
 import s from './members.module.css'
+import {UsersType} from "../../types/types";
 
 const Members: React.FC = () => {
+
     const dispatch = useDispatch();
 
-    const { users, pageSize, totalCount, currentPage, isLoading } = useSelector(
+    const {users, pageSize, totalCount, currentPage, isLoading} = useSelector(
         (state: RootStateType) => state.user
     );
 
@@ -28,12 +30,12 @@ const Members: React.FC = () => {
         <div className={s.usersContainer}>
             <h3>Users</h3>
             {isLoading ? (
-                <Loader />
+                <Loader/>
             ) : (
                 <>
                     <ol>
-                        {users.map((user: any) => (
-                            <User key={user.id} user={user} />
+                        {users.map((user: UsersType) => (
+                            <User key={user.id} user={user}/>
                         ))}
                     </ol>
                     <Paginator

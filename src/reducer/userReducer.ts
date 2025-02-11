@@ -54,13 +54,14 @@ type InitUserStateType = {
     totalCount: number,
     currentPage: number,
     isLoading: boolean,
-    user: UserType | null,
+    user: UserType,
     isFollowingInProgress: number[],
     newUserStatus: string,
     userId: number | null,
     photos: PhotosUserType | null
 }
-// очень спорно нужно дописывать
+
+
 const initialState: InitUserStateType = {
     users: [],
     totalCount: 0,
@@ -68,7 +69,7 @@ const initialState: InitUserStateType = {
     currentPage: 1,
     isLoading: false,
     user: {
-        userId: 0,
+        id: 0,
         lookingForAJob: false,
         name: '',
         photos: {small: null, large: null},
@@ -86,7 +87,7 @@ const initialState: InitUserStateType = {
     isFollowingInProgress: [],
     newUserStatus: '',
     userId: null,
-    photos: null,
+    photos: {small: null, large: null},
 };
 
 export const userReducer = (state = initialState, action: UserActions): InitUserStateType => {
@@ -94,7 +95,7 @@ export const userReducer = (state = initialState, action: UserActions): InitUser
         case  CHANGE_FOLLOW : {
             return {
                 ...state,
-                users: state.users.map((user: any) => user.id === Number(action.payload.id) ? {
+                users: state.users.map((user: UsersType) => user.id === Number(action.payload.id) ? {
                     ...user,
                     followed: action.payload.followStatus
                 } : user)
@@ -109,7 +110,10 @@ export const userReducer = (state = initialState, action: UserActions): InitUser
             }
         }
         case SET_USERS : {
-            return { ...state, users: Array.isArray(action.payload.users) ? action.payload.users : [action.payload.users] };
+            return {
+                ...state,
+                users: Array.isArray(action.payload.users) ? action.payload.users : [action.payload.users]
+            };
         }
         case SET_TOTAL_COUNT : {
             return {...state, totalCount: action.payload.totalCount}
@@ -173,7 +177,6 @@ export const setUserProfileThunkCreator = (userId: number) => async (dispatch: a
         let data = await userAPI.getProfile(userId)
         dispatch(setProfile(data))
         if (data.photos) {
-            console.log(data)
             dispatch(savePhotoSuccess(data.photos.large));
         }
     } catch (error: any) {
@@ -217,10 +220,6 @@ export const savePhoto = (file: any) => async (dispatch: any) => {
     try {
         dispatch(toggleIsLoading(true))
         let data: any = await userAPI.putSavePhoto(file)
-
-        console.log("Ответ от API:", data); // Добавьте этот лог для проверки
-        console.log('Linka', data.data.data.photos.large)
-        // !!!!!!!!--------------!!!!!!!!!
         dispatch(savePhotoSuccess(data.data.data.photos.large));
 
     } catch (error: any) {

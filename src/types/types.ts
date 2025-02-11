@@ -16,7 +16,7 @@ export type UsersType = {
     followed: boolean,
 }
 export type UserType = {
-    userId: number,
+    id: number,
     lookingForAJob: boolean,
     name: string,
     photos: PhotosUserType

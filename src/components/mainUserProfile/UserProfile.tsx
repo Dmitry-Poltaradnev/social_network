@@ -15,6 +15,7 @@ import s from './mainUserProfile.module.css'
 import mainUserPhoto from '../../img/peon.gif'
 import {ProfileContacts} from "./ProfileContacts";
 import ProfileContactsForm from "./ProfileContactsForm";
+import defaultUserPhoto from "../../img/default-avatar-profile.avif";
 
 const UserProfile = () => {
 
@@ -59,17 +60,18 @@ const UserProfile = () => {
             <ProfileContactsForm initialValues={user || {}} contacts={user?.contacts} onSubmit={onSubmit}/>
     }
 
+    const photoSrc = user.photos.large ?? user.photos.small ?? defaultUserPhoto;
+
     return (
         <div className={s.mainUserProfile}>
             {isLoading ? <Loader/> : <>
                 <div className={s.profileWrapper}>
-                    {/*== ==*/}
-                    <img className={s.userPhoto} src={user?.photos.large || mainUserPhoto} alt="mainUserPhoto"/>
+                    {/*todo fix download photo*/}
+                    <img className={s.userPhoto} src={photoSrc} alt="user_photo"/>
                     {/*====*/}
                     {userId && <input onChange={mainPhotoSelected} type="file"/>}
                     <ProfileStatus newUserStatus={newUserStatus}/>
                     {editProfileContacts(editMode)}
-
                 </div>
                 <MainUserPosts/>
             </>}

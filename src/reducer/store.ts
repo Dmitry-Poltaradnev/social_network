@@ -18,6 +18,9 @@ let reducers = combineReducers({
     app: appReducer,
 })
 
+type ReducersType = typeof reducers;
+export type AppStateType = ReturnType<ReducersType>;
+
 // Расширение типа `window` для DevTools
 declare global {
     interface Window {
