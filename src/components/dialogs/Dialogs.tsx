@@ -24,14 +24,13 @@ const Dialogs = () => {
 
     const {messages, dialog} = useSelector((state: RootStateType) => state.message.messagesPage)
 
-    const AddMessageReduxForm = reduxForm({
+    const AddMessageReduxForm = reduxForm<{ message: string }>({
         form: 'addMessage',
     })(AddMessageForm)
 
-
-    const addMessage = ({message}: any) => {
-        if (message.trim().length > 0) {
-            dispatch(addNewMessage(message))
+    const addMessage = (values: { message: string }) => {
+        if (values.message.trim().length > 0) {
+            dispatch(addNewMessage(values.message))
         }
     }
 
@@ -46,7 +45,7 @@ const Dialogs = () => {
                     </div>
                 </div>
                 <div className={s.messages}>
-                    {messages.map((messages: MessageType) => <Message key={messages.id} text={messages.text}/>)}
+                    {messages.map((message: MessageType) => <Message key={message.id} text={message.text}/>)}
                     <AddMessageReduxForm onSubmit={addMessage}/>
                 </div>
             </div>

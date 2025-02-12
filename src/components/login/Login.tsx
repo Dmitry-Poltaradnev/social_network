@@ -7,19 +7,29 @@ import {RootStateType} from "../../reducer/store";
 import {Redirect} from "react-router-dom";
 import s from './loginForm.module.css'
 
-const Login = () => {
+type LoginFormValuesType = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: string
+}
+type LoginFormPropsType = {
+    captchaUrl: string,
+}
+
+const Login : React.FC = () => {
 
     const dispatch = useDispatch()
 
     const {isAuth, captchaUrl} = useSelector((state: RootStateType) => state.auth)
 
-    const LoginReduxForm = reduxForm<{ email: string; password: string; rememberMe: boolean }, { captchaUrl: string }>({
+    const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormPropsType>({
         // a unique name for the form
         form: 'login'
     })(LoginForm)
 
-    const onSubmit = ({email, password, rememberMe,captcha}: any) => {
-        dispatch(loginThunkCreator(email, password, rememberMe, captcha))
+    const onSubmit = (values: LoginFormValuesType) => {
+        dispatch(loginThunkCreator(values.email, values.password, values.rememberMe, values.captcha))
     }
 
     if (isAuth) {

@@ -1,23 +1,30 @@
-.back{
+.back {
     background-color: cornflowerblue;
-
 }
-.dialogs_wrapper{
+
+.dialogs_wrapper {
     display: grid;
     grid-template-columns: 2fr 10fr;
 }
-.dialogs{
+
+.dialogs {
 
 }
-.dialogItems{
+
+.dialogItems {
 
 }
-.dialogItem{
+
+.dialogItem {
 
 }
-.messages{
+
+.messages {
 
 }
-.message{
 
+.message {
+    padding: 10px;
+    border: 1px solid red;
+    margin: 4px;
 }

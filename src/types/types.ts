@@ -26,3 +26,8 @@ export type PhotosUserType = {
     small: string | null,
     large: string | null,
 }
+export type FriendType = {
+    id?: string,
+    avaLink: string,
+    name: string,
+}

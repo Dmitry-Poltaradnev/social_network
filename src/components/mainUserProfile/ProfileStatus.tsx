@@ -1,19 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {putUserStatusThunkCreator} from "../../reducer/userReducer";
 import s from './mainUserProfile.module.css'
 
-export const ProfileStatus = ({newUserStatus}: any) => {
+type ProfileStatusPropsType = {
+    newUserStatus: string
+}
 
+export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({newUserStatus}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         setLocalStatus(newUserStatus);
     }, [newUserStatus]);
 
-    const [localStatus, setLocalStatus] = useState(newUserStatus);
+    const [localStatus, setLocalStatus] = useState<string>(newUserStatus);
 
-    const [inputMode, setInputMode] = useState(false);
+    const [inputMode, setInputMode] = useState<boolean>(false);
 
     const updateStatusHandler = () => {
         dispatch(putUserStatusThunkCreator(localStatus))
@@ -31,7 +34,7 @@ export const ProfileStatus = ({newUserStatus}: any) => {
         <>
             {!inputMode ? (stateStatus) : (<div>
                 <input autoFocus onBlur={updateStatusHandler} value={localStatus}
-                       onChange={(e) => setLocalStatus(e.target.value)}/>
+                       onChange={(e: ChangeEvent<HTMLInputElement>) => setLocalStatus(e.target.value)}/>
                 <button onClick={updateStatusHandler}>Update status on server</button>
             </div>)}
         </>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {ProfileStatus} from "./ProfileStatus";
 import {useDispatch, useSelector} from "react-redux";
@@ -21,7 +21,7 @@ const UserProfile = () => {
 
     const dispatch = useDispatch();
 
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState<boolean>(false);
 
     const {
         isLoading,
@@ -33,7 +33,6 @@ const UserProfile = () => {
 
     useEffect(() => {
         if (userId) {
-            console.log(typeof userId);
             dispatch(setUserProfileThunkCreator(userId));
             dispatch(setUserStatusThunkCreator());
         }
@@ -54,7 +53,7 @@ const UserProfile = () => {
         setEditMode(false)
     }
 
-    const editProfileContacts = (editMode: any) => {
+    const editProfileContacts = (editMode: boolean) => {
         return !editMode ?
             <ProfileContacts user={user} contacts={user?.contacts} userId={userId} toEditMode={toEditMode}/> :
             <ProfileContactsForm initialValues={user || {}} contacts={user?.contacts} onSubmit={onSubmit}/>
