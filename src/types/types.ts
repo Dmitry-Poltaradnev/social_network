@@ -18,7 +18,10 @@ export type UsersType = {
 export type UserType = {
     id: number,
     lookingForAJob: boolean,
-    name: string,
+    lookingForAJobDescription: string,
+    aboutMe : string
+    // name: string,
+    fullName: string,
     photos: PhotosUserType
     contacts: ContactsUserType
 }

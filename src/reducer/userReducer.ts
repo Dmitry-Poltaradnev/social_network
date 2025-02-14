@@ -61,7 +61,6 @@ type InitUserStateType = {
     photos: PhotosUserType | null
 }
 
-
 const initialState: InitUserStateType = {
     users: [],
     totalCount: 0,
@@ -71,7 +70,9 @@ const initialState: InitUserStateType = {
     user: {
         id: 0,
         lookingForAJob: false,
-        name: '',
+        fullName: '',
+        lookingForAJobDescription: '',
+        aboutMe: '',
         photos: {small: null, large: null},
         contacts: {
             github: '',

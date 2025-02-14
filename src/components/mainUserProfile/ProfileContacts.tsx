@@ -1,8 +1,15 @@
 import React from 'react';
 import s from './mainUserProfile.module.css'
+import {ContactsUserType, UserType} from "../../types/types";
 
-export const ProfileContacts = ({contacts, userId, toEditMode, user}: any) => {
+type ProfileContactPropsType = {
+    contacts: ContactsUserType
+    userId?: number
+    toEditMode?: () => void
+    user: UserType
+}
 
+export const ProfileContacts: React.FC<ProfileContactPropsType> = ({contacts, userId, toEditMode, user}) => {
     if (!contacts) {
         return <p>Loading...</p>;
     }
@@ -18,7 +25,7 @@ export const ProfileContacts = ({contacts, userId, toEditMode, user}: any) => {
             <p>My skills: {user.lookingForAJobDescription}</p>
             <h3>Contacts</h3>
             <ul>
-                {Object.entries(contacts).map(([key, value]: any) =>
+                {Object.entries(contacts).map(([key, value]) =>
                     <li key={key}><strong>{key}</strong>: {value || 'null'}</li>
                 )}
             </ul>

@@ -3,7 +3,11 @@ import {useDispatch} from "react-redux";
 import {putUserStatusThunkCreator} from "../../reducer/userReducer";
 import s from './mainUserProfile.module.css'
 
-export const ProfileStatus = ({newUserStatus}: any) => {
+type ProfileStatusPropsType = {
+    newUserStatus: string
+}
+
+export const ProfileStatus = ({newUserStatus}: ProfileStatusPropsType) => {
 
     const dispatch = useDispatch();
 
@@ -11,9 +15,9 @@ export const ProfileStatus = ({newUserStatus}: any) => {
         setLocalStatus(newUserStatus);
     }, [newUserStatus]);
 
-    const [localStatus, setLocalStatus] = useState(newUserStatus);
+    const [localStatus, setLocalStatus] = useState<string>(newUserStatus);
 
-    const [inputMode, setInputMode] = useState(false);
+    const [inputMode, setInputMode] = useState<boolean>(false);
 
     const updateStatusHandler = () => {
         dispatch(putUserStatusThunkCreator(localStatus))
