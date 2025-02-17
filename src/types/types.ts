@@ -20,7 +20,6 @@ export type UserType = {
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     aboutMe : string
-    // name: string,
     fullName: string,
     photos: PhotosUserType
     contacts: ContactsUserType
