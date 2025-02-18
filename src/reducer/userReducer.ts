@@ -21,8 +21,9 @@ import {
 } from "./usersActions";
 import {stopSubmit} from "redux-form";
 import {ContactsUserType, PhotosUserType, UsersType, UserType} from "../types/types";
-import {Dispatch} from "redux";
+import {AnyAction, Dispatch} from "redux";
 import {AppStateType} from "./store";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
 
 export const CHANGE_FOLLOW = 'CHANGE_FOLLOW'
 export const IS_FOLLOWING = 'IS_FOLLOWING'
@@ -36,7 +37,7 @@ export const PUT_USER_STATUS = 'PUT_USER_STATUS'
 export const GET_USER_ID = 'GET_USER_ID'
 export const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
-type UserActions =
+export type UserActions =
     ChangeFollowType
     | SetIsFollowingType
     | SetTotalCountType
@@ -231,17 +232,27 @@ export const savePhoto = (file: File) => async (dispatch: Dispatch<UserActions>)
         dispatch(toggleIsLoading(false))
     }
 }
+
+type DispatchType = ThunkDispatch<AppStateType, unknown, AnyAction>;
+
 export const saveProfileThunkCreator =
     (fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: string, contacts: ContactsUserType) =>
-        async (dispatch: any, getState: any) => {
+        async (dispatch: DispatchType, getState: () => AppStateType) => {
             try {
                 dispatch(toggleIsLoading(true))
                 const userId = getState().user.userId;
+
+                if (userId === null) {
+                    throw new Error('userId is missing in state')
+                }
+
                 const profile = {fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts};
-                const response = await userAPI.saveProfile(profile);
+                const response: {
+                    data: { resultCode: number; messages: string[] }
+                } = await userAPI.saveProfile(profile);
 
                 if (response.data.resultCode === 0) {
-                    dispatch(setUserProfileThunkCreator(userId));
+                    await dispatch(setUserProfileThunkCreator(userId));
                 } else {
                     dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0] || 'Error'}));
                     throw new Error(response.data.messages[0] || 'Error');

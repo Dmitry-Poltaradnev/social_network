@@ -7,7 +7,7 @@ import s from './loginForm.module.css'
 export const LoginForm = ({handleSubmit, error, captchaUrl}: any) => {
     return (
         <div>
-            {captchaUrl && <img src={captchaUrl.captchaUrl} alt="captcha"/>}
+            {captchaUrl && <img src={captchaUrl} alt="captcha"/>}
             {captchaUrl &&
                 <Field placeholder={'add symbols from captcha'} name={'captcha'} component={Input} type="text"
                        validate={[required]}/>}

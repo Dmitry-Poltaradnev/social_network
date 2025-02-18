@@ -1,4 +1,5 @@
 import axios from "axios";
+import {UserType} from "../types/types";
 
 const axiosInstance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
