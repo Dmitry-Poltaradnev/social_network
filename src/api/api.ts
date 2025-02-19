@@ -63,6 +63,9 @@ type PutProfileStatusType = {
 type GetCaptchaType = {
     url: string
 }
+type ChangeUserFollowType ={
+
+}
 // type PutSavePhotoType = {
 //     data: { photos: PhotosProfileType }; // Должно быть так
 // };
