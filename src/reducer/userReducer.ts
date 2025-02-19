@@ -20,7 +20,10 @@ import {
     ToggleIsLoadingType
 } from "./usersActions";
 import {stopSubmit} from "redux-form";
-import {ContactsUserType, PhotosUserType, UsersType, UserType} from "../types/types";
+import {ContactsProfileType, PhotosProfileType, UsersType, ProfileType} from "../types/types";
+import {AnyAction, Dispatch} from "redux";
+import {AppStateType} from "./store";
+import {ThunkDispatch} from "redux-thunk";
 
 export const CHANGE_FOLLOW = 'CHANGE_FOLLOW'
 export const IS_FOLLOWING = 'IS_FOLLOWING'
@@ -34,7 +37,7 @@ export const PUT_USER_STATUS = 'PUT_USER_STATUS'
 export const GET_USER_ID = 'GET_USER_ID'
 export const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
-type UserActions =
+export type UserActions =
     ChangeFollowType
     | SetIsFollowingType
     | SetTotalCountType
@@ -54,13 +57,12 @@ type InitUserStateType = {
     totalCount: number,
     currentPage: number,
     isLoading: boolean,
-    user: UserType,
+    user: ProfileType,
     isFollowingInProgress: number[],
     newUserStatus: string,
     userId: number | null,
-    photos: PhotosUserType | null
+    photos: PhotosProfileType | null
 }
-
 
 const initialState: InitUserStateType = {
     users: [],
@@ -70,8 +72,10 @@ const initialState: InitUserStateType = {
     isLoading: false,
     user: {
         id: 0,
+        fullName: '',
         lookingForAJob: false,
-        name: '',
+        lookingForAJobDescription: '',
+        aboutMe: '',
         photos: {small: null, large: null},
         contacts: {
             github: '',
@@ -144,10 +148,10 @@ export const userReducer = (state = initialState, action: UserActions): InitUser
     }
 };
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: any) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: Dispatch<UserActions>) => {
     try {
         dispatch(toggleIsLoading(true))
-        let data: any = await userAPI.getUser(currentPage, pageSize)
+        let data: { totalCount: number; items: UsersType } = await userAPI.getUser(currentPage, pageSize)
         dispatch(setTotalCount(data.totalCount))
         dispatch(setUser(data.items))
     } catch (error) {
@@ -157,11 +161,11 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => a
     }
 }
 
-export const changeUserFollowThunkCreator = (method: string, userId: number, userFollowed: boolean) => async (dispatch: any) => {
+export const changeUserFollowThunkCreator = (method: string, userId: number, userFollowed: boolean) => async (dispatch: Dispatch<UserActions>) => {
     try {
         const numericUserId = Number(userId);
         dispatch(setIsFollowing(true, numericUserId));
-        let data = await userAPI.changeUserFollow(method, userId)
+        let data: { resultCode: number } = await userAPI.changeUserFollow(method, userId)
         if (data.resultCode === 0) {
             dispatch(changeFollow(userId, !userFollowed));
         }
@@ -172,19 +176,19 @@ export const changeUserFollowThunkCreator = (method: string, userId: number, use
     }
 }
 
-export const setUserProfileThunkCreator = (userId: number) => async (dispatch: any) => {
+export const setUserProfileThunkCreator = (userId: number) => async (dispatch: Dispatch<UserActions>) => {
     try {
-        let data = await userAPI.getProfile(userId)
+        let data: ProfileType = await userAPI.getProfile(userId)
         dispatch(setProfile(data))
         if (data.photos) {
-            dispatch(savePhotoSuccess(data.photos.large));
+            dispatch(savePhotoSuccess(data.photos));
         }
-    } catch (error: any) {
+    } catch (error) {
         console.error("Ошибка запроса:", error);
     }
 }
 
-export const setUserStatusThunkCreator = () => async (dispatch: any, getState: any) => {
+export const setUserStatusThunkCreator = () => async (dispatch: Dispatch<UserActions>, getState: () => AppStateType) => {
     try {
         const userId = getState().user.userId; // Получаем userId из состояния
         if (!userId) {
@@ -192,61 +196,73 @@ export const setUserStatusThunkCreator = () => async (dispatch: any, getState: a
             return;
         }
         dispatch(toggleIsLoading(true))
-        let data = await userAPI.getProfileStatus(userId)
+        let data: string = await userAPI.getProfileStatus(userId)
         dispatch(setUserStatus(data));
-    } catch (error: any) {
+    } catch (error) {
         console.error("Ошибка запроса:", error);
     } finally {
         dispatch(toggleIsLoading(false))
     }
 };
 
-export const putUserStatusThunkCreator = (status: string) => async (dispatch: any) => {
+export const putUserStatusThunkCreator = (status: string) => async (dispatch: Dispatch<UserActions>) => {
     try {
         dispatch(toggleIsLoading(true))
-        let data = await userAPI.putProfileStatus(status)
+        let data: { resultCode: number; messages: string[] } = await userAPI.putProfileStatus(status)
+        console.log(data)
         if (data.resultCode === 0) {
             dispatch(putProfileStatus(status))
         } else {
             console.error("Ошибка обновления статуса:", data.messages[0]);
         }
-    } catch (error: any) {
-        console.error("Ошибка запроса:", error);
-    } finally {
-        dispatch(toggleIsLoading(false))
-    }
-}
-export const savePhoto = (file: any) => async (dispatch: any) => {
-    try {
-        dispatch(toggleIsLoading(true))
-        let data: any = await userAPI.putSavePhoto(file)
-        dispatch(savePhotoSuccess(data.data.data.photos.large));
-
-    } catch (error: any) {
-        console.error("Ошибка запроса:", error);
-    } finally {
-        dispatch(toggleIsLoading(false))
-    }
-}
-export const saveProfileThunkCreator = (fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: string, contacts: ContactsUserType) => async (dispatch: any, getState: any) => {
-    try {
-        dispatch(toggleIsLoading(true))
-        const userId = getState().user.userId;
-        const profile = {fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts};
-        const response = await userAPI.saveProfile(profile);
-
-        if (response.data.resultCode === 0) {
-            dispatch(setUserProfileThunkCreator(userId));
-        } else {
-            dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0] || 'Error'}));
-            throw new Error(response.data.messages[0] || 'Error');
-        }
     } catch (error) {
-        console.error('Ошибка сохранения профиля:', error);
+        console.error("Ошибка запроса:", error);
     } finally {
         dispatch(toggleIsLoading(false))
     }
-};
+}
+export const savePhoto = (file: File) => async (dispatch: Dispatch<UserActions>) => {
+    try {
+        dispatch(toggleIsLoading(true))
+        let response = await userAPI.putSavePhoto(file);
+        dispatch(savePhotoSuccess(response.data.photos));
+    } catch (error) {
+        console.error("Ошибка запроса:", error);
+    } finally {
+        dispatch(toggleIsLoading(false))
+    }
+}
+
+type DispatchType = ThunkDispatch<AppStateType, unknown, AnyAction>;
+
+export const saveProfileThunkCreator =
+    (id: number, photos: PhotosProfileType, fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: string, contacts: ContactsProfileType) =>
+        async (dispatch: DispatchType, getState: () => AppStateType) => {
+            try {
+                dispatch(toggleIsLoading(true))
+                const userId = getState().user.userId;
+
+                if (userId === null) {
+                    throw new Error('userId is missing in state')
+                }
+
+                const profile = {id, photos, fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts};
+                const response: {
+                    data: { resultCode: number; messages: string[] }
+                } = await userAPI.saveProfile(profile);
+
+                if (response.data.resultCode === 0) {
+                    await dispatch(setUserProfileThunkCreator(userId));
+                } else {
+                    dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0] || 'Error'}));
+                    throw new Error(response.data.messages[0] || 'Error');
+                }
+            } catch (error) {
+                console.error('Ошибка сохранения профиля:', error);
+            } finally {
+                dispatch(toggleIsLoading(false))
+            }
+        };
 
 
 

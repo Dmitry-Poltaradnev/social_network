@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {putUserStatusThunkCreator} from "../../reducer/userReducer";
 import s from './mainUserProfile.module.css'
@@ -7,7 +7,8 @@ type ProfileStatusPropsType = {
     newUserStatus: string
 }
 
-export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({newUserStatus}) => {
+export const ProfileStatus = ({newUserStatus}: ProfileStatusPropsType) => {
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -34,7 +35,7 @@ export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({newUserStatus})
         <>
             {!inputMode ? (stateStatus) : (<div>
                 <input autoFocus onBlur={updateStatusHandler} value={localStatus}
-                       onChange={(e: ChangeEvent<HTMLInputElement>) => setLocalStatus(e.target.value)}/>
+                       onChange={(e) => setLocalStatus(e.target.value)}/>
                 <button onClick={updateStatusHandler}>Update status on server</button>
             </div>)}
         </>

@@ -38,8 +38,8 @@ const UserProfile = () => {
         }
     }, [dispatch, userId]);
 
-    const mainPhotoSelected = (e: any) => {
-        if (e.target.files.length) {
+    const mainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
             dispatch(savePhoto(e.target.files[0]));
         }
     }
@@ -47,19 +47,18 @@ const UserProfile = () => {
     const toEditMode = () => {
         setEditMode(!editMode);
     }
-
-    const onSubmit = ({fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts}: any) => {
-        dispatch(saveProfileThunkCreator(fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts))
+    const onSubmit = ({id, photos, fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts}: any) => {
+        dispatch(saveProfileThunkCreator(id, photos, fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts))
         setEditMode(false)
     }
 
     const editProfileContacts = (editMode: boolean) => {
         return !editMode ?
-            <ProfileContacts user={user} contacts={user?.contacts} userId={userId} toEditMode={toEditMode}/> :
+            <ProfileContacts contacts={user.contacts} user={user} userId={Number(userId)} toEditMode={toEditMode}/> :
             <ProfileContactsForm initialValues={user || {}} contacts={user?.contacts} onSubmit={onSubmit}/>
     }
 
-    const photoSrc = user.photos.large ?? user.photos.small ?? defaultUserPhoto;
+    const photoSrc = user?.photos?.large ?? user?.photos?.small ?? defaultUserPhoto;
 
     return (
         <div className={s.mainUserProfile}>

@@ -8,7 +8,7 @@ import {
     SET_USERS,
     SAVE_PHOTO_SUCCESS
 } from "./userReducer";
-import {PhotosUserType, UsersType, UserType} from "../types/types";
+import {PhotosProfileType, UsersType, ProfileType} from "../types/types";
 
 export type ChangeFollowType = {
     type: typeof CHANGE_FOLLOW,
@@ -27,7 +27,7 @@ export type SetUsersType = {
 
 export type SetProfileType = {
     type: typeof SET_USER_PROFILE,
-    payload: { user: UserType }
+    payload: { user: ProfileType }
 }
 
 export type SetTotalCountType = {
@@ -61,7 +61,7 @@ export type GetUserIdType = {
 
 export type SavePhotoSuccessType = {
     type: typeof SAVE_PHOTO_SUCCESS,
-    payload: { photos: PhotosUserType }
+    payload: { photos: PhotosProfileType }
 }
 
 export const changeFollow = (id: number, followStatus: boolean): ChangeFollowType => {
@@ -82,7 +82,7 @@ export const setCurrentPage = (currentPage: number): SetCurrentPageType => {
 export const toggleIsLoading = (isLoading: boolean): ToggleIsLoadingType => {
     return {type: IS_LOADING, payload: {isLoading}}
 }
-export const setProfile = (user: UserType): SetProfileType => {
+export const setProfile = (user: ProfileType): SetProfileType => {
     return {type: SET_USER_PROFILE, payload: {user}};
 }
 export const setUserStatus = (status: string): SetUserStatusType => {
@@ -94,7 +94,7 @@ export const putProfileStatus = (status: string): PutProfileStatusType => {
 export const getUserId = (userId: number): GetUserIdType => {
     return {type: GET_USER_ID, payload: {userId}};
 }
-export const savePhotoSuccess = (photos: PhotosUserType): SavePhotoSuccessType => {
+export const savePhotoSuccess = (photos: PhotosProfileType): SavePhotoSuccessType => {
     return {type: SAVE_PHOTO_SUCCESS, payload: {photos}};
 }
 

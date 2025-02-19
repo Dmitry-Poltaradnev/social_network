@@ -13,7 +13,7 @@ export const MemberProfile = () => {
 
     const dispatch = useDispatch();
 
-    const {user} = useSelector((state: RootStateType) => state.user);
+    const user = useSelector((state: RootStateType) => state.user.user);
 
     useEffect(() => {
         dispatch(setUserProfileThunkCreator(Number(userId)));
@@ -22,7 +22,7 @@ export const MemberProfile = () => {
     return (
         <div className={s.back}>
             <MemberProfileInfo user={user}/>
-            <ProfileContacts contacts={user?.contacts} user={user}/>
+            {user?.contacts && <ProfileContacts contacts={user.contacts} user={user}/>}
         </div>
     );
 };

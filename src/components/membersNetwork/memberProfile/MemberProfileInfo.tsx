@@ -1,7 +1,12 @@
 import React from 'react';
 import s from './memberProfile.module.css'
+import {ProfileType} from "../../../types/types";
 
-export const MemberProfileInfo = ({user}: any) => {
+type MemberProfileInfo = {
+    user: ProfileType
+}
+
+export const MemberProfileInfo : React.FC<MemberProfileInfo> = ({user} ) => {
     return (
         <div>
             {user.photos && user.photos.large ? (

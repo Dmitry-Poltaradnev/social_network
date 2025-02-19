@@ -28,7 +28,7 @@ export const User: React.FC<{ user: UsersType }> = ({user}) => {
     const isDisabled = isFollowingInProgress.includes(user.id)
 
     return (
-        <li>
+        <li className={s.memberProfile}>
             <NavLink to={'/profile/' + user.id}>
                 <img className={s.memberPhoto} src={photoSrc} alt="user_photo"/>
             </NavLink>
