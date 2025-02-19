@@ -7,7 +7,7 @@ type SetAuthUserPayLoadType = {
     isAuth: boolean
 }
 
-export type SetAuthUserType = {
+export type SetAuthProfileType = {
     type: typeof SET_AUTH_USER,
     payload: SetAuthUserPayLoadType
 }
@@ -20,7 +20,7 @@ export type SetCaptchaType = {
     payload: string
 }
 
-export const setAuthUser = ({id, email, login, isAuth}: SetAuthUserPayLoadType): SetAuthUserType => {
+export const setAuthUser = ({id, email, login, isAuth}: SetAuthUserPayLoadType): SetAuthProfileType => {
     return {type: SET_AUTH_USER, payload: {id, email, login, isAuth}};
 }
 export const setAuthLoading = (loadingState: boolean): SetAuthLoadingType => {

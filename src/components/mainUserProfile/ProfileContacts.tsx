@@ -1,12 +1,12 @@
 import React from 'react';
 import s from './mainUserProfile.module.css'
-import {ContactsUserType, UserType} from "../../types/types";
+import {ContactsProfileType, ProfileType} from "../../types/types";
 
 type ProfileContactPropsType = {
-    contacts: ContactsUserType
+    contacts: ContactsProfileType
     userId?: number
     toEditMode?: () => void
-    user: UserType
+    user: ProfileType
 }
 
 export const ProfileContacts: React.FC<ProfileContactPropsType> = ({contacts, userId, toEditMode, user}) => {

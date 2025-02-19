@@ -1,9 +1,9 @@
-import {userAPI} from "../api/api";
+import {ResultCodeEnum, ResultCodeForCaptcha, userAPI} from "../api/api";
 import {
     setAuthLoading,
     SetAuthLoadingType,
+    SetAuthProfileType,
     setAuthUser,
-    SetAuthUserType,
     setCaptcha,
     SetCaptchaType
 } from "./authActions";
@@ -16,7 +16,7 @@ export const SET_AUTH_USER = 'SET_AUTH_USER'
 export const SET_LOADING = 'SET_LOADING'
 export const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL'
 
-type AuthActions = SetAuthUserType | SetAuthLoadingType | SetCaptchaType | GetUserIdType
+type AuthActions = SetAuthProfileType | SetAuthLoadingType | SetCaptchaType | GetUserIdType
 
 type ThunkActionType = ThunkAction<void, AppStateType, unknown, AuthActions>;
 
@@ -55,7 +55,7 @@ export const authReducer = (state = initAuthState, action: AuthActions): InitAut
 export const getLoginThunkCreator = (): ThunkActionType => async (dispatch) => {
     try {
         const data = await userAPI.getLogin();
-        if (data.resultCode === 0) {
+        if (data.resultCode === ResultCodeEnum.Success) {
             const {id, email, login} = data.data;
             dispatch(setAuthUser({id, email, login, isAuth: true}));
             dispatch(getUserId(id));
@@ -70,7 +70,7 @@ export const getLoginThunkCreator = (): ThunkActionType => async (dispatch) => {
 export const deleteLoginThunkCreator = (): ThunkActionType => async (dispatch) => {
     try {
         const data = await userAPI.logout()
-        if (data.data.resultCode === 0) {
+        if (data.data.resultCode === ResultCodeEnum.Success) {
             dispatch(setAuthUser({id: null, email: null, login: null, isAuth: false}))
         }
     } catch (error) {
@@ -81,10 +81,10 @@ export const deleteLoginThunkCreator = (): ThunkActionType => async (dispatch) =
 export const loginThunkCreator = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkActionType => async (dispatch) => {
     try {
         const data = await userAPI.login(email, password, rememberMe, captcha)
-        if (data.data.resultCode === 0) {
+        if (data.data.resultCode === ResultCodeEnum.Success) {
             dispatch(getLoginThunkCreator())
         } else {
-            if (data.data.resultCode === 10) {
+            if (data.data.resultCode === ResultCodeForCaptcha.CaptchaIsRequired) {
                 dispatch(getCaptchaThunkCreator())
             }
             throw new Error(data.data.messages.length > 0 ? data.data.messages[0] : 'Some error!');

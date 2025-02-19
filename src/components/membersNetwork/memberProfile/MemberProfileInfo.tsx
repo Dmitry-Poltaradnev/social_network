@@ -1,9 +1,9 @@
 import React from 'react';
 import s from './memberProfile.module.css'
-import {UserType} from "../../../types/types";
+import {ProfileType} from "../../../types/types";
 
 type MemberProfileInfo = {
-    user: UserType
+    user: ProfileType
 }
 
 export const MemberProfileInfo : React.FC<MemberProfileInfo> = ({user} ) => {

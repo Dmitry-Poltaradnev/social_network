@@ -20,10 +20,10 @@ import {
     ToggleIsLoadingType
 } from "./usersActions";
 import {stopSubmit} from "redux-form";
-import {ContactsUserType, PhotosUserType, UsersType, UserType} from "../types/types";
+import {ContactsProfileType, PhotosProfileType, UsersType, ProfileType} from "../types/types";
 import {AnyAction, Dispatch} from "redux";
 import {AppStateType} from "./store";
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {ThunkDispatch} from "redux-thunk";
 
 export const CHANGE_FOLLOW = 'CHANGE_FOLLOW'
 export const IS_FOLLOWING = 'IS_FOLLOWING'
@@ -57,11 +57,11 @@ type InitUserStateType = {
     totalCount: number,
     currentPage: number,
     isLoading: boolean,
-    user: UserType,
+    user: ProfileType,
     isFollowingInProgress: number[],
     newUserStatus: string,
     userId: number | null,
-    photos: PhotosUserType | null
+    photos: PhotosProfileType | null
 }
 
 const initialState: InitUserStateType = {
@@ -178,7 +178,7 @@ export const changeUserFollowThunkCreator = (method: string, userId: number, use
 
 export const setUserProfileThunkCreator = (userId: number) => async (dispatch: Dispatch<UserActions>) => {
     try {
-        let data: UserType = await userAPI.getProfile(userId)
+        let data: ProfileType = await userAPI.getProfile(userId)
         dispatch(setProfile(data))
         if (data.photos) {
             dispatch(savePhotoSuccess(data.photos));
@@ -224,8 +224,8 @@ export const putUserStatusThunkCreator = (status: string) => async (dispatch: Di
 export const savePhoto = (file: File) => async (dispatch: Dispatch<UserActions>) => {
     try {
         dispatch(toggleIsLoading(true))
-        let data: { data: { photos: PhotosUserType } } = await userAPI.putSavePhoto(file)
-        dispatch(savePhotoSuccess(data.data.photos));
+        let response = await userAPI.putSavePhoto(file);
+        dispatch(savePhotoSuccess(response.data.photos));
     } catch (error) {
         console.error("Ошибка запроса:", error);
     } finally {
@@ -236,7 +236,7 @@ export const savePhoto = (file: File) => async (dispatch: Dispatch<UserActions>)
 type DispatchType = ThunkDispatch<AppStateType, unknown, AnyAction>;
 
 export const saveProfileThunkCreator =
-    (fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: string, contacts: ContactsUserType) =>
+    (id: number, photos: PhotosProfileType, fullName: string, lookingForAJob: boolean, lookingForAJobDescription: string, aboutMe: string, contacts: ContactsProfileType) =>
         async (dispatch: DispatchType, getState: () => AppStateType) => {
             try {
                 dispatch(toggleIsLoading(true))
@@ -246,7 +246,7 @@ export const saveProfileThunkCreator =
                     throw new Error('userId is missing in state')
                 }
 
-                const profile = {fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts};
+                const profile = {id, photos, fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts};
                 const response: {
                     data: { resultCode: number; messages: string[] }
                 } = await userAPI.saveProfile(profile);

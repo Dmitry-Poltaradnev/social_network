@@ -1,4 +1,4 @@
-export type ContactsUserType = {
+export type ContactsProfileType = {
     github: string,
     vk: string,
     facebook: string,
@@ -12,19 +12,19 @@ export type UsersType = {
     name: string
     id: number,
     status: string,
-    photos: PhotosUserType,
+    photos: PhotosProfileType,
     followed: boolean,
 }
-export type UserType = {
+export type ProfileType = {
     id: number,
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
-    aboutMe : string
+    aboutMe : string,
     fullName: string,
-    photos: PhotosUserType
-    contacts: ContactsUserType
+    photos: PhotosProfileType
+    contacts: ContactsProfileType
 }
-export type PhotosUserType = {
+export type PhotosProfileType = {
     small: string | null,
     large: string | null,
 }

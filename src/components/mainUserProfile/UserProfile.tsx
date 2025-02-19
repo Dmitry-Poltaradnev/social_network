@@ -47,14 +47,14 @@ const UserProfile = () => {
     const toEditMode = () => {
         setEditMode(!editMode);
     }
-    const onSubmit = ({fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts}: any) => {
-        dispatch(saveProfileThunkCreator(fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts))
+    const onSubmit = ({id, photos, fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts}: any) => {
+        dispatch(saveProfileThunkCreator(id, photos, fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts))
         setEditMode(false)
     }
 
     const editProfileContacts = (editMode: boolean) => {
         return !editMode ?
-            <ProfileContacts contacts={user.contacts} user={user} userId={Number(userId)} toEditMode={toEditMode}/>:
+            <ProfileContacts contacts={user.contacts} user={user} userId={Number(userId)} toEditMode={toEditMode}/> :
             <ProfileContactsForm initialValues={user || {}} contacts={user?.contacts} onSubmit={onSubmit}/>
     }
 
