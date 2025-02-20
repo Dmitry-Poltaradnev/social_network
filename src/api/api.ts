@@ -63,6 +63,9 @@ type PutProfileStatusType = {
 type GetCaptchaType = {
     url: string
 }
+type GetProfileStatusType ={
+    userId : number
+}
 type ChangeUserFollowType ={
 
 }
@@ -109,9 +112,11 @@ export const userAPI = {
             url: `follow/${id}`
         }).then(response => response.data)
     },
+    // =====
     getProfileStatus(userId: number) {
         return axiosInstance.get(`profile/status/${userId}`).then(response => response.data)
     },
+    // =====
     putProfileStatus(newUserStatus: string) {
         return axiosInstance.put<PutProfileStatusType>(`profile/status`, {status: newUserStatus}).then(response => response.data)
     },

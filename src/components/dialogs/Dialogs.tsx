@@ -9,6 +9,10 @@ import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {reduxForm} from "redux-form";
 import {AddMessageForm} from "./message/AddMessageForm";
 
+type AddMessageFormType = {
+    text: string
+}
+
 export type MessageType = {
     id: string
     text: string
@@ -24,14 +28,15 @@ const Dialogs = () => {
 
     const {messages, dialog} = useSelector((state: RootStateType) => state.message.messagesPage)
 
-    const AddMessageReduxForm = reduxForm({
+    const AddMessageReduxForm = reduxForm<AddMessageFormType>({
         form: 'addMessage',
     })(AddMessageForm)
 
 
-    const addMessage = ({message}: any) => {
-        if (message.trim().length > 0) {
-            dispatch(addNewMessage(message))
+    const addMessage = (formData: { text: string }) => {
+        console.log(formData)
+        if (formData.text.trim().length > 0) {
+            dispatch(addNewMessage(formData.text))
         }
     }
 

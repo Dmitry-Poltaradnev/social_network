@@ -196,7 +196,7 @@ export const setUserStatusThunkCreator = () => async (dispatch: Dispatch<UserAct
             return;
         }
         dispatch(toggleIsLoading(true))
-        let data: string = await userAPI.getProfileStatus(userId)
+        let data : string = await userAPI.getProfileStatus(userId)
         dispatch(setUserStatus(data));
     } catch (error) {
         console.error("Ошибка запроса:", error);
