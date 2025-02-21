@@ -8,7 +8,7 @@ export type ContactsProfileType = {
     youtube: string,
     mainLink: string,
 }
-export type UsersType = {
+export type UserType = {
     name: string
     id: number,
     status: string,

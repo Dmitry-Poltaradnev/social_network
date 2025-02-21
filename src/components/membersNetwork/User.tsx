@@ -5,14 +5,14 @@ import {NavLink} from "react-router-dom";
 import {RootStateType} from "../../reducer/store";
 import {changeUserFollowThunkCreator} from "../../reducer/userReducer";
 import s from './memberProfile/memberProfile.module.css'
-import {UsersType} from "../../types/types";
+import {UserType} from "../../types/types";
 
 export const FOLLOW_METHOD = {
     FOLLOW: 'post',
     UNFOLLOW: 'delete',
 }
 
-export const User: React.FC<{ user: UsersType }> = ({user}) => {
+export const User: React.FC<{ user: UserType }> = ({user}) => {
 
     const photoSrc = user.photos.small ?? user.photos.large ?? defaultUserPhoto;
 

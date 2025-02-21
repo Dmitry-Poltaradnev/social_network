@@ -1,4 +1,3 @@
-import {userAPI} from "../api/api";
 import {
     changeFollow,
     ChangeFollowType,
@@ -20,10 +19,12 @@ import {
     ToggleIsLoadingType
 } from "./usersActions";
 import {stopSubmit} from "redux-form";
-import {ContactsProfileType, PhotosProfileType, UsersType, ProfileType} from "../types/types";
+import {ContactsProfileType, PhotosProfileType, UserType, ProfileType} from "../types/types";
 import {AnyAction, Dispatch} from "redux";
 import {AppStateType} from "./store";
 import {ThunkDispatch} from "redux-thunk";
+import {usersAPI} from "../api/users-api";
+import {profileAPI} from "../api/profile-api";
 
 export const CHANGE_FOLLOW = 'CHANGE_FOLLOW'
 export const IS_FOLLOWING = 'IS_FOLLOWING'
@@ -52,7 +53,7 @@ export type UserActions =
 
 
 type InitUserStateType = {
-    users: UsersType[],
+    users: UserType[],
     pageSize: number,
     totalCount: number,
     currentPage: number,
@@ -99,7 +100,7 @@ export const userReducer = (state = initialState, action: UserActions): InitUser
         case  CHANGE_FOLLOW : {
             return {
                 ...state,
-                users: state.users.map((user: UsersType) => user.id === Number(action.payload.id) ? {
+                users: state.users.map((user: UserType) => user.id === Number(action.payload.id) ? {
                     ...user,
                     followed: action.payload.followStatus
                 } : user)
@@ -151,9 +152,9 @@ export const userReducer = (state = initialState, action: UserActions): InitUser
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: Dispatch<UserActions>) => {
     try {
         dispatch(toggleIsLoading(true))
-        let data: { totalCount: number; items: UsersType } = await userAPI.getUser(currentPage, pageSize)
+        let data = await usersAPI.getUser(currentPage, pageSize)
         dispatch(setTotalCount(data.totalCount))
-        dispatch(setUser(data.items))
+        dispatch(setUser(data.items));
     } catch (error) {
         console.log("Didn't get users", error);
     } finally {
@@ -165,7 +166,7 @@ export const changeUserFollowThunkCreator = (method: string, userId: number, use
     try {
         const numericUserId = Number(userId);
         dispatch(setIsFollowing(true, numericUserId));
-        let data: { resultCode: number } = await userAPI.changeUserFollow(method, userId)
+        let data: { resultCode: number } = await usersAPI.changeUserFollow(method, userId)
         if (data.resultCode === 0) {
             dispatch(changeFollow(userId, !userFollowed));
         }
@@ -178,7 +179,7 @@ export const changeUserFollowThunkCreator = (method: string, userId: number, use
 
 export const setUserProfileThunkCreator = (userId: number) => async (dispatch: Dispatch<UserActions>) => {
     try {
-        let data: ProfileType = await userAPI.getProfile(userId)
+        let data: ProfileType = await profileAPI.getProfile(userId)
         dispatch(setProfile(data))
         if (data.photos) {
             dispatch(savePhotoSuccess(data.photos));
@@ -196,7 +197,7 @@ export const setUserStatusThunkCreator = () => async (dispatch: Dispatch<UserAct
             return;
         }
         dispatch(toggleIsLoading(true))
-        let data : string = await userAPI.getProfileStatus(userId)
+        let data: string = await profileAPI.getProfileStatus(userId)
         dispatch(setUserStatus(data));
     } catch (error) {
         console.error("Ошибка запроса:", error);
@@ -208,8 +209,7 @@ export const setUserStatusThunkCreator = () => async (dispatch: Dispatch<UserAct
 export const putUserStatusThunkCreator = (status: string) => async (dispatch: Dispatch<UserActions>) => {
     try {
         dispatch(toggleIsLoading(true))
-        let data: { resultCode: number; messages: string[] } = await userAPI.putProfileStatus(status)
-        console.log(data)
+        let data: { resultCode: number; messages: string[] } = await profileAPI.putProfileStatus(status)
         if (data.resultCode === 0) {
             dispatch(putProfileStatus(status))
         } else {
@@ -224,7 +224,7 @@ export const putUserStatusThunkCreator = (status: string) => async (dispatch: Di
 export const savePhoto = (file: File) => async (dispatch: Dispatch<UserActions>) => {
     try {
         dispatch(toggleIsLoading(true))
-        let response = await userAPI.putSavePhoto(file);
+        let response = await profileAPI.putSavePhoto(file);
         dispatch(savePhotoSuccess(response.data.photos));
     } catch (error) {
         console.error("Ошибка запроса:", error);
@@ -249,7 +249,7 @@ export const saveProfileThunkCreator =
                 const profile = {id, photos, fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts};
                 const response: {
                     data: { resultCode: number; messages: string[] }
-                } = await userAPI.saveProfile(profile);
+                } = await profileAPI.saveProfile(profile);
 
                 if (response.data.resultCode === 0) {
                     await dispatch(setUserProfileThunkCreator(userId));
