@@ -1,10 +1,11 @@
-.formError{
+.formError {
     border: 1px solid red;
     padding: 5px;
     margin: 10px;
     display: inline-block;
 }
-.loginWrapper{
+
+.loginWrapper {
     background-color: bisque;
     color: black
 }

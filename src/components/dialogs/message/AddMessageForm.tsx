@@ -12,7 +12,7 @@ const maxLength100 = maxLengthCreator(10)
 export const AddMessageForm: React.FC<InjectedFormProps<AddMessageFormValues>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <Field name={'message'} placeholder={'Enter your message'} component={TextArea}
+            <Field name={'text'} placeholder={'Enter your message'} component={TextArea}
                    validate={[required, maxLength100]}/>
             <br/>
             <button>Send message</button>

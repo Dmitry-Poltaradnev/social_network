@@ -8,7 +8,7 @@ import {
     SET_USERS,
     SAVE_PHOTO_SUCCESS
 } from "./userReducer";
-import {PhotosProfileType, UsersType, ProfileType} from "../types/types";
+import {PhotosProfileType, UserType, ProfileType} from "../types/types";
 
 export type ChangeFollowType = {
     type: typeof CHANGE_FOLLOW,
@@ -22,7 +22,7 @@ export type SetIsFollowingType = {
 
 export type SetUsersType = {
     type: typeof SET_USERS,
-    payload: { users: UsersType }
+    payload: { users: UserType[] }
 }
 
 export type SetProfileType = {
@@ -70,9 +70,10 @@ export const changeFollow = (id: number, followStatus: boolean): ChangeFollowTyp
 export const setIsFollowing = (isFollowing: boolean, userId: number): SetIsFollowingType => {
     return ({type: IS_FOLLOWING, payload: {isFollowing, userId}});
 }
-export const setUser = (users: UsersType): SetUsersType => {
-    return {type: SET_USERS, payload: {users}};
-}
+export const setUser = (users: UserType[]): SetUsersType => ({
+    type: "SET_USERS",
+    payload: {users}
+});
 export const setTotalCount = (totalCount: number): SetTotalCountType => {
     return {type: SET_TOTAL_COUNT, payload: {totalCount}};
 }

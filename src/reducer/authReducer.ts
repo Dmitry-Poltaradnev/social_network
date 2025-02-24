@@ -1,4 +1,4 @@
-import {ResultCodeEnum, ResultCodeForCaptcha, userAPI} from "../api/api";
+import {ResultCodeEnum, ResultCodeForCaptcha} from "../api/api";
 import {
     setAuthLoading,
     SetAuthLoadingType,
@@ -11,6 +11,8 @@ import {getUserId, GetUserIdType} from "./usersActions";
 import {stopSubmit} from "redux-form";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./store";
+import {authAPI} from "../api/auth-api";
+import {securityAPI} from "../api/security-api";
 
 export const SET_AUTH_USER = 'SET_AUTH_USER'
 export const SET_LOADING = 'SET_LOADING'
@@ -54,7 +56,7 @@ export const authReducer = (state = initAuthState, action: AuthActions): InitAut
 }
 export const getLoginThunkCreator = (): ThunkActionType => async (dispatch) => {
     try {
-        const data = await userAPI.getLogin();
+        const data = await authAPI.getLogin();
         if (data.resultCode === ResultCodeEnum.Success) {
             const {id, email, login} = data.data;
             dispatch(setAuthUser({id, email, login, isAuth: true}));
@@ -69,7 +71,7 @@ export const getLoginThunkCreator = (): ThunkActionType => async (dispatch) => {
 
 export const deleteLoginThunkCreator = (): ThunkActionType => async (dispatch) => {
     try {
-        const data = await userAPI.logout()
+        const data = await authAPI.logout()
         if (data.data.resultCode === ResultCodeEnum.Success) {
             dispatch(setAuthUser({id: null, email: null, login: null, isAuth: false}))
         }
@@ -80,7 +82,7 @@ export const deleteLoginThunkCreator = (): ThunkActionType => async (dispatch) =
 
 export const loginThunkCreator = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkActionType => async (dispatch) => {
     try {
-        const data = await userAPI.login(email, password, rememberMe, captcha)
+        const data = await authAPI.login(email, password, rememberMe, captcha)
         if (data.data.resultCode === ResultCodeEnum.Success) {
             dispatch(getLoginThunkCreator())
         } else {
@@ -97,7 +99,7 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
 
 export const getCaptchaThunkCreator = (): ThunkActionType => async (dispatch) => {
     try {
-        const response = await userAPI.getCaptcha()
+        const response = await securityAPI.getCaptcha()
         const captchaUrl: string = response.data.url
         dispatch(setCaptcha(captchaUrl));
     } catch (error) {

@@ -8,7 +8,7 @@ import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {Paginator} from "../paginator/Paginator";
 import {setCurrentPage} from "../../reducer/usersActions";
 import s from './members.module.css'
-import {UsersType} from "../../types/types";
+import {UserType} from "../../types/types";
 
 const Members: React.FC = () => {
 
@@ -34,7 +34,7 @@ const Members: React.FC = () => {
             ) : (
                 <>
                     <ol>
-                        {users.map((user: UsersType) => (
+                        {users.map((user: UserType) => (
                             <User key={user.id} user={user}/>
                         ))}
                     </ol>

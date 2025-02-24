@@ -55,7 +55,7 @@ export const messageReducer = (state = initialMessageState, action: MessageActio
                 ...state,
                 messagesPage: {
                     ...state.messagesPage,
-                    messages: [...state.messagesPage.messages, {id: v1(), text: action.payload.text}],
+                    messages: [...state.messagesPage.messages, {id: v1(), text: action.payload}],
                 },
             };
         default:
