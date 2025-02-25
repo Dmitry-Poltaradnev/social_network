@@ -225,7 +225,7 @@ export const savePhoto = (file: File) => async (dispatch: Dispatch<UserActions>)
     try {
         dispatch(toggleIsLoading(true))
         let response = await profileAPI.putSavePhoto(file);
-        dispatch(savePhotoSuccess(response.data.photos));
+        dispatch(savePhotoSuccess(response.data.data.photos));
     } catch (error) {
         console.error("Ошибка запроса:", error);
     } finally {
@@ -247,15 +247,14 @@ export const saveProfileThunkCreator =
                 }
 
                 const profile = {id, photos, fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts};
-                const response: {
-                    data: { resultCode: number; messages: string[] }
-                } = await profileAPI.saveProfile(profile);
 
-                if (response.data.resultCode === 0) {
+                const response = await profileAPI.saveProfile(profile);
+
+                if (response.resultCode === 0) {
                     await dispatch(setUserProfileThunkCreator(userId));
                 } else {
-                    dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0] || 'Error'}));
-                    throw new Error(response.data.messages[0] || 'Error');
+                    dispatch(stopSubmit('edit-profile', {_error: response.messages[0] || 'Error'}));
+                    throw new Error(response.messages[0] || 'Error');
                 }
             } catch (error) {
                 console.error('Ошибка сохранения профиля:', error);

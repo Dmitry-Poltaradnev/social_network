@@ -1,55 +1,28 @@
-import {ProfileType} from "../types/types";
-import {axiosInstance, ResultCodeEnum} from "./api";
+import {PhotosProfileType, ProfileType} from "../types/types";
+import {axiosInstance, ResponseType} from "./api";
 
-export type PutProfileStatusType = {
-    resultCode: ResultCodeEnum
-    messages: Array<string>
-    data: any
+type  SavePhotoResType = {
+    photos: PhotosProfileType
 }
-
-export type GetProfileStatusType = {
-    userId: number
-}
-type ChangeUserFollowType = {}
-// type PutSavePhotoType = {
-//     data: { photos: PhotosProfileType }; // Должно быть так
-// };
-// type GetProfileType = {
-//     userId: number
-//     lookingForAJob: boolean
-//     lookingForAJobDescription: string
-//     fullName: string
-//     contacts: {
-//         github: string
-//         vk: string
-//         facebook: string
-//         instagram: string
-//         twitter: string
-//         website: string
-//         youtube: string
-//         mainLink: string
-//     }
-// }
-
 
 export const profileAPI = {
     getProfile(userId: number) {
-        return axiosInstance.get(`profile/${userId}`)
+        return axiosInstance.get<ProfileType>(`profile/${userId}`)
             .then(response => response.data)
     },
 
     getProfileStatus(userId: number) {
-        return axiosInstance.get(`profile/status/${userId}`).then(response => response.data)
+        return axiosInstance.get<string>(`profile/status/${userId}`).then(response => response.data)
     },
     putProfileStatus(newUserStatus: string) {
-        return axiosInstance.put<PutProfileStatusType>(`profile/status`, {status: newUserStatus}).then(response => response.data)
+        return axiosInstance.put<ResponseType>(`profile/status`, {status: newUserStatus}).then(response => response.data)
     },
     putSavePhoto(photos: any) {
         const formData = new FormData();
         formData.append('image', photos)
-        return axiosInstance.put(`profile/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        return axiosInstance.put<ResponseType<SavePhotoResType>>(`profile/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
     },
     saveProfile(profile: ProfileType) {
-        return axiosInstance.put(`profile`, profile)
+        return axiosInstance.put<ResponseType>(`profile`, profile).then(response => response.data)
     },
 }
