@@ -51,7 +51,6 @@ export type UserActions =
     | SetProfileType
     | SetUsersType
 
-
 type InitUserStateType = {
     users: UserType[],
     pageSize: number,
@@ -62,10 +61,9 @@ type InitUserStateType = {
     isFollowingInProgress: number[],
     newUserStatus: string,
     userId: number | null,
-    photos: PhotosProfileType | null
 }
 
-const initialState: InitUserStateType = {
+const initialState : InitUserStateType = {
     users: [],
     totalCount: 0,
     pageSize: 10,
@@ -92,7 +90,6 @@ const initialState: InitUserStateType = {
     isFollowingInProgress: [],
     newUserStatus: '',
     userId: null,
-    photos: {small: null, large: null},
 };
 
 export const userReducer = (state = initialState, action: UserActions): InitUserStateType => {
@@ -142,7 +139,11 @@ export const userReducer = (state = initialState, action: UserActions): InitUser
             return {...state, userId: action.payload.userId}
         }
         case SAVE_PHOTO_SUCCESS : {
-            return {...state, photos: action.payload.photos}
+            return {
+                ...state, user: {
+                    ...state.user, photos: action.payload.photos
+                }
+            }
         }
         default :
             return state

@@ -9,13 +9,10 @@ type AppActions = SetInitializedActionType;
 
 type ThunkActionType = ThunkAction<void, AppStateType, unknown, AppActions>;
 
-export type InitAuthStateType = {
-    initialized: boolean,
-}
-
-const initAuthState: InitAuthStateType = {
+const initAuthState = {
     initialized: false
 }
+export type InitAuthStateType = typeof initAuthState
 
 export const appReducer = (state = initAuthState, action: AppActions): InitAuthStateType => {
     switch (action.type) {

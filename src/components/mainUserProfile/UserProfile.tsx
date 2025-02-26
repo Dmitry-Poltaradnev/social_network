@@ -27,7 +27,6 @@ const UserProfile = () => {
         isLoading,
         newUserStatus,
         userId,
-        photos,
         user
     } = useSelector((state: RootStateType) => state.user)
 
