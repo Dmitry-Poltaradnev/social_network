@@ -17,14 +17,14 @@ export type UserType = {
 }
 export type ProfileType = {
     id: number
+    fullName: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     aboutMe: string
-    fullName: string
     photos: PhotosProfileType
     contacts: ContactsProfileType
 }
 export type PhotosProfileType = {
-    small: string | null
-    large: string | null
+    small: null | string
+    large: null | string
 }

@@ -4,8 +4,8 @@ import {MemberProfileInfo} from "./MemberProfileInfo";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../../reducer/store";
 import {useParams} from "react-router-dom";
-import {setUserProfileThunkCreator} from "../../../reducer/userReducer";
 import {ProfileContacts} from "../../mainUserProfile/ProfileContacts";
+import {setUserProfileThunkCreator} from "../../../reducer/profileReducer";
 
 export const MemberProfile = () => {
 
@@ -13,7 +13,7 @@ export const MemberProfile = () => {
 
     const dispatch = useDispatch();
 
-    const user = useSelector((state: RootStateType) => state.user.user);
+    const user = useSelector((state: RootStateType) => state.profile.user);
 
     useEffect(() => {
         dispatch(setUserProfileThunkCreator(Number(userId)));

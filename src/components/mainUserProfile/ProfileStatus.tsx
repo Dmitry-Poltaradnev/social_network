@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import {putUserStatusThunkCreator} from "../../reducer/userReducer";
 import s from './mainUserProfile.module.css'
+import {putUserStatusThunkCreator} from "../../reducer/profileReducer";
 
 type ProfileStatusPropsType = {
     newUserStatus: string

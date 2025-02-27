@@ -3,19 +3,13 @@ import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {ProfileStatus} from "./ProfileStatus";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
-import {
-    savePhoto,
-    saveProfileThunkCreator,
-    setUserProfileThunkCreator,
-    setUserStatusThunkCreator
-} from "../../reducer/userReducer";
 import {Loader} from "../common/loader/Loader";
 import {MainUserPosts} from "./mainUserPosts/MainUserPosts";
 import s from './mainUserProfile.module.css'
-import mainUserPhoto from '../../img/peon.gif'
 import {ProfileContacts} from "./ProfileContacts";
 import ProfileContactsForm from "./ProfileContactsForm";
 import defaultUserPhoto from "../../img/default-avatar-profile.avif";
+import {savePhoto, saveProfileThunkCreator, setUserProfileThunkCreator, setUserStatusThunkCreator} from '../../reducer/profileReducer';
 
 const UserProfile = () => {
 
@@ -25,10 +19,13 @@ const UserProfile = () => {
 
     const {
         isLoading,
-        newUserStatus,
         userId,
-        user
     } = useSelector((state: RootStateType) => state.user)
+
+    const {
+        newUserStatus,
+        user
+    } = useSelector((state: RootStateType) => state.profile)
 
     useEffect(() => {
         if (userId) {
