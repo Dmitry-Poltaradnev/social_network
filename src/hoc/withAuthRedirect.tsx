@@ -2,9 +2,10 @@ import {useSelector} from "react-redux";
 import {RootStateType} from "../reducer/store";
 import {Redirect} from "react-router-dom";
 import {Loader} from "../components/common/loader/Loader";
+import React, {ComponentType} from "react";
 
-export const WithAuthRedirect = (WrappedComponent: any) => {
-    const RedirectComponent = (props: any) => {
+export function WithAuthRedirect<T extends object>(WrappedComponent: ComponentType<T>) {
+    const RedirectComponent = (props: React.ComponentProps<typeof WrappedComponent>) => {
         const {isAuth, isLoading} = useSelector((state: RootStateType) => state.auth)
 
         if (isLoading) {

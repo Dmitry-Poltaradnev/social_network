@@ -1,35 +1,30 @@
 export type ContactsProfileType = {
-    github: string,
-    vk: string,
-    facebook: string,
-    instagram: string,
-    twitter: string,
-    website: string,
-    youtube: string,
-    mainLink: string,
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
 }
 export type UserType = {
     name: string
-    id: number,
-    status: string,
-    photos: PhotosProfileType,
-    followed: boolean,
+    id: number
+    status: string
+    photos: PhotosProfileType
+    followed: boolean
 }
 export type ProfileType = {
-    id: number,
-    lookingForAJob: boolean,
-    lookingForAJobDescription: string,
-    aboutMe : string,
-    fullName: string,
+    id: number
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    aboutMe: string
     photos: PhotosProfileType
     contacts: ContactsProfileType
 }
 export type PhotosProfileType = {
-    small: string | null,
-    large: string | null,
-}
-export type FriendType = {
-    id?: string,
-    avaLink: string,
-    name: string,
+    small: null | string
+    large: null | string
 }

@@ -6,17 +6,9 @@ export const DELETE_POST = 'DELETE_POST'
 
 type PostActionType = AddPostActionType | DeletePostActionType
 
-type PostType = {
-    id: string
-    text: string
-    likes: number
-}
+type InitPostType = typeof initialPostState
 
-type InitPostType = {
-    myPosts: PostType[]
-}
-
-export const initialPostState: InitPostType = {
+export const initialPostState = {
     myPosts: [
         {id: v1(), text: 'This is my first post', likes: 10},
         {id: v1(), text: 'This is my second post', likes: 20},
@@ -24,7 +16,7 @@ export const initialPostState: InitPostType = {
     ]
 };
 
-export const postReducer = (state = initialPostState, action: PostActionType): InitPostType => {
+export const postReducer = (state: InitPostType = initialPostState, action: PostActionType): InitPostType => {
     switch (action.type) {
         case ADD_POST:
             return {

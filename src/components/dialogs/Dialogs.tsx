@@ -17,6 +17,7 @@ export type MessageType = {
     id: string
     text: string
 }
+
 export type DialogType = {
     id: string
     name: string
@@ -32,9 +33,7 @@ const Dialogs = () => {
         form: 'addMessage',
     })(AddMessageForm)
 
-
     const addMessage = (formData: { text: string }) => {
-        console.log(formData)
         if (formData.text.trim().length > 0) {
             dispatch(addNewMessage(formData.text))
         }
@@ -51,7 +50,8 @@ const Dialogs = () => {
                     </div>
                 </div>
                 <div className={s.messages}>
-                    {messages.map((messages: MessageType) => <Message key={messages.id} text={messages.text}/>)}
+                    {messages.map((messages: MessageType) => <Message key={messages.id} id={messages.id}
+                                                                      text={messages.text}/>)}
                     <AddMessageReduxForm onSubmit={addMessage}/>
                 </div>
             </div>
