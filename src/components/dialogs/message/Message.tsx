@@ -1,10 +1,7 @@
 import React from 'react';
+import {MessageType} from "../Dialogs";
 
-type MessageType = {
-    text: string;
-}
-
-export const Message = ({text}: MessageType) => {
+export const Message = ({text, id}: MessageType) => {
     return (
         <div>{text}
             <hr/>

@@ -14,8 +14,7 @@ export const Header = () => {
         <header className={s.header}>
             <p>poltaradnev@gmail.com</p>
             <p>31665</p>
-            <h2>Welcome to my page Second part</h2>
-            <h2>Header</h2>
+            <h2>"Social network"</h2>
             <div>{auth.isAuth && <div className={s.loginWrapper}>
                 <p>
                     <button onClick={() => dispatch(deleteLoginThunkCreator())}>Logout</button>

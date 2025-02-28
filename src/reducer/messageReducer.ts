@@ -5,7 +5,7 @@ export const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE'
 
 type MessageActions = AddMessageType
 
-type InitialMessageStateType = typeof initialMessageState
+ export type InitialMessageStateType = typeof initialMessageState
 
 export const initialMessageState = {
     messagesPage: {
