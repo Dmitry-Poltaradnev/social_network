@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
-import {User} from "./User";
+import {Member} from "./Member";
 import {Loader} from "../common/loader/Loader";
 import {getUsersThunkCreator} from "../../reducer/userReducer";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -35,7 +35,7 @@ const Members: React.FC = () => {
                 <>
                     <ol>
                         {users.map((user: UserType) => (
-                            <User key={user.id} user={user}/>
+                            <Member key={user.id} user={user}/>
                         ))}
                     </ol>
                     <Paginator
