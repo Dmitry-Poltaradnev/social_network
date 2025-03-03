@@ -12,7 +12,7 @@ export const FOLLOW_METHOD = {
     UNFOLLOW: 'delete',
 }
 
-export const User: React.FC<{ user: UserType }> = ({user}) => {
+export const Member: React.FC<{ user: UserType }> = ({user}) => {
 
     const photoSrc = user.photos.small ?? user.photos.large ?? defaultUserPhoto;
 

@@ -60,9 +60,7 @@ const UserProfile = () => {
         <div className={s.mainUserProfile}>
             {isLoading ? <Loader/> : <>
                 <div className={s.profileWrapper}>
-                    {/*todo fix download photo*/}
                     <img className={s.userPhoto} src={photoSrc} alt="user_photo"/>
-                    {/*====*/}
                     {userId && <input onChange={mainPhotoSelected} type="file"/>}
                     <ProfileStatus newUserStatus={newUserStatus}/>
                     {editProfileContacts(editMode)}
