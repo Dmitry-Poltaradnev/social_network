@@ -4,13 +4,13 @@ import s from './FriendsList.module.css'
 import {useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
-import {FriendType} from "../../types/types";
 
 const FriendsList = () => {
 
-    const stateMessage = useSelector((state: RootStateType) => state.message.friendsBar) as FriendType[];
+    const stateMessage = useSelector((state: RootStateType) => state.message.friendsBar);
 
-    let friendsList = stateMessage.map((friend : FriendType ) => <Friend key={friend.id}
+
+    let friendsList = stateMessage.map((friend) => <Friend key={friend.id} id={friend.id}
                                                            avaLink={friend.avaLink}
                                                            name={friend.name}/>)
 

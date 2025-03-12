@@ -3,6 +3,7 @@ import s from './mainUserProfile.module.css'
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../common/formsControls/FormsControls";
 import {required} from "../../utils/validators";
+import {Button} from "../common/Button";
 
 type ProfileContactsFormProps = {
     contacts: any;
@@ -16,9 +17,8 @@ const ProfileContactsForm: React.FC<InjectedFormProps<{}, ProfileContactsFormPro
 
     return (
         <form className={s.profileContacts} onSubmit={handleSubmit}>
-            <div>
-                <button>save</button>
-            </div>
+            <Button btnName={'Save'} btnEffect={handleSubmit}/>
+            {/*<button>save</button>*/}
             <h3>Edit Contacts</h3>
             <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
                 <p>About me: </p>

@@ -3,9 +3,9 @@ import {MessageType} from "../Dialogs";
 
 export const Message = ({text, id}: MessageType) => {
     return (
-        <div>{text}
+        <p>{text}
             <hr/>
-        </div>
+        </p>
     );
 };
 

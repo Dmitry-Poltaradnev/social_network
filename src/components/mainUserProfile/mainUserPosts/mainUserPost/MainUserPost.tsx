@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './mainUserPost.module.css'
+import {Button} from "../../../common/Button";
 
 export type MyPostType = {
     id: string,
@@ -13,7 +14,7 @@ export const MainUserPost = ({id, text, likes, deletePost}: MyPostType) => {
         <div className={s.post}>
             <p>{text}</p>
             <span>Likes: {likes}</span>
-            <button onClick={() => deletePost(id)}>Delete Post</button>
+            <Button btnName={'Delete Post'} btnEffect={() => deletePost(id)} />
         </div>
     );
 };

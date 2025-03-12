@@ -7,11 +7,13 @@
 
     grid-template-areas:
         "header header header"
-        "navigation content content ";
+        "navigation content content "
+        "footer footer footer";
 }
-.app-wrapper-content{
-        grid-area: content;
-        background-color: antiquewhite;
+
+.app-wrapper-content {
+    grid-area: content;
+    background-color: antiquewhite;
 }
 
 

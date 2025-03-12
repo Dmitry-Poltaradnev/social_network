@@ -3,6 +3,7 @@ import {Field, InjectedFormProps} from 'redux-form';
 import {Input} from '../common/formsControls/FormsControls';
 import {required} from '../../utils/validators';
 import s from './loginForm.module.css';
+import {Button} from "../common/Button";
 
 export type LoginFormPropsType = {
     email: string;
@@ -51,7 +52,7 @@ export const LoginForm: React.FC<
                 <span>remember me</span>
                 {error && <span className={s.formError}>{error}</span>}
                 <br/>
-                <button>Login</button>
+                <Button btnName={'Login'} btnEffect={() => handleSubmit}/>
             </form>
         </div>
     );

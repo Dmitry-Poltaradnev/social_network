@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './mainUserProfile.module.css'
 import {ContactsProfileType, ProfileType} from "../../types/types";
+import {Button} from "../common/Button";
 
 type ProfileContactPropsType = {
     contacts: ContactsProfileType
@@ -17,7 +18,8 @@ export const ProfileContacts: React.FC<ProfileContactPropsType> = ({contacts, us
     return (
         <div className={s.profileContacts}>
             {userId && <div>
-                <button onClick={toEditMode}>edit</button>
+                <Button btnName={'Edit'} btnEffect={toEditMode || (() => {
+                })}/>
             </div>}
             <p>About me: {user.aboutMe} </p>
             <p>Full name: {user.fullName}</p>
