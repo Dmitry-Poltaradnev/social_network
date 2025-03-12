@@ -6,6 +6,7 @@ import {RootStateType} from "../../reducer/store";
 import {changeUserFollowThunkCreator} from "../../reducer/userReducer";
 import s from './memberProfile/memberProfile.module.css'
 import {UserType} from "../../types/types";
+import {Button} from "../common/Button";
 
 export const FOLLOW_METHOD = {
     FOLLOW: 'post',
@@ -35,9 +36,8 @@ export const Member: React.FC<{ user: UserType }> = ({user}) => {
             <br/>
             <span> Name: {user.name}</span>
             <br/>
-            <button disabled={isDisabled} onClick={handleFollowToggle}>
-                {user.followed ? "Unfollow" : "Follow"}
-            </button>
+            <Button disabled={isDisabled} btnEffect={handleFollowToggle}
+                    btnName={user.followed ? "Unfollow" : "Follow"}/>
         </li>
     );
 };

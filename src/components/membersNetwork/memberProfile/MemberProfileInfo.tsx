@@ -6,7 +6,7 @@ type MemberProfileInfo = {
     user: ProfileType
 }
 
-export const MemberProfileInfo : React.FC<MemberProfileInfo> = ({user} ) => {
+export const MemberProfileInfo: React.FC<MemberProfileInfo> = ({user}) => {
     return (
         <div>
             {user.photos && user.photos.large ? (

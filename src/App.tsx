@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {initializeApp} from "./reducer/appReducer";
 import {RootStateType} from "./reducer/store";
 import {Loader} from "./components/common/loader/Loader";
+import {Footer} from "./components/footer/Footer";
 
 // Используем lazy для ленивой загрузки компонентов
 const DialogsComponent = lazy(() => import('./components/dialogs/Dialogs'));
@@ -44,6 +45,7 @@ function App() {
                     <Route path="*" render={() => <div>404 NOT FOUND</div>}/>
                 </Switch>
             </Suspense>
+            <Footer/>
         </div>
     );
 }

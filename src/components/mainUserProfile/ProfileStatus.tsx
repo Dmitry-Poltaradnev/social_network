@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import s from './mainUserProfile.module.css'
 import {putUserStatusThunkCreator} from "../../reducer/profileReducer";
+import {Button} from "../common/Button";
 
 type ProfileStatusPropsType = {
     newUserStatus: string
@@ -36,7 +37,7 @@ export const ProfileStatus = ({newUserStatus}: ProfileStatusPropsType) => {
             {!inputMode ? (stateStatus) : (<div>
                 <input autoFocus onBlur={updateStatusHandler} value={localStatus}
                        onChange={(e) => setLocalStatus(e.target.value)}/>
-                <button onClick={updateStatusHandler}>Update status on server</button>
+                <Button btnName={'Update status on server'} btnEffect={updateStatusHandler}/>
             </div>)}
         </>
     );

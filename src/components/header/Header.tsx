@@ -3,6 +3,7 @@ import s from './Header.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {deleteLoginThunkCreator} from "../../reducer/authReducer";
+import {Button} from "../common/Button";
 
 export const Header = () => {
 
@@ -17,7 +18,7 @@ export const Header = () => {
             <h2>"Social network"</h2>
             <div>{auth.isAuth && <div className={s.loginWrapper}>
                 <p>
-                    <button onClick={() => dispatch(deleteLoginThunkCreator())}>Logout</button>
+                    <Button btnName={'Logout'} btnEffect={() => dispatch(deleteLoginThunkCreator())}/>
                     -{auth.login}</p>
             </div>
             }</div>
