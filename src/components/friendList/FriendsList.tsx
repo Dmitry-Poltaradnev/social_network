@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
-const FriendsList = () => {
+ export const FriendsList = () => {
 
     const stateMessage = useSelector((state: RootStateType) => state.message.friendsBar);
 
@@ -23,5 +23,5 @@ const FriendsList = () => {
     );
 };
 
-const FriendsListComponent = WithAuthRedirect(FriendsList)
-export default FriendsListComponent
+// const FriendsListComponent = WithAuthRedirect(FriendsList)
+// export default FriendsListComponent

@@ -23,7 +23,7 @@ export type DialogType = {
     name: string
 }
 
-const Dialogs = () => {
+export const Dialogs = () => {
 
     const dispatch = useDispatch()
 
@@ -59,5 +59,5 @@ const Dialogs = () => {
     );
 };
 
-const DialogsComponent = WithAuthRedirect(Dialogs);
-export default DialogsComponent
+// const DialogsComponent = WithAuthRedirect(Dialogs);
+// export default DialogsComponent
