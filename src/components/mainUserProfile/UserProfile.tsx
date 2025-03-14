@@ -9,7 +9,12 @@ import s from './mainUserProfile.module.css'
 import {ProfileContacts} from "./ProfileContacts";
 import ProfileContactsForm from "./ProfileContactsForm";
 import defaultUserPhoto from "../../img/default-avatar-profile.avif";
-import {savePhoto, saveProfileThunkCreator, setUserProfileThunkCreator, setUserStatusThunkCreator} from '../../reducer/profileReducer';
+import {
+    savePhoto,
+    saveProfileThunkCreator,
+    setUserProfileThunkCreator,
+    setUserStatusThunkCreator
+} from '../../reducer/profileReducer';
 
 const UserProfile = () => {
 

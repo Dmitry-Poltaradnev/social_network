@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import s from './mainUserProfile.module.css'
 import {putUserStatusThunkCreator} from "../../reducer/profileReducer";
-import {Button} from "../common/Button";
+import {Button, Input, Tooltip} from "antd";
+import {InfoCircleOutlined, UserOutlined} from "@ant-design/icons";
 
 type ProfileStatusPropsType = {
     newUserStatus: string
@@ -30,14 +31,22 @@ export const ProfileStatus = ({newUserStatus}: ProfileStatusPropsType) => {
     }
 
     const stateStatus = newUserStatus ?
-        (<span onDoubleClick={changeInputModeHandler}>User status: {newUserStatus}</span>) : (
-            <span className={s.noStatusField} onDoubleClick={changeInputModeHandler}>No status</span>)
+        (<div className={s.statusWrapper} onDoubleClick={changeInputModeHandler}>Status : {newUserStatus}</div>) : (
+            <div className={s.noStatusField} onDoubleClick={changeInputModeHandler}>No status</div>)
     return (
         <>
-            {!inputMode ? (stateStatus) : (<div>
-                <input autoFocus onBlur={updateStatusHandler} value={localStatus}
-                       onChange={(e) => setLocalStatus(e.target.value)}/>
-                <Button btnName={'Update status on server'} btnEffect={updateStatusHandler}/>
+            {!inputMode ? (stateStatus) : (<div style={{display: "flex", gap: 10}}>
+                <Input style={{maxWidth: 200}} autoFocus value={localStatus} onBlur={updateStatusHandler}
+                       onChange={(e) => setLocalStatus(e.target.value)}
+                       placeholder="Enter your status"
+                       prefix={<UserOutlined style={{color: 'rgba(0,0,0,.25)'}}/>}
+                       suffix={
+                           <Tooltip title="Click outside the input field or update button to close">
+                               <InfoCircleOutlined style={{color: 'rgba(0,0,0,.45)'}}/>
+                           </Tooltip>
+                       }
+                />
+                <Button type={'primary'} onClick={updateStatusHandler}>Update status on server</Button>
             </div>)}
         </>
     );

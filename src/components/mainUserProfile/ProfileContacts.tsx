@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './mainUserProfile.module.css'
 import {ContactsProfileType, ProfileType} from "../../types/types";
-import {Button} from "../common/Button";
+import {Button} from "antd";
 
 type ProfileContactPropsType = {
     contacts: ContactsProfileType
@@ -18,13 +18,15 @@ export const ProfileContacts: React.FC<ProfileContactPropsType> = ({contacts, us
     return (
         <div className={s.profileContacts}>
             {userId && <div>
-                <Button btnName={'Edit'} btnEffect={toEditMode || (() => {
-                })}/>
+                <Button type={"primary"} onClick={toEditMode || (() => {
+                })}>Edit</Button>
             </div>}
-            <p>About me: {user.aboutMe} </p>
-            <p>Full name: {user.fullName}</p>
-            <p>Free for work: {user.lookingForAJob ? 'yes' : 'no'} </p>
-            <p>My skills: {user.lookingForAJobDescription}</p>
+            <ul style={{listStyleType: 'none', padding: 10}}>
+                <li>About me : {user.aboutMe}</li>
+                <li>Name : {user.fullName}</li>
+                <li>Free for work : {user.lookingForAJob ? 'yes' : 'no'}</li>
+                <li>My skills : {user.lookingForAJobDescription}</li>
+            </ul>
             <h3>Contacts</h3>
             <ul>
                 {Object.entries(contacts).map(([key, value]) =>

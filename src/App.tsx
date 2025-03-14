@@ -1,9 +1,8 @@
-import React, {lazy, Suspense, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Header} from "./components/header/Header";
-import {Navigation} from "./components/navigation/Navigation";
 import {MemberProfile} from "./components/membersNetwork/memberProfile/MemberProfile";
-import {NavLink, Route, Switch, useHistory} from 'react-router-dom';
+import {Route, Switch, useHistory} from 'react-router-dom';
 import {UsersComponents} from "./components/membersNetwork/Members";
 import {UserProfileComponent} from "./components/mainUserProfile/UserProfile";
 import Login from "./components/login/Login";
@@ -11,25 +10,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {initializeApp} from "./reducer/appReducer";
 import {RootStateType} from "./reducer/store";
 import {Loader} from "./components/common/loader/Loader";
-import {Footer} from "./components/footer/Footer";
 
-
-// ====
 import {
     LaptopOutlined,
-    MenuFoldOutlined,
-    MenuUnfoldOutlined, ProfileOutlined, TeamOutlined,
-    UploadOutlined,
+    ProfileOutlined, TeamOutlined,
     UserOutlined,
-    VideoCameraOutlined,
 } from '@ant-design/icons';
 
-import {Avatar, Button, Layout, Menu, Space, theme} from 'antd';
-import s from "./components/navigation/Navigation.module.css";
+import {Layout, Menu, theme} from 'antd';
 import {FriendsList} from "./components/friendList/FriendsList";
 import {Dialogs} from "./components/dialogs/Dialogs";
-
-// ====
 
 // Используем lazy для ленивой загрузки компонентов
 // const DialogsComponent = lazy(() => import('./components/dialogs/Dialogs'));
@@ -37,9 +27,7 @@ import {Dialogs} from "./components/dialogs/Dialogs";
 
 function App() {
 
-// ======
-
-    const { Sider, Content, Footer} = Layout;
+    const {Sider, Content, Footer} = Layout;
 
     const [collapsed, setCollapsed] = useState(false);
 
@@ -47,13 +35,11 @@ function App() {
         token: {colorBgContainer, borderRadiusLG},
     } = theme.useToken();
 
-    // ======
 
     const dispatch = useDispatch();
     const initialized = useSelector((state: RootStateType) => state.app.initialized);
 
     const navigate = useHistory();
-
 
     useEffect(() => {
         dispatch(initializeApp());
@@ -63,9 +49,8 @@ function App() {
         return <Loader/>;
     }
 
-
     return (
-        <Layout>
+        <Layout style={{minHeight: '100vh'}}>
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="demo-logo-vertical"/>
                 <Menu
@@ -99,21 +84,6 @@ function App() {
             </Sider>
             <Layout>
                 <Header collapsed={collapsed} setCollapsed={setCollapsed}/>
-                {/*<Header style={{padding: 0, background: colorBgContainer}}>*/}
-                {/*    <Button*/}
-                {/*        type="text"*/}
-                {/*        icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}*/}
-                {/*        onClick={() => setCollapsed(!collapsed)}*/}
-                {/*        style={{*/}
-                {/*            fontSize: '16px',*/}
-                {/*            width: 64,*/}
-                {/*            height: 64,*/}
-                {/*        }}*/}
-                {/*    />*/}
-                {/*    <Space wrap size={16}>*/}
-                {/*        <Avatar size={32} icon={<UserOutlined />} />*/}
-                {/*    </Space>*/}
-                {/*</Header>*/}
                 <Content
                     style={{
                         margin: '24px 16px',
@@ -156,7 +126,6 @@ function App() {
         // {/*    </Suspense>*/}
         // {/*    <Footer/>*/}
         // {/*</div>*/}
-
     )
 }
 

@@ -18,25 +18,25 @@ const ProfileContactsForm: React.FC<InjectedFormProps<{}, ProfileContactsFormPro
     return (
         <form className={s.profileContacts} onSubmit={handleSubmit}>
             <Button btnName={'Save'} btnEffect={handleSubmit}/>
-            {/*<button>save</button>*/}
             <h3>Edit Contacts</h3>
-            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
-                <p>About me: </p>
-                <Field placeholder={'about'} name={'aboutMe'} component={Input} type="text"
-                />
-            </div>
-            <div>
-                <Field placeholder={'change name'} name={'fullName'} component={Input} type="text"
-                       validate={[required]}/>
-            </div>
-            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
-                <p>Free for a work:</p>
+
+            <span>About me : </span>
+            <Field placeholder={'about'} name={'aboutMe'} component={Input} type="text"
+            />
+
+            <span>Name : </span>
+            <Field placeholder={'change name'} name={'fullName'} component={Input} type="text"
+                   validate={[required]}/>
+
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                <p>Free for a work :</p>
                 <Field name={'lookingForAJob'} component={Input} type="checkbox"/>
             </div>
-            <div>
-                <Field placeholder={'my skills'} name={'lookingForAJobDescription'} component={Input} type="text"
-                       validate={[required]}/>
-            </div>
+
+
+            <span>My skills :</span>
+            <Field placeholder={'my skills'} name={'lookingForAJobDescription'} component={Input} type="text"
+                   validate={[required]}/>
             <ul>
                 {Object.entries(contacts).map(([key, value]: any) =>
                     <li key={key}>{key} :<Field placeholder={key} name={`contacts.${key}`}
