@@ -1,54 +1,66 @@
 import React from 'react';
-import s from './mainUserProfile.module.css'
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input} from "../common/formsControls/FormsControls";
-import {required} from "../../utils/validators";
-import {Button} from "../common/Button";
+import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {Button, Checkbox, Form, Input} from 'antd';
+import {required} from '../../utils/validators';
 
 type ProfileContactsFormProps = {
     contacts: any;
 };
 
+const renderInput = ({input, meta, label, ...rest}: any) => (
+    <Form.Item
+        label={label}
+        validateStatus={meta.touched && meta.error ? 'error' : ''}
+        help={meta.touched && meta.error ? meta.error : ''}
+        labelCol={{span: 8}}
+        wrapperCol={{span: 16}}
+    >
+        <Input {...input} {...rest} />
+    </Form.Item>
+);
+
+const renderCheckbox = ({input}: any) => (
+    <Form.Item>
+        <Checkbox checked={input.value} onChange={input.onChange}>
+            Free for work
+        </Checkbox>
+    </Form.Item>
+);
+
 const ProfileContactsForm: React.FC<InjectedFormProps<{}, ProfileContactsFormProps> & ProfileContactsFormProps> = ({
                                                                                                                        contacts,
-                                                                                                                       handleSubmit
-                                                                                                                   }: any) => {
-
-
+                                                                                                                       handleSubmit,
+                                                                                                                   }) => {
     return (
-        <form className={s.profileContacts} onSubmit={handleSubmit}>
-            <Button btnName={'Save'} btnEffect={handleSubmit}/>
-            <h3>Edit Contacts</h3>
+        <Form style={{maxWidth: 600}} onFinish={handleSubmit}>
+            <Form.Item>
+                <Button type="primary" onClick={handleSubmit} htmlType="submit">
+                    Save
+                </Button>
+            </Form.Item>
 
-            <span>About me : </span>
-            <Field placeholder={'about'} name={'aboutMe'} component={Input} type="text"
-            />
+            <Field name="aboutMe" component={renderInput} placeholder="About me"
+                   validate={[required]} label="About me:"/>
+            <Field name="fullName" component={renderInput} placeholder="Full name" validate={[required]}
+                   label="Full name:"/>
+            <Field name="lookingForAJobDescription" component={renderInput} placeholder="My skills"
+                   validate={[required]} label="My skills:"/>
+            <Field name="lookingForAJob" component={renderCheckbox}/>
 
-            <span>Name : </span>
-            <Field placeholder={'change name'} name={'fullName'} component={Input} type="text"
-                   validate={[required]}/>
-
-            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                <p>Free for a work :</p>
-                <Field name={'lookingForAJob'} component={Input} type="checkbox"/>
-            </div>
-
-
-            <span>My skills :</span>
-            <Field placeholder={'my skills'} name={'lookingForAJobDescription'} component={Input} type="text"
-                   validate={[required]}/>
-            <ul>
-                {Object.entries(contacts).map(([key, value]: any) =>
-                    <li key={key}>{key} :<Field placeholder={key} name={`contacts.${key}`}
-                                                component={Input} type="text"/></li>
-                )}
+            <h3>Contacts :</h3>
+            <ul style={{listStyle: 'none'}}>
+                {Object.entries(contacts).map(([key, value]: any) => (
+                    <li key={key}>
+                        <Field name={`contacts.${key}`} component={renderInput} placeholder={key} value={value}/>
+                    </li>
+                ))}
             </ul>
-        </form>
+        </Form>
     );
 };
 
 const ProfileContactsReduxForm = reduxForm<{}, ProfileContactsFormProps>({
     form: 'edit-profile',
-})(ProfileContactsForm)
+})(ProfileContactsForm);
 
-export default ProfileContactsReduxForm
+export default ProfileContactsReduxForm;
