@@ -1,19 +1,30 @@
 import React from 'react';
-import {Field, InjectedFormProps} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../utils/validators";
-import {TextArea} from "../../common/formsControls/FormsControls";
-import {Button} from "../../common/Button";
+import {Button, Form, Input} from "antd";
 
 const maxLength100 = maxLengthCreator(10)
 
-export const AddMessageForm = (props: any) => {
+const renderInput = ({input, meta}: any) => (
+    <Form.Item
+        validateStatus={meta.touched && meta.error ? "error" : ""}
+        help={meta.touched && meta.error ? meta.error : ""}
+    >
+        <Input style={{width: '60%'}} {...input} placeholder="Write new message"/>
+    </Form.Item>
+);
+
+export const AddMessageForm: React.FC<InjectedFormProps<{ post: string }>> = ({handleSubmit}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <Field name={'text'} placeholder={'Enter your message'} component={TextArea}
-                   validate={[required, maxLength100]}/>
-            <br/>
-            <Button btnName={'Send message'} btnEffect={props.handleSubmit}/>
-        </form>
+        <Form onFinish={handleSubmit}>
+            <Field name="post" component={renderInput} validate={[required, maxLength100]}/>
+            <Button type="primary" onClick={handleSubmit}>
+                Add Post
+            </Button>
+        </Form>
     );
 };
 
+export const AddMessageReduxForm = reduxForm<{ post: string }>({
+    form: "addMessage",
+})(AddMessageForm);

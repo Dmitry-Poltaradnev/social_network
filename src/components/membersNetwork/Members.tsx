@@ -28,7 +28,7 @@ const Members: React.FC = () => {
 
     return (
         <div className={s.usersContainer}>
-            <h3>Users</h3>
+            <h3 style={{fontStyle: "italic"}}>Users: </h3>
             {isLoading ? (
                 <Loader/>
             ) : (

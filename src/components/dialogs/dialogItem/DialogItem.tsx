@@ -5,9 +5,9 @@ import {DialogType} from "../Dialogs";
 
 export const DialogItem = ({name, id}: DialogType) => {
     return (
-        <div className={s.dialogItem}>
-            <NavLink to={`/dialogs/${id}`}>{name}</NavLink>
-        </div>
+        <li className={s.dialogItem}>
+            <NavLink className={s.itemLink} to={`/dialogs/${id}`}>{name}</NavLink>
+        </li>
     );
 };
 

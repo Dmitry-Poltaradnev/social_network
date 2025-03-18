@@ -5,13 +5,7 @@ import {Message} from "./message/Message";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewMessage} from "../../reducer/messageActions";
 import {RootStateType} from "../../reducer/store";
-import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
-import {reduxForm} from "redux-form";
-import {AddMessageForm} from "./message/AddMessageForm";
-
-type AddMessageFormType = {
-    text: string
-}
+import {AddMessageReduxForm} from "./message/AddMessageForm";
 
 export type MessageType = {
     id: string
@@ -29,30 +23,34 @@ export const Dialogs = () => {
 
     const {messages, dialog} = useSelector((state: RootStateType) => state.message.messagesPage)
 
-    const AddMessageReduxForm = reduxForm<AddMessageFormType>({
-        form: 'addMessage',
-    })(AddMessageForm)
-
-    const addMessage = (formData: { text: string }) => {
-        if (formData.text.trim().length > 0) {
-            dispatch(addNewMessage(formData.text))
+    const addMessage = (formData: any, reset: () => void) => {
+        if (formData.post.trim().length > 0) {
+            dispatch(addNewMessage(formData.post))
+            reset()
         }
     }
 
     return (
         <div className={s.back}>
-            <h2>Dialogs</h2>
-            <div className={s.dialogs_wrapper}>
+            <h2 style={{fontStyle: "italic"}}>Dialogs : </h2>
+            <div className={s.dialogsBlockWrapper}>
                 <div className={s.dialogs}>
-                    <div className={s.dialogItems}>
+                    <h3>Select user</h3>
+                    <ul className={s.dialogItems}>
                         {dialog.map((dialog: DialogType) => <DialogItem key={dialog.id} name={dialog.name}
                                                                         id={dialog.id}/>)}
-                    </div>
+                    </ul>
                 </div>
                 <div className={s.messages}>
-                    {messages.map((messages: MessageType) => <Message key={messages.id} id={messages.id}
-                                                                      text={messages.text}/>)}
-                    <AddMessageReduxForm onSubmit={addMessage}/>
+                    <ol>
+                        {messages.map((message: MessageType) => (
+                            <li key={message.id}>
+                                <Message id={message.id} text={message.text}/>
+                            </li>
+                        ))}
+                    </ol>
+                    <AddMessageReduxForm
+                        onSubmit={(formData: any, dispatch: any, props: any) => addMessage(formData, props.reset)}/>
                 </div>
             </div>
         </div>

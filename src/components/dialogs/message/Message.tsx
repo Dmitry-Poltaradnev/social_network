@@ -1,11 +1,7 @@
 import React from 'react';
 import {MessageType} from "../Dialogs";
 
-export const Message = ({text, id}: MessageType) => {
-    return (
-        <p>{text}
-            <hr/>
-        </p>
-    );
+export const Message = ({text}: MessageType) => {
+    return <span>{text}</span>
 };
 

@@ -1,30 +1,30 @@
-.back {
-    background-color: cornflowerblue;
-}
-
 .dialogs_wrapper {
     display: grid;
     grid-template-columns: 2fr 10fr;
-}
-
-.dialogs {
-
-}
-
-.dialogItems {
-
-}
-
-.dialogItem {
-
-}
-
-.messages {
-
 }
 
 .message {
     padding: 10px;
     border: 1px solid red;
     margin: 4px;
+}
+
+.dialogItems {
+    list-style: none;
+}
+
+.dialogItem {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 5px;
+}
+
+.itemLink {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.dialogsBlockWrapper {
+    display: flex;
+    justify-content: space-between;
 }

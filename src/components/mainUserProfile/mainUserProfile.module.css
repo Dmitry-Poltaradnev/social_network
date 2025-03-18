@@ -15,7 +15,7 @@
 .mainUserProfile {
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-end;
     gap: 20px;
 }
 
@@ -33,11 +33,6 @@
     font-size: 15px;
     font-weight: 600;
     min-width: 500px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
 }
 .statusWrapper{
     background-color: gray;

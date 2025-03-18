@@ -3,41 +3,44 @@ import {MainUserPost} from "./mainUserPost/MainUserPost";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../../reducer/store";
 import {addPost, deletePost} from "../../../reducer/postsActions";
-import {AddPostForm} from "./AddPostForm";
-import {reduxForm} from "redux-form";
+import {AddPostReduxForm} from "./AddPostForm";
+import s from '../mainUserPosts/mainUserPost/mainUserPost.module.css'
 
 export const MainUserPosts = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const post = useSelector((state: RootStateType) => state.post.myPosts);
 
     const deletePostHandler = (id: string) => {
-        dispatch(deletePost(id))
+        dispatch(deletePost(id));
     }
 
-    let myPostsList = post.map((item) => <MainUserPost deletePost={deletePostHandler} key={item.id} id={item.id}
-                                                       likes={item.likes} text={item.text}/>)
+    const myPostsList = post.map((item) => (
+        <MainUserPost
+            deletePost={deletePostHandler}
+            key={item.id}
+            id={item.id}
+            likes={item.likes}
+            text={item.text}
+        />
+    ));
 
-    const AddPostReduxForm = reduxForm({
-        form: 'addPost'
-    })(AddPostForm)
-
-
-    const addNewPost = (formData: any) => {
+    const addNewPost = (formData: any, reset: () => void) => {
         if (formData.post.trim().length > 0) {
             dispatch(addPost(formData.post));
+            reset();
         }
     };
 
     return (
-        <div className={'myPosts'}>
-            <h3>My Posts</h3>
-            <AddPostReduxForm onSubmit={addNewPost}/>
+        <div className={s.myPosts}>
+            <h3 className={s.postTitle}>My Posts :</h3>
+            <AddPostReduxForm
+                onSubmit={(formData: any, dispatch: any, props: any) => addNewPost(formData, props.reset)}/>
             <div>
                 {myPostsList}
             </div>
         </div>
     );
 };
-
