@@ -16,7 +16,6 @@ import {
     ProfileOutlined, TeamOutlined,
     UserOutlined,
 } from '@ant-design/icons';
-
 import {Layout, Menu, theme} from 'antd';
 import {FriendsList} from "./components/friendList/FriendsList";
 import {Dialogs} from "./components/dialogs/Dialogs";
@@ -107,25 +106,6 @@ function App() {
                 <Layout> <Footer style={{padding: 0, background: colorBgContainer}}>Footer</Footer> </Layout>
             </Layout>
         </Layout>
-        // ==========
-        // {/*<div className="App">*/}
-        // {/*    <Header/>*/}
-        // {/*    <Navigation/>*/}
-        // {/*    <Suspense fallback={<Loader/>}>*/}
-        // {/*        <Switch>*/}
-        // {/*            <Route path="/" exact render={() => <UserProfileComponent/>}/>*/}
-        // {/*            <Route path="/userProfile" exact render={() => <UserProfileComponent/>}/>*/}
-        // {/*            <Route path="/profile/:userId" render={() => <MemberProfile/>}/>*/}
-        // {/*            <Route path="/users" render={() => <UsersComponents/>}/>*/}
-        // {/*            <Route path="/login" render={() => <Login/>}/>*/}
-        // {/*            <Route path="/dialogs" component={DialogsComponent}/>*/}
-        // {/*            <Route path="/friendsList" component={FriendsListComponent}/>*/}
-        // {/*            <Route path="*" render={() => <div>404 NOT FOUND*/}
-        // {/*            </div>}/>*/}
-        // {/*        </Switch>*/}
-        // {/*    </Suspense>*/}
-        // {/*    <Footer/>*/}
-        // {/*</div>*/}
     )
 }
 

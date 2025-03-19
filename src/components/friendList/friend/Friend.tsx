@@ -7,10 +7,8 @@ type FriendType = {
 }
 
 export const Friend = ({avaLink, name}: FriendType) => {
-    return (
-        <li className={s.friendItem}>
-            <img className={s.friendImg} src={avaLink} alt="avatarka"/>{name}
-        </li>
-    );
+    return (<li className={s.friendItem}>
+        <img className={s.friendImg} src={avaLink} alt="avatarka"/> <p className={s.friendName}>{name}</p>
+    </li>)
 };
 

@@ -1,49 +1,52 @@
-import React, {useState} from "react";
-import s from "./paginator.module.css";
-import {Button} from "../common/Button";
+import React from "react";
+import { Pagination, Button } from "antd";
+import { LeftOutlined, RightOutlined, EllipsisOutlined } from "@ant-design/icons";
 
-type PaginatorProps = {
+interface PaginatorProps {
     totalItemCount: number;
-    portionSize: number;
+    pageSize: number;
     currentPage: number;
     onPageChange: (page: number) => void;
 }
 
 export const Paginator: React.FC<PaginatorProps> = ({
                                                         totalItemCount,
-                                                        portionSize,
+                                                        pageSize,
                                                         currentPage,
-                                                        onPageChange
+                                                        onPageChange,
                                                     }) => {
-
-    const pagesCount = Math.ceil(totalItemCount / portionSize);
-
-    let portionCount = Math.ceil(pagesCount / portionSize);
-
-    let [portionNumber, setPortionNumber] = useState<number>(1);
-
-    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
-    let rightPortionPageNumber = portionNumber * portionSize;
-
-
-    const pages = Array.from({length: pagesCount}, (_, i) => i + 1);
+    const itemRender = (
+        page: number,
+        type: "page" | "prev" | "next" | "jump-prev" | "jump-next",
+        originalElement: React.ReactNode
+    ) => {
+        if (type === "prev") {
+            return <Button type="primary" shape="circle" icon={<LeftOutlined />} />;
+        }
+        if (type === "next") {
+            return <Button type="primary" shape="circle" icon={<RightOutlined />} />;
+        }
+        if (type === "jump-prev" || type === "jump-next") {
+            return <Button type="default" shape="circle" icon={<EllipsisOutlined />} />;
+        }
+        return (
+            <Button
+                type={page === currentPage ? "primary" : "default"}
+                onClick={() => onPageChange(page)}
+            >
+                {page}
+            </Button>
+        );
+    };
 
     return (
-        <div className={s.paginatorWrapper}>
-            {portionNumber > 1 &&
-                <Button btnName={'Prev page'} btnEffect={() => {
-                    setPortionNumber(portionNumber - 1)
-                }}/>}
-            {pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber).map((page) => (
-                <button className={`${s.paginatorBtn} ${currentPage === page ? s.activeButton : s.unActiveButton}`}
-                        key={page}
-                        onClick={() => onPageChange(page)}
-                >
-                    {page}
-                </button>
-            ))}
-            {portionCount > portionNumber &&
-                <Button btnName={'Next page'} btnEffect={() => setPortionNumber(portionNumber + 1)}/>}
-        </div>
+        <Pagination
+            current={currentPage}
+            total={totalItemCount}
+            pageSize={pageSize}
+            onChange={onPageChange}
+            showSizeChanger={false}
+            itemRender={itemRender}
+        />
     );
 };

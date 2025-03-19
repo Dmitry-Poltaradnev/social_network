@@ -5,21 +5,18 @@ import {useSelector} from "react-redux";
 import {RootStateType} from "../../reducer/store";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
- export const FriendsList = () => {
+export const FriendsList = () => {
 
     const stateMessage = useSelector((state: RootStateType) => state.message.friendsBar);
-
 
     let friendsList = stateMessage.map((friend) => <Friend key={friend.id}
                                                            avaLink={friend.avaLink}
                                                            name={friend.name}/>)
 
     return (
-        <div className={s.friendsListWrapper}>
-            <ul className={s.friendList}>
-                {friendsList}
-            </ul>
-        </div>
+        <ul className={s.friendList}>
+            {friendsList}
+        </ul>
     );
 };
 

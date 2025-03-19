@@ -7,11 +7,10 @@ import {getUsersThunkCreator} from "../../reducer/userReducer";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {Paginator} from "../paginator/Paginator";
 import {setCurrentPage} from "../../reducer/usersActions";
-import s from './members.module.css'
+import s from "./members.module.css";
 import {UserType} from "../../types/types";
 
 const Members: React.FC = () => {
-
     const dispatch = useDispatch();
 
     const {users, pageSize, totalCount, currentPage, isLoading} = useSelector(
@@ -27,24 +26,23 @@ const Members: React.FC = () => {
     };
 
     return (
-        <div className={s.usersContainer}>
-            <h3 style={{fontStyle: "italic"}}>Users: </h3>
+        <div>
             {isLoading ? (
                 <Loader/>
             ) : (
-                <>
-                    <ol>
+                <div className={s.usersBlockWrapper}>
+                    <ol className={s.usersContainer}>
                         {users.map((user: UserType) => (
                             <Member key={user.id} user={user}/>
                         ))}
                     </ol>
                     <Paginator
                         totalItemCount={totalCount}
-                        portionSize={pageSize}
+                        pageSize={pageSize}
                         currentPage={currentPage}
                         onPageChange={onPageChange}
                     />
-                </>
+                </div>
             )}
         </div>
     );

@@ -11,9 +11,9 @@ export const MemberProfileInfo: React.FC<MemberProfileInfo> = ({user}) => {
         <div>
             {user.photos && user.photos.large ? (
                 <img className={s.memberPhoto} src={user.photos.large}
-                     alt="Member profile"/>
+                     alt="Member_Photo"/>
             ) : (
-                <div>Photo didn't load</div>
+                <div>Photo didn't download</div>
             )}
         </div>
     );

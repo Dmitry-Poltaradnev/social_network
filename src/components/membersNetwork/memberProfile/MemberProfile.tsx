@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import s from './memberProfile.module.css';
 import {MemberProfileInfo} from "./MemberProfileInfo";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../../reducer/store";
@@ -20,10 +19,10 @@ export const MemberProfile = () => {
     }, [dispatch, userId]);
 
     return (
-        <div className={s.back}>
+        <>
             <MemberProfileInfo user={user}/>
             {user?.contacts && <ProfileContacts contacts={user.contacts} user={user}/>}
-        </div>
+        </>
     );
 };
 

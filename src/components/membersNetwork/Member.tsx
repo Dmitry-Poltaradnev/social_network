@@ -6,7 +6,7 @@ import {RootStateType} from "../../reducer/store";
 import {changeUserFollowThunkCreator} from "../../reducer/userReducer";
 import s from './memberProfile/memberProfile.module.css'
 import {UserType} from "../../types/types";
-import {Button} from "../common/Button";
+import {Button} from "antd";
 
 export const FOLLOW_METHOD = {
     FOLLOW: 'post',
@@ -33,11 +33,9 @@ export const Member: React.FC<{ user: UserType }> = ({user}) => {
             <NavLink to={'/profile/' + user.id}>
                 <img className={s.memberPhoto} src={photoSrc} alt="user_photo"/>
             </NavLink>
-            <br/>
             <span> Name: {user.name}</span>
-            <br/>
-            <Button disabled={isDisabled} btnEffect={handleFollowToggle}
-                    btnName={user.followed ? "Unfollow" : "Follow"}/>
+            <Button type={'primary'} disabled={isDisabled}
+                    onClick={handleFollowToggle}>{user.followed ? "Unfollow" : "Follow"}</Button>
         </li>
     );
 };
