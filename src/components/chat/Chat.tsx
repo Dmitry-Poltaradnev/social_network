@@ -1,14 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ChatMessage} from "./ChatMessage";
+import {MessageType, ws} from "./ChatPage";
 
-type MessageType = {
-    message: string
-    photo: string
-    userId: number
-    userName: string
-}
-
-export const ws = new WebSocket('https://social-network.samuraijs.com/handlers/ChatHandler.ashx');
 
 export const Chat = () => {
 
@@ -17,14 +10,13 @@ export const Chat = () => {
     useEffect(() => {
         ws.addEventListener('message', (e: MessageEvent) => {
             let newMessages: MessageType[] = JSON.parse(e.data);
-            setMessages((prev) => [...newMessages, ...prev]);
+            setMessages((prev) => [...prev, ...newMessages]);
         })
-    }, [])
+    }, [setMessages])
 
     console.log(messages)
-
-    return (<>
-        {messages.map((message): any => <ChatMessage message={message}/>)}
-    </>)
+    return <>
+        {messages.map((message: MessageType, index: number): any => <ChatMessage key={index} message={message}/>)}
+    </>
 };
 

@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import {Button} from "antd";
-import {ws} from "./Chat";
+import {ws} from "./ChatPage";
 
 export const AddChatMessageForm = () => {
 
     const [text, setText] = useState<string>('');
 
     const sendMessage = () => {
-        ws.send(text)
-        setText("")
+        if (text.trim().length > 0) {
+            ws.send(text)
+            setText("")
+        }
     }
 
     return (
