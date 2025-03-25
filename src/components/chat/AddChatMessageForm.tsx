@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Button } from 'antd';
+import React, {useState} from 'react';
+import {Button, Input} from 'antd';
+import s from './chatPage.module.css'
 
 type AddChatMessageFormProps = {
     ws: WebSocket | null;
 };
 
-export const AddChatMessageForm = ({ ws }: AddChatMessageFormProps) => {
+export const AddChatMessageForm = ({ws}: AddChatMessageFormProps) => {
     const [text, setText] = useState<string>('');
 
     const sendMessage = () => {
@@ -16,9 +17,9 @@ export const AddChatMessageForm = ({ ws }: AddChatMessageFormProps) => {
     };
 
     return (
-        <div>
-            <textarea onChange={(e) => setText(e.target.value)} value={text} />
-            <Button onClick={sendMessage}>Send</Button>
+        <div className={s.sendBlockWrapper} >
+            <Input onChange={(e) => setText(e.target.value)} value={text} placeholder="Input message"/>
+            <Button type={'primary'} onClick={sendMessage}>Send</Button>
         </div>
     );
 };

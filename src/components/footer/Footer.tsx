@@ -1,9 +1,19 @@
 import React from 'react';
-import s from './Footer.module.css'
+import {Layout, theme} from 'antd';
 
-export const Footer = () => {
+export const FooterComponent = () => {
+    const {Footer} = Layout;
+    const {
+        token: {colorBgContainer},
+    } = theme.useToken();
+
     return (
-        <footer className={s.footer}>Footer</footer>
+        <Footer style={{
+            textAlign: 'center',
+            padding: '10px 0',
+            background: colorBgContainer
+        }}>
+            2025 Social Network
+        </Footer>
     );
 };
-

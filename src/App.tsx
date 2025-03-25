@@ -13,13 +13,12 @@ import {Loader} from "./components/common/loader/Loader";
 
 import {
     LaptopOutlined,
-    ProfileOutlined, TeamOutlined,
+    TeamOutlined,
     UserOutlined,
 } from '@ant-design/icons';
 import {Layout, Menu, theme} from 'antd';
-import {FriendsList} from "./components/friendList/FriendsList";
-import {Dialogs} from "./components/dialogs/Dialogs";
 import {ChatPage} from "./components/chat/ChatPage";
+import {FooterComponent} from "./components/footer/Footer";
 
 // Используем lazy для ленивой загрузки компонентов
 // const DialogsComponent = lazy(() => import('./components/dialogs/Dialogs'));
@@ -27,7 +26,7 @@ import {ChatPage} from "./components/chat/ChatPage";
 
 function App() {
 
-    const {Sider, Content, Footer} = Layout;
+    const {Sider, Content} = Layout;
 
     const [collapsed, setCollapsed] = useState(false);
 
@@ -65,23 +64,13 @@ function App() {
                             label: 'User Profile',
                         },
                         {
-                            key: '/dialogs',
-                            icon: <LaptopOutlined/>,
-                            label: 'Dialogs',
-                        },
-                        {
                             key: '/users',
                             icon: <TeamOutlined/>,
                             label: 'Users',
                         },
                         {
-                            key: '/friendsList',
-                            icon: <ProfileOutlined/>,
-                            label: 'Friends List',
-                        },
-                        {
                             key: '/chatPage',
-                            icon: <ProfileOutlined/>,
+                            icon: <LaptopOutlined/>,
                             label: 'Chat',
                         },
                     ]}
@@ -104,13 +93,11 @@ function App() {
                         <Route path="/profile/:userId" render={() => <MemberProfile/>}/>
                         <Route path="/users" render={() => <UsersComponents/>}/>
                         <Route path="/login" render={() => <Login/>}/>
-                        <Route path="/dialogs" render={() => <Dialogs/>}/>
-                        <Route path="/friendsList" render={() => <FriendsList/>}/>
                         <Route path="/chatPage" render={() => <ChatPage/>}/>
                         <Route path="*" render={() => <div>404 NOT FOUND</div>}/>
                     </Switch>
                 </Content>
-                <Layout> <Footer style={{padding: 0, background: colorBgContainer}}>Footer</Footer> </Layout>
+                <FooterComponent/>
             </Layout>
         </Layout>
     )

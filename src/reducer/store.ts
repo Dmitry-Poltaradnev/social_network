@@ -1,5 +1,4 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
-import {messageReducer} from "./messageReducer";
 import {postReducer} from "./postReducer";
 import {userReducer} from "./userReducer";
 import {authReducer} from "./authReducer";
@@ -11,7 +10,6 @@ import {profileReducer} from "./profileReducer";
 export type RootStateType = ReturnType<typeof reducers>;
 
 let reducers = combineReducers({
-    message: messageReducer,
     post: postReducer,
     user: userReducer,
     auth: authReducer,
