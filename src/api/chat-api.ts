@@ -8,3 +8,9 @@ export const createWebSocket = () => {
 export const closeWebSocket = () => {
     ws?.close();
 };
+
+export const sendMessage = (message: string) => {
+    if (ws?.readyState === WebSocket.OPEN) {
+        ws.send(message);
+    }
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './chatPage.module.css'
-import {MessageType} from "./ChatPage";
+import {MessageType} from "../../reducer/chatReducer";
 
 type ChatMessagePropsType = {
     message: MessageType

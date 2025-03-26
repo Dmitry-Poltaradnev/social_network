@@ -1,49 +1,28 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { createWebSocket, closeWebSocket } from '../../api/chat-api';
-import { Chat } from './Chat';
-import { AddChatMessageForm } from './AddChatMessageForm';
-
-export type MessageType = {
-    message: string;
-    photo: string;
-    userId: number;
-    userName: string;
-};
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Chat} from './Chat';
+import {AddChatMessageForm} from './AddChatMessageForm';
+import {initializeChatTC, sendMessageTC} from "../../reducer/chatReducer";
+import {closeWebSocket} from "../../api/chat-api";
+import {AppStateType} from "../../reducer/store";
 
 export const ChatPage = () => {
-    const [messages, setMessages] = useState<MessageType[]>([]);
-    const ws = useRef<WebSocket | null>(null);
+    const dispatch = useDispatch();
+    const messages = useSelector((state: AppStateType) => state.chat.chatMessages);
 
     useEffect(() => {
-        ws.current = createWebSocket();
+        dispatch(initializeChatTC());
+        return () => dispatch(closeWebSocket());
+    }, [dispatch]);
 
-        const handleMessage = (e: MessageEvent) => {
-            const newMessages: MessageType[] = JSON.parse(e.data);
-            setMessages((prev) => [...prev, ...newMessages]);
-        };
-
-        const handleClose = () => {
-            console.log('Socket closed. Reconnecting...');
-            setTimeout(() => {
-                ws.current = createWebSocket();
-                ws.current?.addEventListener('message', handleMessage);
-            }, 3000);
-        };
-
-        ws.current.addEventListener('message', handleMessage);
-        ws.current.addEventListener('close', handleClose);
-
-        return () => {
-            ws.current?.removeEventListener('message', handleMessage);
-            ws.current?.removeEventListener('close', handleClose);
-            closeWebSocket();
-        };
-    }, []);
+    const handleSendMessage = (message: string) => {
+        dispatch(sendMessageTC(message));
+    };
 
     return (
         <div>
-            <Chat messages={messages} />
-            <AddChatMessageForm ws={ws.current} />
+            <Chat messages={messages}/>
+            <AddChatMessageForm onSendMessage={handleSendMessage}/>
         </div>
     );
 };

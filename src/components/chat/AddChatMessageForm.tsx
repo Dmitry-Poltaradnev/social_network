@@ -2,25 +2,24 @@ import React, {useState} from 'react';
 import {Button, Input} from 'antd';
 import s from './chatPage.module.css'
 
-type AddChatMessageFormProps = {
-    ws: WebSocket | null;
+type Props = {
+    onSendMessage: (message: string) => void;
 };
 
-export const AddChatMessageForm = ({ws}: AddChatMessageFormProps) => {
-    const [text, setText] = useState<string>('');
+export const AddChatMessageForm = ({onSendMessage}: Props) => {
+    const [text, setText] = useState('');
 
     const sendMessage = () => {
-        if (text.trim().length > 0 && ws?.readyState === WebSocket.OPEN) {
-            ws.send(text);
+        if (text.trim().length > 0) {
+            onSendMessage(text);
             setText('');
         }
     };
 
     return (
-        <div className={s.sendBlockWrapper} >
+        <div className={s.sendBlockWrapper}>
             <Input onChange={(e) => setText(e.target.value)} value={text} placeholder="Input message"/>
-            <Button type={'primary'} onClick={sendMessage}>Send</Button>
+            <Button type='primary' onClick={sendMessage}>Send</Button>
         </div>
     );
 };
-

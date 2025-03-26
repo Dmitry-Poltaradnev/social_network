@@ -10,7 +10,6 @@ export const profileAPI = {
         return axiosInstance.get<ProfileType>(`profile/${userId}`)
             .then(response => response.data)
     },
-
     getProfileStatus(userId: number) {
         return axiosInstance.get<string>(`profile/status/${userId}`).then(response => response.data)
     },
